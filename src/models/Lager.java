@@ -3,8 +3,8 @@ package models;
 import java.util.ArrayList;
 
 public class Lager {
-    ArrayList<Reol> reoler = new ArrayList<>();
-    String navn;
+    private ArrayList<Reol> reoler = new ArrayList<>();
+    private String navn;
 
     public Lager(String navn) {
         this.navn = navn;
@@ -14,17 +14,18 @@ public class Lager {
         reoler.add(new Reol(nummer, pladser));
     }
 
-    public void addFad(Reol reol, int plads, Fad fad) {
-        if (reol.fade.get(plads - 1) == null) {
-            reol.fade.add(plads - 1, fad);
+
+    public ArrayList<Fad> getFadeKlar() {
+        ArrayList<Fad> result = new ArrayList<>();
+        for (Reol reol : reoler) {
+            for (Hylde hylde : reol.getHylder()) {
+                if (hylde.getFad().erWhiskyKlar()) {
+                    result.add(hylde.getFad());
+                }
+            }
         }
+        return result;
     }
 
-//    public Fad getFadeKlar() {
-//        for (Reol reol : reoler) {
-//            for (Fad fad : reol.getFade()) {
-//            }
-//        }
-//        return
-//    }
+
 }
