@@ -1,12 +1,14 @@
 package models;
 
+import java.time.LocalDate;
+import java.time.Period;
+
 public class Fad {
     private static int fadNr;
     private String fadId;
     private int størrelse;
     private int alder;
-
-//    private PåFyldning påFyldning?
+    private Påfyldning påFyldning;
 
 //    private Historik historik;
 //    private String fadType eller FadType fadType?
@@ -30,5 +32,21 @@ public class Fad {
         return alder;
     }
 
+    public void setPåfyldning(Påfyldning påFyldning) {
+        this.påFyldning = påFyldning;
+    }
 
+    public Påfyldning getPåFyldning() {
+        return påFyldning;
+    }
+
+    public boolean erWhiskyKlar() {
+        if (påFyldning != null) {
+            Period period = Period.between(påFyldning.getStartDato(), LocalDate.now());
+            if (period.getYears() >= 3) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
