@@ -5,8 +5,7 @@ public class Fad {
     private String fadId;
     private int størrelse;
     private int alder;
-
-//    private PåFyldning påFyldning?
+    private Påfyldning påFyldning;
 
 //    private Historik historik;
 //    private String fadType eller FadType fadType?
