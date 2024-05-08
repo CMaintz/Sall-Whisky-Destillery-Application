@@ -1,7 +1,4 @@
-package models;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+package application.models;
 
 public class Reol {
     private int nummer;

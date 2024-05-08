@@ -1,4 +1,4 @@
-package models;
+package application.models;
 
 public class Hylde {
     private Fad fad;

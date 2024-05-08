@@ -1,4 +1,4 @@
-package models;
+package application.models;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -8,11 +8,8 @@ public class Fad {
     private String fadId;
     private int størrelse;
     private int alder;
+    private Påfyldning påFyldning;
 
-//    private PåFyldning påFyldning?
-
-//    private Historik historik;
-//    private String fadType eller FadType fadType?
 
     public Fad(int størrelse, int alder) {
         this.størrelse = størrelse;

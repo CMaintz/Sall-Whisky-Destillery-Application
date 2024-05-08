@@ -1,4 +1,4 @@
-package models;
+package application.models;
 
 public class Korn {
     private String sort;
