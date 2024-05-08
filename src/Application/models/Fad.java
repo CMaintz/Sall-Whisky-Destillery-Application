@@ -1,8 +1,7 @@
-package application.models;
+package Application.models;
 
 import java.time.LocalDate;
 import java.time.Period;
-import application.models.Påfyldning;
 
 public class Fad {
     private static int fadNr;
@@ -11,6 +10,8 @@ public class Fad {
     private int alder;
     private Påfyldning påFyldning;
 
+//    private Historik historik;
+//    private String fadType eller FadType fadType?
 
     public Fad(int størrelse, int alder) {
         this.størrelse = størrelse;
