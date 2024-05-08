@@ -1,6 +1,8 @@
 package models;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 //Når en destillering af whisky foretages, skal det registreres i systemet.
 //adminstrator indtaster detaljer om destilleringen, såsom startdato, slutdato, maltbatch, kornsort, medarbejder, mængde væske og alkholprocent.
@@ -15,6 +17,7 @@ public class Destillering {
     private double alkoholProcent;
     private String rygeMateriale;
     private String kommentar;
+    private List<Fad> fade = new ArrayList<>();
 
 
     public Destillering(LocalDate startDato, LocalDate slutDato, String maltBatch, String kornSort, String medarbejder, double mængdeVæske, double alkoholProcent, String rygeMateriale, String kommentar) {
@@ -99,5 +102,14 @@ public class Destillering {
 
     public void setKommentar(String kommentar) {
         this.kommentar = kommentar;
+    }
+
+    public List<Fad> getFade() {
+        return fade;
+    }
+
+    public void addFad(Fad fad) {
+        this.fade.add(fad);
+        fad.getDestilleringer().add(this);
     }
 }
