@@ -110,6 +110,6 @@ public class Destillering {
 
     public void addFad(Fad fad) {
         this.fade.add(fad);
-        fad.getDestilleringer().add(this);
+//        fad.getDestilleringer().add(this);
     }
 }

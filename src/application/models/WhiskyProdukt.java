@@ -27,7 +27,7 @@ public class WhiskyProdukt {
 
     public void addFad(Fad fad) {
         this.fade.add(fad);
-        fad.getWhiskyProdukter().add(this);
+//        fad.getWhiskyProdukter().add(this);
     }
 
     public String getNavn() {
