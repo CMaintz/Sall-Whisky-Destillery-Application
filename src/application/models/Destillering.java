@@ -13,6 +13,7 @@ public class Destillering {
     private Korn korn;
     private String medarbejder;
     private double antalLiter;
+    private double currentAntalLiter;
     private double alkoholProcent;
     private String rygeMateriale;
     private String kommentar;
@@ -82,5 +83,11 @@ public class Destillering {
 
     public void setKommentar(String kommentar) {
         this.kommentar = kommentar;
+    }
+
+    public void setCurrentAntalLiter(double antalLiterTappet) {
+        if (currentAntalLiter >= antalLiterTappet) {
+            currentAntalLiter -= antalLiterTappet;
+        }
     }
 }

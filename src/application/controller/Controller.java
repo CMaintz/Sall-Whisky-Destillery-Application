@@ -1,8 +1,8 @@
 package application.controller;
-import application.models.Destillering;
-import application.models.Fad;
-import application.models.Korn;
+import application.models.*;
 import storage.Storage;
+
+import java.util.ArrayList;
 
 public class Controller {
     public static Fad createFad(int størrelse, int alder) {
@@ -22,4 +22,12 @@ public class Controller {
         Storage.addDestillering(destillering);
         return destillering;
     }
+
+//    public static Destillat createDestillat(ArrayList<Påfyldning> påfyldninger, String navn, Fad fad) {
+//        fad.createDestillat(påfyldninger, navn);
+//    }
+//
+//    public static Destillat removeDestillat() {
+//
+//    }
 }

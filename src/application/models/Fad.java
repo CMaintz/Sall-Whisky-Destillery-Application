@@ -2,6 +2,8 @@ package application.models;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+
 import application.models.Påfyldning;
 
 public class Fad {
@@ -9,7 +11,8 @@ public class Fad {
     private String fadId;
     private int størrelse;
     private int alder;
-    private Påfyldning påFyldning;
+    private Destillat destillat;
+    private ArrayList<Destillat> historik = new ArrayList<>();
 
 
     public Fad(int størrelse, int alder) {
@@ -31,12 +34,12 @@ public class Fad {
         return alder;
     }
 
-    public void setPåfyldning(Påfyldning påFyldning) {
-        this.påFyldning = påFyldning;
-    }
-
-    public Påfyldning getPåFyldning() {
-        return påFyldning;
+    public Destillat createDestillat(ArrayList<Påfyldning> påfyldninger, String navn) {
+        if (destillat != null) {
+            historik.add(destillat);
+        }
+        destillat = new Destillat(påfyldninger, navn);
+        return destillat;
     }
 
 //    public boolean erWhiskyKlar() {
