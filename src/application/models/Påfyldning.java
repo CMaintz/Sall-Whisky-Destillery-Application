@@ -1,9 +1,13 @@
 package application.models;
 
+import application.models.Destillering;
+
 import java.time.LocalDate;
+
 
 public class Påfyldning {
     private String medarbejderNavn;
+    private LocalDate startDato;
     private int literPåfyldt;
     private Destillering destillat;
     private LocalDate påfyldningsDato;
