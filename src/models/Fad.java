@@ -1,5 +1,7 @@
 package models;
 
+import java.util.Calendar;
+
 public class Fad {
     private static int fadNr;
     private String fadId;
@@ -29,6 +31,10 @@ public class Fad {
     public int getAlder() {
         return alder;
     }
-
-
 }
+
+
+//    public Calendar getDestilleringer() {
+//        return null;
+//    }
+//}
