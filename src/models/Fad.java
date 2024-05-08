@@ -42,7 +42,7 @@ public class Fad {
 
     public boolean erWhiskyKlar() {
         if (påFyldning != null) {
-            Period period = Period.between(påFyldning.getStartDato(), LocalDate.now());
+            Period period = Period.between(påFyldning.getPåfyldningsDato(), LocalDate.now());
             if (period.getYears() >= 3) {
                 return true;
             }

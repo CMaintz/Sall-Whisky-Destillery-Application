@@ -15,6 +15,19 @@ public class Påfyldning {
         påfyldningsDato = LocalDate.now();
     }
 
+    public String getMedarbejderNavn() {
+        return medarbejderNavn;
+    }
 
+    public int getLiterPåfyldt() {
+        return literPåfyldt;
+    }
 
+    public Destillering getDestillat() {
+        return destillat;
+    }
+
+    public LocalDate getPåfyldningsDato() {
+        return påfyldningsDato;
+    }
 }
