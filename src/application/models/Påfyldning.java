@@ -1,22 +1,20 @@
-package Application.models;
+package application.models;
 
 import application.models.Destillering;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 
 public class Påfyldning {
     private String medarbejderNavn;
-    private LocalDate startDato;
     private int literPåfyldt;
-    private Destillering destillat;
-    private LocalDate påfyldningsDato;
+    private Destillering destillering;
 
-    public Påfyldning(String medarbejderNavn, int literPåfyldt, Destillering destillat) {
+    public Påfyldning(String medarbejderNavn, int literPåfyldt, Destillering destillering) {
         this.medarbejderNavn = medarbejderNavn;
         this.literPåfyldt = literPåfyldt;
-        this.destillat = destillat;
-        påfyldningsDato = LocalDate.now();
+        this.destillering = destillering;
     }
 
     public String getMedarbejderNavn() {
@@ -27,11 +25,7 @@ public class Påfyldning {
         return literPåfyldt;
     }
 
-    public Destillering getDestillat() {
-        return destillat;
-    }
-
-    public LocalDate getPåfyldningsDato() {
-        return påfyldningsDato;
+    public Destillering getDestillering() {
+        return destillering;
     }
 }

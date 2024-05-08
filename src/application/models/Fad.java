@@ -39,13 +39,13 @@ public class Fad {
         return påFyldning;
     }
 
-    public boolean erWhiskyKlar() {
-        if (påFyldning != null) {
-            Period period = Period.between(påFyldning.getPåfyldningsDato(), LocalDate.now());
-            if (period.getYears() >= 3) {
-                return true;
-            }
-        }
-        return false;
-    }
+//    public boolean erWhiskyKlar() {
+//        if (påFyldning != null) {
+//            Period period = Period.between(påFyldning.getPåfyldningsDato(), LocalDate.now());
+//            if (period.getYears() >= 3) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 }
