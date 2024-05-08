@@ -5,16 +5,16 @@ import java.time.LocalDate;
 public class Påfyldning {
     private String medarbejderNavn;
     private int literPåfyldt;
-    private LocalDate startDato;
-    private Destillering destillering;
+    private Destillering destillat;
+    private LocalDate påfyldningsDato;
 
-    public Påfyldning(String medarbejderNavn, int literPåfyldt, LocalDate startDato) {
+    public Påfyldning(String medarbejderNavn, int literPåfyldt, Destillering destillat) {
         this.medarbejderNavn = medarbejderNavn;
         this.literPåfyldt = literPåfyldt;
-        this.startDato = startDato;
+        this.destillat = destillat;
+        påfyldningsDato = LocalDate.now();
     }
 
-    public LocalDate getStartDato() {
-        return startDato;
-    }
+
+
 }
