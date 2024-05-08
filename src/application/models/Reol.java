@@ -1,4 +1,8 @@
 package application.models;
+import application.models.Hylde;
+import application.models.Fad;
+
+
 
 public class Reol {
     private int nummer;

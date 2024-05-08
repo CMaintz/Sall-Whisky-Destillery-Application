@@ -1,6 +1,11 @@
 package application.models;
 
 import java.util.ArrayList;
+import application.models.Reol;
+import application.models.Fad;
+import application.models.Hylde;
+
+
 
 public class Lager {
     private ArrayList<Reol> reoler = new ArrayList<>();
@@ -15,17 +20,17 @@ public class Lager {
     }
 
 
-    public ArrayList<Fad> getFadeKlar() {
-        ArrayList<Fad> result = new ArrayList<>();
-        for (Reol reol : reoler) {
-            for (Hylde hylde : reol.getHylder()) {
-                if (hylde.getFad().erWhiskyKlar()) {
-                    result.add(hylde.getFad());
-                }
-            }
-        }
-        return result;
-    }
+//    public ArrayList<Fad> getFadeKlar() {
+//        ArrayList<Fad> result = new ArrayList<>();
+//        for (Reol reol : reoler) {
+//            for (Hylde hylde : reol.getHylder()) {
+//                if (hylde.getFad().erWhiskyKlar()) {
+//                    result.add(hylde.getFad());
+//                }
+//            }
+//        }
+//        return result;
+//    }
 
 
 }

@@ -1,4 +1,6 @@
 package application.models;
+import application.models.Fad;
+
 
 public class Hylde {
     private Fad fad;
