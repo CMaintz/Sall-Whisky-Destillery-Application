@@ -23,11 +23,16 @@ public class Controller {
         return destillering;
     }
 
-//    public static Destillat createDestillat(ArrayList<Påfyldning> påfyldninger, String navn, Fad fad) {
-//        fad.createDestillat(påfyldninger, navn);
-//    }
-//
-//    public static Destillat removeDestillat() {
-//
-//    }
+    public static Påfyldning createPåfyldning(String medarbejderNavn, double literPåFyldt, Destillering destillering) {
+        Påfyldning påfyldning = new Påfyldning(medarbejderNavn, literPåFyldt, destillering);
+        Storage.addPåfyldninger(påfyldning);
+        return påfyldning;
+    }
+
+    public static Destillat createDestilat(ArrayList<Påfyldning> påfyldninger, String navn) {
+        Destillat destillat = new Destillat(påfyldninger, navn);
+        Storage.addDestillat(destillat);
+        return destillat;
+    }
+
 }

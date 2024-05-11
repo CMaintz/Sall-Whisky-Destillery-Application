@@ -29,4 +29,14 @@ public class Destillat {
     public LocalDate getPåfyldningsDato() {
         return påfyldningsDato;
     }
+
+    @Override
+    public String toString() {
+        return "Destillat{" +
+                "påfyldning=" + påfyldning +
+                ", navn='" + navn + '\'' +
+                ", antalLiter=" + antalLiter +
+                ", påfyldningsDato=" + påfyldningsDato +
+                '}';
+    }
 }

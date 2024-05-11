@@ -34,11 +34,11 @@ public class Fad {
         return alder;
     }
 
-    public Destillat createDestillat(ArrayList<Påfyldning> påfyldninger, String navn) {
-        if (destillat != null) {
-            historik.add(destillat);
+    public Destillat addDestillat(Destillat destillat) {
+        if (!historik.contains(destillat) && destillat == null) {
+            historik.add(this.destillat);
+            this.destillat = destillat;
         }
-        destillat = new Destillat(påfyldninger, navn);
         return destillat;
     }
 
