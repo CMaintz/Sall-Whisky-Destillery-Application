@@ -11,6 +11,7 @@ public class Påfyldning {
     private double literPåfyldt;
     private Destillering destillering;
 
+    //Pre: literPåFyldt skal være <= currentAntalLiter i destilat
     public Påfyldning(String medarbejderNavn, double literPåfyldt, Destillering destillering) {
         this.medarbejderNavn = medarbejderNavn;
         this.literPåfyldt = literPåfyldt;
@@ -31,6 +32,11 @@ public class Påfyldning {
     }
 
     private void setSamletAntalLiterDestillering(double literPåfyldt) {
-        destillering.setAntalLiter(literPåfyldt);
+        destillering.setCurrentAntalLiter(literPåfyldt);
+    }
+
+    @Override
+    public String toString() {
+        return medarbejderNavn + ", " + literPåfyldt + ", " + destillering;
     }
 }

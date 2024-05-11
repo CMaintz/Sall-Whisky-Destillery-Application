@@ -27,6 +27,7 @@ public class Destillering {
         this.alkoholProcent = alkoholProcent;
         this.rygeMateriale = rygeMateriale;
         this.kommentar = kommentar;
+        currentAntalLiter = antalLiter;
     }
 
     public String getMaltBatch() {
@@ -86,8 +87,10 @@ public class Destillering {
     }
 
     public void setCurrentAntalLiter(double antalLiterTappet) {
-        if (currentAntalLiter >= antalLiterTappet) {
-            currentAntalLiter -= antalLiterTappet;
-        }
+        currentAntalLiter -= antalLiterTappet;
+    }
+
+    public double getCurrentAntalLiter() {
+        return currentAntalLiter;
     }
 }

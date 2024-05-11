@@ -2,15 +2,15 @@ package storage;
 
 import java.util.ArrayList;
 
-import application.models.Destillering;
-import application.models.Fad;
-import application.models.Korn;
-import application.models.Påfyldning;
+import application.models.*;
 
 public class Storage {
     private static ArrayList<Fad> fade = new ArrayList<>();
     private static ArrayList<Korn> korne = new ArrayList<>();
     private static ArrayList<Destillering> destilleringer = new ArrayList<>();
+    private static ArrayList<Destillat> destillater = new ArrayList<>();
+    private static ArrayList<Påfyldning> påfyldninger = new ArrayList<>();
+
 
 
     public static ArrayList<Fad> getFade() {
@@ -35,6 +35,20 @@ public class Storage {
 
     public static void addDestillering(Destillering destillering) {
         destilleringer.add(destillering);
+    }
+    public static ArrayList<Destillat> getDestillater() {
+        return new ArrayList<>(destillater);
+    }
+
+    public static void addDestillat(Destillat destillat) {
+        destillater.add(destillat);
+    }
+    public static ArrayList<Påfyldning> getPåfyldninger() {
+        return new ArrayList<>(påfyldninger);
+    }
+
+    public static void addPåfyldninger(Påfyldning påfyldning) {
+        påfyldninger.add(påfyldning);
     }
 
 }
