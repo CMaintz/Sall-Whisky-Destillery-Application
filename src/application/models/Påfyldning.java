@@ -1,4 +1,6 @@
-package Application.models;
+package application.models;
+
+import application.models.Destillering;
 
 import java.time.LocalDate;
 
