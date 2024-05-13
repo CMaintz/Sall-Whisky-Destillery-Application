@@ -54,4 +54,19 @@ public class FadHistorik {
     public void setLeverandør(String leverandør) {
         this.leverandør = leverandør;
     }
+
+    public int getAlder() {
+        return tilÅr - fraÅr;
+    }
+
+    @Override
+    public String toString() {
+        return "FadHistorik{" +
+                "tidligereIndhold='" + tidligereIndhold + '\'' +
+                ", land='" + land + '\'' +
+                ", fraÅr=" + fraÅr +
+                ", tilÅr=" + tilÅr +
+                ", leverandør='" + leverandør + '\'' +
+                '}';
+    }
 }
