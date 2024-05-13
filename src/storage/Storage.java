@@ -11,6 +11,9 @@ public class Storage {
     private static ArrayList<Destillat> destillater = new ArrayList<>();
     private static ArrayList<Påfyldning> påfyldninger = new ArrayList<>();
     private static ArrayList<Lager> lagere = new ArrayList<>();
+    private static ArrayList<WhiskyProdukt> whiskyProdukter = new ArrayList<>();
+    private static ArrayList<FadTapning> fadTapninger = new ArrayList<>();
+
 
 
 
@@ -58,6 +61,20 @@ public class Storage {
 
     public static void addLager(Lager lager) {
         lagere.add(lager);
+    }
+    public static ArrayList<WhiskyProdukt> getWhiskyProdukter() {
+        return new ArrayList<>(whiskyProdukter);
+    }
+
+    public static void addWhiskyProdukt(WhiskyProdukt whiskyProdukt) {
+        whiskyProdukter.add(whiskyProdukt);
+    }
+    public static ArrayList<FadTapning> getFadTapninger() {
+        return new ArrayList<>(fadTapninger);
+    }
+
+    public static void addFadTapning(FadTapning fadTapning) {
+        fadTapninger.add(fadTapning);
     }
 
 }

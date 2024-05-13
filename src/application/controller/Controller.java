@@ -40,5 +40,16 @@ public class Controller {
         Storage.addLager(lager);
         return lager;
     }
+    
+    public static FadTapning createFadTapning(String medarbejdernavn, double literTappet, Fad fad) {
+        FadTapning fadTapning = new FadTapning(medarbejdernavn, literTappet, fad);
+        Storage.addFadTapning(fadTapning);
+        return fadTapning;
+    }
 
+    public static WhiskyProdukt createWhiskyProdukt(String navn, int flaskenr, ArrayList<FadTapning> fadTapninger, double alkoholprocent, String beskrivelse, String type) {
+        WhiskyProdukt whiskyProdukt = new WhiskyProdukt(navn, flaskenr, fadTapninger, alkoholprocent, beskrivelse, type);
+        Storage.addWhiskyProdukt(whiskyProdukt);
+        return whiskyProdukt;
+    }
 }

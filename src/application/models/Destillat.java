@@ -30,6 +30,14 @@ public class Destillat {
         return påfyldningsDato;
     }
 
+    public double getAntalLiter() {
+        return antalLiter;
+    }
+
+    public void setAntalLiter(double antalLiter) {
+        this.antalLiter -= antalLiter;
+    }
+
     @Override
     public String toString() {
         return "Destillat{" +
