@@ -5,8 +5,8 @@ import storage.Storage;
 import java.util.ArrayList;
 
 public class Controller {
-    public static Fad createFad(int størrelse, int alder) {
-        Fad fad = new Fad(størrelse, alder);
+    public static Fad createFad(int størrelse, int alder, FadHistorik fadHistorik) {
+        Fad fad = new Fad(størrelse, alder, fadHistorik);
         Storage.addFad(fad);
         return fad;
     }

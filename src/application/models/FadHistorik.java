@@ -1,11 +1,15 @@
 package application.models;
 
+import java.util.ArrayList;
+
 public class FadHistorik {
     private String tidligereIndhold;
     private String land;
     private int fraÅr;
     private int tilÅr;
     private String leverandør;
+    private ArrayList<Destillat> historik = new ArrayList<>();
+
 
     public FadHistorik(String tidligereIndhold, String land, int fraÅr, int tilÅr, String leverandør) {
         this.tidligereIndhold = tidligereIndhold;
@@ -53,5 +57,9 @@ public class FadHistorik {
 
     public void setLeverandør(String leverandør) {
         this.leverandør = leverandør;
+    }
+
+    public void addDestillatHistorik(Destillat destillat) {
+        historik.add(destillat);
     }
 }

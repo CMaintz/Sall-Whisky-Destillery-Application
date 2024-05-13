@@ -12,7 +12,8 @@ public class ModelsTest {
 
     @Test
     void testCreateFad() {
-        Fad fad = Controller.createFad(50, 3);
+        FadHistorik fadHistorik = new FadHistorik("Cherry", "Spanien", 2004, 2019, "LeveretAfJens");
+        Fad fad = Controller.createFad(50, 3, fadHistorik);
         assertTrue(Storage.getFade().contains(fad));
     }
 

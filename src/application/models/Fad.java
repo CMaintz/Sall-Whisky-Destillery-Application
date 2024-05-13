@@ -12,12 +12,13 @@ public class Fad {
     private int størrelse;
     private int alder;
     private Destillat destillat;
-    private ArrayList<Destillat> historik = new ArrayList<>();
+    private FadHistorik fadHistorik;
 
 
-    public Fad(int størrelse, int alder) {
+    public Fad(int størrelse, int alder, FadHistorik fadHistorik) {
         this.størrelse = størrelse;
         this.alder = alder;
+        this.fadHistorik = fadHistorik;
         fadNr++;
         this.fadId = fadNr + "";
     }
@@ -34,9 +35,13 @@ public class Fad {
         return alder;
     }
 
+    public Destillat getDestillat() {
+        return destillat;
+    }
+
     public Destillat addDestillat(Destillat destillat) {
-        if (!historik.contains(destillat) && destillat == null) {
-            historik.add(this.destillat);
+        if (destillat == null) {
+            fadHistorik.addDestillatHistorik(destillat);
             this.destillat = destillat;
         }
         return destillat;
