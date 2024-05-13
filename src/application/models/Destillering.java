@@ -17,6 +17,8 @@ public class Destillering {
     private double alkoholProcent;
     private String rygeMateriale;
     private String kommentar;
+    private LocalDate startDato;
+    private LocalDate slutDato;
 
 
     public Destillering(String maltBatch, Korn korn, String medarbejder, double mængdeVæske, double alkoholProcent, String rygeMateriale, String kommentar) {
@@ -28,6 +30,7 @@ public class Destillering {
         this.rygeMateriale = rygeMateriale;
         this.kommentar = kommentar;
         currentAntalLiter = antalLiter;
+        startDato = LocalDate.now();
     }
 
     public String getMaltBatch() {
@@ -92,5 +95,9 @@ public class Destillering {
 
     public double getCurrentAntalLiter() {
         return currentAntalLiter;
+    }
+
+    public void setSlutDato(LocalDate slutDato) {
+        this.slutDato = slutDato;
     }
 }

@@ -5,19 +5,22 @@ import java.util.List;
 
 public class WhiskyProdukt {
     private String navn;
-    private int flaskeNr;
     private double alkoholProcent;
     private String beskrivelse;
     private String type;
     private ArrayList<FadTapning> fadTapninger = new ArrayList<>();
+    private double antalLiterAlkohol;
+    private double antalLiterVand;
 
-    public WhiskyProdukt(String navn, int flaskeNr, ArrayList<FadTapning> fadTapninger, double alkoholProcent, String beskrivelse, String type) {
+    public WhiskyProdukt(String navn, ArrayList<FadTapning> fadTapninger, String beskrivelse, String type) {
         this.navn = navn;
-        this.flaskeNr = flaskeNr;
         this.alkoholProcent = alkoholProcent;
         this.beskrivelse = beskrivelse;
         this.type = type;
         this.fadTapninger = fadTapninger;
+        for (FadTapning fadTapning : fadTapninger) {
+            antalLiterAlkohol += fadTapning.getLiterTappet();
+        }
     }
 
     public String getNavn() {
@@ -26,14 +29,6 @@ public class WhiskyProdukt {
 
     public void setNavn(String navn) {
         this.navn = navn;
-    }
-
-    public int getFlaskeNr() {
-        return flaskeNr;
-    }
-
-    public void setFlaskeNr(int flaskeNr) {
-        this.flaskeNr = flaskeNr;
     }
 
     public double getAlkoholProcent() {
@@ -51,12 +46,27 @@ public class WhiskyProdukt {
     public void setBeskrivelse(String beskrivelse) {
         this.beskrivelse = beskrivelse;
     }
+    private void setAlkoholprocent() {
+        double result = 0;
+        for (FadTapning fadTapning : fadTapninger) {
+            result += fadTapning.getDestillat().getAlkoholprocent();
+        }
+        alkoholProcent = result / fadTapninger.size();
+    }
 
+    public void tilføjVand(int liter) {
+        antalLiterVand = liter;
+        alkoholProcent = (antalLiterAlkohol * alkoholProcent) / (antalLiterAlkohol + antalLiterVand);
+    }
     public String getType() {
         return type;
     }
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public double getSamletAntalLiter() {
+        return antalLiterAlkohol + antalLiterVand;
     }
 }

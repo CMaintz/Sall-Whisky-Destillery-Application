@@ -19,4 +19,12 @@ public class FadTapning {
             fad.getDestillat().setAntalLiter(literTappet);
         }
     }
+
+    public Destillat getDestillat() {
+        return destillat;
+    }
+
+    public double getLiterTappet() {
+        return literTappet;
+    }
 }

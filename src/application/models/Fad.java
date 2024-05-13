@@ -11,6 +11,7 @@ public class Fad {
     private String fadId;
     private int størrelse;
     private int alder;
+    private Hylde hylde;
     private Destillat destillat;
     private FadHistorik fadHistorik;
 
@@ -37,6 +38,10 @@ public class Fad {
 
     public Destillat getDestillat() {
         return destillat;
+    }
+
+    public void setHylde(Hylde hylde) {
+        this.hylde = hylde;
     }
 
     public Destillat addDestillat(Destillat destillat) {

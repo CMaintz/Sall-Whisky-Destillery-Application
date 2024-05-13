@@ -25,13 +25,11 @@ public class Controller {
 
     public static Påfyldning createPåfyldning(String medarbejderNavn, double literPåFyldt, Destillering destillering) {
         Påfyldning påfyldning = new Påfyldning(medarbejderNavn, literPåFyldt, destillering);
-        Storage.addPåfyldninger(påfyldning);
         return påfyldning;
     }
 
     public static Destillat createDestilat(ArrayList<Påfyldning> påfyldninger, String navn) {
         Destillat destillat = new Destillat(påfyldninger, navn);
-        Storage.addDestillat(destillat);
         return destillat;
     }
 
@@ -43,13 +41,17 @@ public class Controller {
     
     public static FadTapning createFadTapning(String medarbejdernavn, double literTappet, Fad fad) {
         FadTapning fadTapning = new FadTapning(medarbejdernavn, literTappet, fad);
-        Storage.addFadTapning(fadTapning);
         return fadTapning;
     }
 
-    public static WhiskyProdukt createWhiskyProdukt(String navn, int flaskenr, ArrayList<FadTapning> fadTapninger, double alkoholprocent, String beskrivelse, String type) {
-        WhiskyProdukt whiskyProdukt = new WhiskyProdukt(navn, flaskenr, fadTapninger, alkoholprocent, beskrivelse, type);
-        Storage.addWhiskyProdukt(whiskyProdukt);
+    public static WhiskyProdukt createWhiskyProdukt(String navn, ArrayList<FadTapning> fadTapninger, double alkoholprocent, String beskrivelse, String type) {
+        WhiskyProdukt whiskyProdukt = new WhiskyProdukt(navn, fadTapninger, beskrivelse, type);
         return whiskyProdukt;
+    }
+    
+    public static WhiskyFlaske createWhiskyFlaske(int nummer, WhiskyProdukt whiskyProdukt) {
+        WhiskyFlaske whiskyFlaske = new WhiskyFlaske(nummer, whiskyProdukt);
+        Storage.addWhiskyFlaske(whiskyFlaske);
+        return whiskyFlaske;
     }
 }

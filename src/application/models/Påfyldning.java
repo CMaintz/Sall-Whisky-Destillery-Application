@@ -17,6 +17,7 @@ public class Påfyldning {
         this.literPåfyldt = literPåfyldt;
         this.destillering = destillering;
         setSamletAntalLiterDestillering(literPåfyldt);
+        destillering.setSlutDato(LocalDate.now());
     }
 
     public String getMedarbejderNavn() {
