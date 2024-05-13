@@ -15,7 +15,11 @@ public class Lager {
         this.navn = navn;
     }
 
-    public void addReol(int nummer, int pladser) {
+    public ArrayList<Reol> getReoler() {
+        return reoler;
+    }
+
+    public void createReol(int nummer, int pladser) {
         reoler.add(new Reol(nummer, pladser));
     }
 

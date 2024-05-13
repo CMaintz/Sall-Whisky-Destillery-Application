@@ -10,7 +10,11 @@ public class Reol {
 
     public Reol(int nummer, int pladser) {
         this.nummer = nummer;
-        this.hylder = new Hylde[pladser-1];
+        this.hylder = new Hylde[pladser];
+        for (int i = 0; i < pladser; i++) {
+            Hylde hylde = new Hylde(i+1);
+            hylder[i] = hylde;
+        }
     }
 
     public Hylde[] getHylder() {

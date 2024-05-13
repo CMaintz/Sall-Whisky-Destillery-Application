@@ -42,6 +42,8 @@ public class Fad {
         return destillat;
     }
 
+
+
 //    public boolean erWhiskyKlar() {
 //        if (påFyldning != null) {
 //            Period period = Period.between(påFyldning.getPåfyldningsDato(), LocalDate.now());
