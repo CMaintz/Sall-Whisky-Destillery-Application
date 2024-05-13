@@ -35,4 +35,10 @@ public class Controller {
         return destillat;
     }
 
+    public static Lager createLager(String navn) {
+        Lager lager = new Lager(navn);
+        Storage.addLager(lager);
+        return lager;
+    }
+
 }

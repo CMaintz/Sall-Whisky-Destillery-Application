@@ -57,4 +57,12 @@ public class ModelsTest {
         Destillat destillat = Controller.createDestilat(påfyldninger, "Test Destillat");
         assertTrue(Storage.getDestillater().contains(destillat));
     }
+
+    @Test
+    void testCreateReol() {
+        Lager lager = new Lager("Lager1");
+        lager.createReol(1, 10);
+        assertTrue(lager.getReoler().size() == 1);
+        assertTrue(lager.getReoler().get(0).getHylder().length == 10);
+    }
 }

@@ -1,7 +1,6 @@
 package application.controller;
 
 import application.models.*;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import storage.Storage;
 
@@ -44,5 +43,11 @@ public class ControllerTest {
         påfyldninger.add(påfyldning);
         Destillat destillat = Controller.createDestilat(påfyldninger, "Test Destillat");
         assertTrue(Storage.getDestillater().contains(destillat));
+    }
+
+    @Test
+    void testCreateLager() {
+        Lager lager = new Lager("Lager1");
+        assertTrue(Storage.getLager().contains(lager));
     }
 }
