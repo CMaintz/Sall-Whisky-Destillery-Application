@@ -54,4 +54,9 @@ public class Controller {
         Storage.addWhiskyFlaske(whiskyFlaske);
         return whiskyFlaske;
     }
+
+    public static void omhældningAfDestillat(Fad fadFra, Fad fadTil) {
+        fadTil.addDestillat(fadFra.getDestillat());
+        fadFra.setDestillat(null);
+    }
 }

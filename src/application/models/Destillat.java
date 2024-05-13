@@ -9,6 +9,8 @@ public class Destillat {
     private double antalLiter;
     private LocalDate påfyldningsDato;
     private double alkoholprocent;
+    ArrayList<DestillatHistorik> destillatHistorik = new ArrayList<>();
+    private Fad fad;
 
     public Destillat(ArrayList<Påfyldning> påfyldning, String navn) {
         this.påfyldninger = påfyldning;
@@ -42,6 +44,16 @@ public class Destillat {
 
     public void setAntalLiter(double antalLiter) {
         this.antalLiter -= antalLiter;
+    }
+
+    public void setFad(Fad fad) {
+        this.fad = fad;
+    }
+    
+
+    public void addDestillatHistorik() {
+        DestillatHistorik destillatHistorik = new DestillatHistorik(fad, påfyldningsDato, LocalDate.now());
+        this.destillatHistorik.add(destillatHistorik);
     }
 
     private void setAlkoholprocent() {

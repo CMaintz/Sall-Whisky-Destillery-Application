@@ -44,10 +44,15 @@ public class Fad {
         this.hylde = hylde;
     }
 
+    public void setDestillat(Destillat destillat) {
+        this.destillat = destillat;
+    }
+
     public Destillat addDestillat(Destillat destillat) {
         if (destillat == null) {
             fadHistorik.addDestillatHistorik(destillat);
             this.destillat = destillat;
+            destillat.setFad(this);
         }
         return destillat;
     }
