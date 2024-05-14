@@ -1,6 +1,7 @@
 package application.models;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 
 public class Destillat {
@@ -52,7 +53,7 @@ public class Destillat {
     
 
     public void addDestillatHistorik() {
-        DestillatHistorik destillatHistorik = new DestillatHistorik(fad, påfyldningsDato, LocalDate.now());
+        DestillatHistorik destillatHistorik = new DestillatHistorik(fad, påfyldningsDato, LocalDate.now(), this);
         this.destillatHistorik.add(destillatHistorik);
     }
 
@@ -62,6 +63,19 @@ public class Destillat {
             result += påfyldning.getDestillering().getAlkoholProcent();
         }
         alkoholprocent = result / påfyldninger.size();
+    }
+
+    private boolean destillatKlar() {
+        double days = 0;
+        boolean result = false;
+        for (DestillatHistorik dh : destillatHistorik) {
+            Period period = Period.between(dh.getStartDato(), dh.getSlutDato());
+            days += period.getDays();
+        }
+        if (days >= 1095) {
+            result = true;
+        }
+        return result;
     }
 
     @Override

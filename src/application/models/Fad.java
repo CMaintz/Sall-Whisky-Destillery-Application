@@ -50,22 +50,11 @@ public class Fad {
 
     public Destillat addDestillat(Destillat destillat) {
         if (destillat == null) {
-            fadHistorik.addDestillatHistorik(destillat);
+            DestillatHistorik destillatHistorik = new DestillatHistorik(this, destillat.getPåfyldningsDato(), LocalDate.now(), destillat);
+            fadHistorik.addDestillatHistorik(destillatHistorik);
             this.destillat = destillat;
             destillat.setFad(this);
         }
         return destillat;
     }
-
-
-
-//    public boolean erWhiskyKlar() {
-//        if (påFyldning != null) {
-//            Period period = Period.between(påFyldning.getPåfyldningsDato(), LocalDate.now());
-//            if (period.getYears() >= 3) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
 }
