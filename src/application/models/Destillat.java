@@ -65,7 +65,7 @@ public class Destillat {
         alkoholprocent = result / påfyldninger.size();
     }
 
-    private boolean destillatKlar() {
+    public boolean destillatKlar() {
         double days = 0;
         boolean result = false;
         for (DestillatHistorik dh : destillatHistorik) {

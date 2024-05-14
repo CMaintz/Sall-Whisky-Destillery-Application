@@ -59,4 +59,18 @@ public class Controller {
         fadTil.addDestillat(fadFra.getDestillat());
         fadFra.setDestillat(null);
     }
+    public static void removeLager(Lager lager) {
+        boolean remove = true;
+        for (Reol reol : lager.getReoler()) {
+            for (Hylde hylde : reol.getHylder()) {
+                if (hylde.getFad() != null) {
+                    remove = false;
+                }
+            }
+        }
+        if (remove) {
+            Storage.getLager().remove(lager);
+//            ?????
+        }
+    }
 }
