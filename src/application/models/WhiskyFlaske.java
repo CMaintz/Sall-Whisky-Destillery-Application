@@ -3,13 +3,14 @@ package application.models;
 import java.time.LocalDate;
 
 public class WhiskyFlaske {
-    private int nummer;
+    private int flaskeNr;
     private WhiskyProdukt whiskyProdukt;
     private LocalDate flaskningsDato;
 
-    public WhiskyFlaske(int nummer, WhiskyProdukt whiskyProdukt) {
-        this.nummer = nummer;
+    public WhiskyFlaske(int flaskeNr, WhiskyProdukt whiskyProdukt) {
+        this.flaskeNr = flaskeNr;
         this.whiskyProdukt = whiskyProdukt;
         flaskningsDato = LocalDate.now();
     }
+
 }

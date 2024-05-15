@@ -22,4 +22,5 @@ public class DestillatHistorik {
     public LocalDate getSlutDato() {
         return slutDato;
     }
+
 }

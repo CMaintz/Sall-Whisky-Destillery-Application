@@ -1,12 +1,14 @@
 package application.controller;
+
 import application.models.*;
 import storage.Storage;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
 
 public class Controller {
-    public static Fad createFad(int størrelse, int alder, FadHistorik fadHistorik) {
-        Fad fad = new Fad(størrelse, alder, fadHistorik);
+    public static Fad createFad(int størrelse, String tidligereIndhold, String land, LocalDate fraÅr, String leverandør) {
+        Fad fad = new Fad(størrelse);
+        fad.createFadHistorik(tidligereIndhold, land, fraÅr, leverandør);
         Storage.addFad(fad);
         return fad;
     }
@@ -23,13 +25,13 @@ public class Controller {
         return destillering;
     }
 
-    public static Påfyldning createPåfyldning(String medarbejderNavn, double literPåFyldt, Destillering destillering) {
-        Påfyldning påfyldning = new Påfyldning(medarbejderNavn, literPåFyldt, destillering);
+    public static Påfyldning createPåfyldning(String medarbejderNavn, double literPåFyldt, Destillering destillering, Destillat destillat) {
+        Påfyldning påfyldning = destillat.createPåfyldning(medarbejderNavn, literPåFyldt, destillering);
         return påfyldning;
     }
 
-    public static Destillat createDestilat(ArrayList<Påfyldning> påfyldninger, String navn) {
-        Destillat destillat = new Destillat(påfyldninger, navn);
+    public static Destillat createDestilat(String navn) {
+        Destillat destillat = new Destillat(navn);
         return destillat;
     }
 
@@ -38,21 +40,28 @@ public class Controller {
         Storage.addLager(lager);
         return lager;
     }
-    
-    public static FadTapning createFadTapning(String medarbejdernavn, double literTappet, Fad fad) {
-        FadTapning fadTapning = new FadTapning(medarbejdernavn, literTappet, fad);
-        return fadTapning;
+
+    public static FadTapning createFadTapning(String medarbejdernavn, double literTappet, Fad fad, WhiskyProdukt whiskyProdukt) {
+        FadTapning ft = whiskyProdukt.createFadTapning(medarbejdernavn, literTappet, fad);
+        return ft;
     }
 
-    public static WhiskyProdukt createWhiskyProdukt(String navn, ArrayList<FadTapning> fadTapninger, double alkoholprocent, String beskrivelse, String type) {
-        WhiskyProdukt whiskyProdukt = new WhiskyProdukt(navn, fadTapninger, beskrivelse, type);
+    public static WhiskyProdukt createWhiskyProdukt(String navn, String beskrivelse, int literVandTilføjet) {
+        WhiskyProdukt whiskyProdukt = new WhiskyProdukt(navn, beskrivelse, literVandTilføjet);
         return whiskyProdukt;
     }
-    
-    public static WhiskyFlaske createWhiskyFlaske(int nummer, WhiskyProdukt whiskyProdukt) {
-        WhiskyFlaske whiskyFlaske = new WhiskyFlaske(nummer, whiskyProdukt);
-        Storage.addWhiskyFlaske(whiskyFlaske);
-        return whiskyFlaske;
+
+    //    pre: antalFlasker <= currentLiterWhisky
+
+    public static void createWhiskyflasker(WhiskyProdukt whiskyProdukt) {
+        double liter = whiskyProdukt.getSamletAntalLiter();
+        //TODO Nedenstående kan også være en While (whiskyProdukt.getLiter > 0)
+        for (int i = 0; i < liter; i++) {
+            whiskyProdukt.fyldPåFlasker();
+        }
+//        TODO setAntalLiter til 0 bagefter, eller sig literWhisky--; efter hver create?
+//         (som er tilfældet nu)
+//        whiskyProdukt.setAntalLiter(0);
     }
 
     public static void omhældningAfDestillat(Fad fadFra, Fad fadTil) {

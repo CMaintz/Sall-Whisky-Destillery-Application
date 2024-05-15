@@ -3,28 +3,34 @@ package application.models;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Destillat {
-    private ArrayList<Påfyldning> påfyldninger = new ArrayList<>();
+    private List<Påfyldning> påfyldninger;
     private String navn;
     private double antalLiter;
     private LocalDate påfyldningsDato;
     private double alkoholprocent;
-    ArrayList<DestillatHistorik> destillatHistorik = new ArrayList<>();
+    List<DestillatHistorik> destillatHistorik;
     private Fad fad;
 
-    public Destillat(ArrayList<Påfyldning> påfyldning, String navn) {
-        this.påfyldninger = påfyldning;
+    public Destillat(String navn) {
+        påfyldninger = new ArrayList<>();
+        destillatHistorik = new ArrayList<>();
+
         this.navn = navn;
         påfyldningsDato = LocalDate.now();
-        for (Påfyldning pf : påfyldning) {
-            antalLiter += pf.getLiterPåfyldt();
-        }
         setAlkoholprocent();
     }
 
+    public Påfyldning createPåfyldning(String medarbejderNavn, double literPåfyldt, Destillering destillering){
+        Påfyldning pf = new Påfyldning(medarbejderNavn, literPåfyldt, destillering);
+        påfyldninger.add(pf);
+        antalLiter += pf.getLiterPåfyldt();
+        return pf;
+    }
     public ArrayList<Påfyldning> getPåfyldninger() {
-        return påfyldninger;
+        return new ArrayList<>(påfyldninger);
     }
 
     public String getNavn() {
@@ -43,7 +49,7 @@ public class Destillat {
         return antalLiter;
     }
 
-    public void setAntalLiter(double antalLiter) {
+    public void fjernAntalLiter(double antalLiter) {
         this.antalLiter -= antalLiter;
     }
 
