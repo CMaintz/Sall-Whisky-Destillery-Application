@@ -12,4 +12,5 @@ public class DestillatHistorik {
         this.startDato = startDato;
         this.slutDato = slutDato;
     }
+
 }

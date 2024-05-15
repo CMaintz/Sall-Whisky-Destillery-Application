@@ -1,9 +1,6 @@
 package application.models;
 
-import application.models.Destillering;
-
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 
 public class Påfyldning {
@@ -11,12 +8,12 @@ public class Påfyldning {
     private double literPåfyldt;
     private Destillering destillering;
 
-    //Pre: literPåFyldt skal være <= currentAntalLiter i destilat
-    public Påfyldning(String medarbejderNavn, double literPåfyldt, Destillering destillering) {
+    //Pre: literPåFyldt skal være <= currentAntalLiter i valgte destillering
+    Påfyldning(String medarbejderNavn, double literPåfyldt, Destillering destillering) {
         this.medarbejderNavn = medarbejderNavn;
         this.literPåfyldt = literPåfyldt;
         this.destillering = destillering;
-        setSamletAntalLiterDestillering(literPåfyldt);
+        destillering.fjernAntalLiter(literPåfyldt);
         destillering.setSlutDato(LocalDate.now());
     }
 
@@ -32,9 +29,7 @@ public class Påfyldning {
         return destillering;
     }
 
-    private void setSamletAntalLiterDestillering(double literPåfyldt) {
-        destillering.setCurrentAntalLiter(literPåfyldt);
-    }
+
 
     @Override
     public String toString() {

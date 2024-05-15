@@ -15,23 +15,12 @@ public class Korn {
         return sort;
     }
 
-    public void setSort(String sort) {
-        this.sort = sort;
-    }
-
     public String getVariant() {
         return variant;
-    }
-
-    public void setVariant(String variant) {
-        this.variant = variant;
     }
 
     public String getMarkNavn() {
         return markNavn;
     }
 
-    public void setMarkNavn(String markNavn) {
-        this.markNavn = markNavn;
-    }
 }

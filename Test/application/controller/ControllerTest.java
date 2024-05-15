@@ -4,6 +4,7 @@ import application.models.*;
 import org.junit.jupiter.api.Test;
 import storage.Storage;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,8 +12,7 @@ public class ControllerTest {
 
     @Test
     void testCreateFad() {
-        FadHistorik fadHistorik = new FadHistorik("Cherry", "Spanien", 2004, 2019, "LeveretAfJens");
-        Fad fad = Controller.createFad(50, 3, fadHistorik);
+        Fad fad = Controller.createFad(50, "Cherry", "Spanien", LocalDate.of(2004, 1, 1), "LeveretAfJens");
         assertTrue(Storage.getFade().contains(fad));
     }
 
@@ -32,17 +32,16 @@ public class ControllerTest {
     @Test
     void testCreatePåfyldning() {
         Destillering destillering = Controller.createDestillering("Batch 1", Controller.createKorn("Corn", "Yellow", "Brand X"), "Test Medarbejder", 100, 40, "Oak", "Test Kommentar");
-        Påfyldning påfyldning = Controller.createPåfyldning("Test Medarbejder", 50, destillering);
+        Destillat dest = new Destillat("Derp");
+        Påfyldning påfyldning = Controller.createPåfyldning("Test Medarbejder", 50, destillering, dest);
 //        assertTrue(Storage.getPåfyldninger().contains(påfyldning));
     }
 
     @Test
     void testCreateDestillat() {
         Destillering destillering = Controller.createDestillering("Batch 1", Controller.createKorn("Corn", "Yellow", "Brand X"), "Test Medarbejder", 100, 40, "Oak", "Test Kommentar");
-        Påfyldning påfyldning = Controller.createPåfyldning("Test Medarbejder", 50, destillering);
-        ArrayList<Påfyldning> påfyldninger = new ArrayList<>();
-        påfyldninger.add(påfyldning);
-        Destillat destillat = Controller.createDestilat(påfyldninger, "Test Destillat");
+        Destillat destillat = Controller.createDestilat("Test Destillat");
+        Påfyldning påfyldning = Controller.createPåfyldning("Test Medarbejder", 50, destillering, destillat);
 //        assertTrue(Storage.getDestillater().contains(destillat));
     }
 
