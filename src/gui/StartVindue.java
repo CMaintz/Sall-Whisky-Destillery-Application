@@ -27,16 +27,12 @@ public class StartVindue extends Application {
         BorderPane pane = new BorderPane();
         this.initContent(pane);
 
-        // Load the image
         Image image = new Image("https://sallwhisky.com/wp-content/uploads/2021/01/Fad-tegnet.png"); // replace with your image path
 
-        // Create a BackgroundSize object
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, false);
 
-        // Create a BackgroundImage object
         BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
 
-        // Create a Background object and set it to the pane
         Background background = new Background(backgroundImage);
         pane.setBackground(background);
 

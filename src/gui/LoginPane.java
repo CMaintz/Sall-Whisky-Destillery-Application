@@ -23,15 +23,15 @@ public class LoginPane extends Application {
         TextField nameInput = new TextField();
         Label lblPassword = new Label("Password");
         PasswordField passwordInput = new PasswordField();
+        Label lblHint = new Label("Hint: \nUsername: admin\nPassword: admin");
 
         Button btnLogin = new Button("Login");
         btnLogin.setOnAction(e -> {
             String username = nameInput.getText();
             String password = passwordInput.getText();
             if (username.equals("admin") && password.equals("admin")) {
-                System.out.println("Login successful");
                 primaryStage.close();
-                Platform.runLater(() -> {
+
                     try {
                         StartVindue startVindue = new StartVindue();
                         Stage newStage = new Stage();
@@ -39,9 +39,6 @@ public class LoginPane extends Application {
                     } catch (Exception exception) {
                         exception.printStackTrace();
                     }
-                });
-            } else {
-                System.out.println("Login failed");
             }
         });
 
@@ -50,6 +47,7 @@ public class LoginPane extends Application {
         gridPane.add(lblPassword, 0, 1);
         gridPane.add(passwordInput, 1, 1);
         gridPane.add(btnLogin, 1, 2);
+        gridPane.add(lblHint, 1, 3);
 
         Scene scene = new Scene(gridPane, 300, 200);
         primaryStage.setTitle("Login");

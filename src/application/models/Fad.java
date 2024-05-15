@@ -44,13 +44,13 @@ public class Fad {
         this.hylde = hylde;
     }
 
-    public Destillat addDestillat(Destillat destillat) {
-        if (destillat == null) {
-            fadHistorik.addDestillatHistorik(destillat);
-            this.destillat = destillat;
-        }
-        return destillat;
-    }
+//    public Destillat addDestillat(Destillat destillat) {
+//        if (destillat == null) {
+//            fadHistorik.addDestillatHistorik(destillat);
+//            this.destillat = destillat;
+//        }
+//        return destillat;
+//    }
 
 
 
@@ -63,4 +63,17 @@ public class Fad {
 //        }
 //        return false;
 //    }
+
+    //Tostring
+    @Override
+    public String toString() {
+        return "Fad{" +
+                "fadId='" + fadId + '\'' +
+                ", størrelse=" + størrelse +
+                ", alder=" + alder +
+                ", hylde=" + hylde +
+                ", destillat=" + destillat +
+                ", fadHistorik=" + fadHistorik +
+                '}';
+    }
 }
