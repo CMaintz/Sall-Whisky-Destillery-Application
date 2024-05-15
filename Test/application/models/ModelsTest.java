@@ -1,6 +1,7 @@
 // CombinedTest.java
 import application.controller.Controller;
 import application.models.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import storage.Storage;
@@ -11,66 +12,82 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ModelsTest {
+    private ArrayList<Påfyldning> påfyldninger = new ArrayList<>();
+    private Destillering destillering;
+    private Korn korn;
+    private Destillat destillat;
+    private Fad fad;
 
+    @BeforeEach
+    void setUp() {
+        fad = new Fad(100);
+        destillat = new Destillat("Destillat1");
+        destillat.setFad(fad);
+        korn = new Korn("TestSort", "TestVariant", "Mark1");
+        destillering = new Destillering("TestMaltBatch", korn, "Medarbejder1", 40, 50, "Røg1", "Smager godt");
+    }
     @Test
-    void testCreateFad() {
-        Fad fad = Controller.createFad(50, "Cherry", "Spanien", LocalDate.of(2004, 1, 1), "LeveretAfJens");
-        assertTrue(Storage.getFade().contains(fad));
+    void destillatConstructorTest() {
     }
 
     @Test
-    void testCreateKorn() {
-        Korn korn = Controller.createKorn("Corn", "Yellow", "Brand X");
-        assertTrue(Storage.getKorn().contains(korn));
+    void destillatCreatePåfyldningTest() {
+        Påfyldning påfyldning = destillat.createPåfyldning("Jens", 20, destillering);
+        assertTrue(destillat.getPåfyldninger().contains(påfyldning));
+        Påfyldning påfyldning2 = destillat.createPåfyldning("Børge", 15, destillering);
+        assertTrue(destillat.getPåfyldninger().contains(påfyldning2));
+        assertEquals(35, destillat.getAntalLiter());
     }
 
     @Test
-    void testCreateDestillering() {
-        Korn korn = Controller.createKorn("Corn", "Yellow", "Brand X");
-        Destillering destillering = Controller.createDestillering("Batch 1", korn, "Test Medarbejder", 100, 40, "Oak", "Test Kommentar");
-        assertTrue(Storage.getDestillering().contains(destillering));
+    void destillatAddFadHistorikTest() {
+        Fad testFad = new Fad(80);
+        destillat.addDestillatHistorik(testFad);
+        assertTrue(destillat.getFad().equals(testFad));
+        assertTrue(destillat.getDestillatHistorik().get(0).getFad().equals(fad));
     }
 
     @Test
-    void testCreatePåfyldning() {
-        Destillat destillat = Controller.createDestilat("TestDestillat");
-        Destillering destillering = Controller.createDestillering("Batch 1", Controller.createKorn("Corn", "Yellow", "Brand X"), "Test Medarbejder", 100, 40, "Oak", "Test Kommentar");
-        Påfyldning påfyldning = Controller.createPåfyldning("Test Medarbejder", 50, destillering, destillat);
-//        assertTrue(Storage.getPåfyldninger().contains(påfyldning));
-        assertEquals(50, påfyldning.getLiterPåfyldt());
-        assertEquals(50, destillering.getCurrentAntalLiter());
-        Controller.createPåfyldning("Test Medarbejder", 150, destillering, destillat);
-
+    void destillatSetAlkoholProcentTest() {
+        Destillering destillering1 = new Destillering("MaltbatchTest2", korn, "Jens", 120, 60, "RøgTest", "Smager godt");
+        destillat.createPåfyldning("Bob", 20, destillering1);
+        assertEquals(60, destillat.getAlkoholprocent());
+        destillat.createPåfyldning("Jens", 30, destillering);
+        assertEquals(54, destillat.getAlkoholprocent());
     }
 
     @Test
-    @Disabled
-    void testCreatePåfyldningWithError() {
-        Destillering destillering = Controller.createDestillering("Batch 1", Controller.createKorn("Corn", "Yellow", "Brand X"), "Test Medarbejder", 100, 40, "Oak", "Test Kommentar");
-        assertThrows(IllegalArgumentException.class, () -> {
-//            Controller.createPåfyldning("Test Medarbejder", 150, destillering);
-//            TODO wtf is dis? ^ Det er kun hvis man selv har indsat et throw man skal teste throws.
-        });
+    void destillatKlarTest() {
+        assertFalse(destillat.destillatKlar());
+        Destillat destillatTest = new Destillat("Test");
+        destillat.setPåfyldningsDato(LocalDate.of(2020, 10, 10));
+        assertTrue(destillat.destillatKlar());
     }
 
     @Test
-    void testCreateDestillat() {
-//        TODO ryd op i det her lårt
-//        Destillering destillering = Controller.createDestillering("Batch 1", Controller.createKorn("Corn", "Yellow", "Brand X"), "Test Medarbejder", 100, 40, "Oak", "Test Kommentar");
-        Destillat destillat = Controller.createDestilat("Test Destillat");
-        Fad fad = new Fad(200);
-        fad.addDestillat(destillat);
-        assertTrue(fad.getDestillat().equals(destillat));
-//        Påfyldning påfyldning = Controller.createPåfyldning("Test Medarbejder", 50, destillering, destillat);
-//        assertTrue(destillat.getPåfyldninger().contains(påfyldning));
-//        assertTrue(påfyldning.getDestillering().equals(destillering));
+    void testSetters() {
+        Destillat destillat = new Destillat("Test Destillat");
+
+        destillat.setPåfyldningsDato(LocalDate.of(2022, 5, 15));
+        assertEquals(LocalDate.of(2022, 5, 15), destillat.getPåfyldningsDato());
+
+        Fad fad = new Fad(50);
+        destillat.setFad(fad);
+        assertEquals(fad, destillat.getFad());
+
+        destillat.fjernAntalLiter(5.0);
+        assertEquals(-5.0, destillat.getAntalLiter());
     }
 
     @Test
-    void testCreateReol() {
-        Lager lager = new Lager("Lager1");
-        lager.createReol(10);
-        assertTrue(lager.getReoler().size() == 1);
-        assertTrue(lager.getReoler().get(0).getHylder().length == 10);
+    void testGetters() {
+        destillat.createPåfyldning("Jens", 30, destillering);
+        assertEquals(50, destillat.getAlkoholprocent());
+        assertEquals(30, destillat.getAntalLiter());
+        assertTrue(destillat.getFad().equals(fad));
+        destillat.getPåfyldninger();
+        destillat.getPåfyldningsDato();
+        destillat.getDestillatHistorik();
+        destillat.getNavn();
     }
 }

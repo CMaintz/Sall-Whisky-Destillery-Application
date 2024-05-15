@@ -20,13 +20,13 @@ public class Destillat {
 
         this.navn = navn;
         påfyldningsDato = LocalDate.now();
-        setAlkoholprocent();
     }
 
     public Påfyldning createPåfyldning(String medarbejderNavn, double literPåfyldt, Destillering destillering){
         Påfyldning pf = new Påfyldning(medarbejderNavn, literPåfyldt, destillering);
         påfyldninger.add(pf);
         antalLiter += pf.getLiterPåfyldt();
+        setAlkoholprocent();
         return pf;
     }
     public ArrayList<Påfyldning> getPåfyldninger() {
@@ -57,21 +57,38 @@ public class Destillat {
         this.fad = fad;
     }
 
+    public void setPåfyldningsDato(LocalDate påfyldningsDato) {
+        this.påfyldningsDato = påfyldningsDato;
+    }
 
-    public void addDestillatHistorik() {
-        DestillatHistorik destillatHistorik = new DestillatHistorik(fad, påfyldningsDato, LocalDate.now(), this);
+    public Fad getFad() {
+        return fad;
+    }
+
+    public List<DestillatHistorik> getDestillatHistorik() {
+        return destillatHistorik;
+    }
+
+    public void addDestillatHistorik(Fad newFad) {
+        DestillatHistorik destillatHistorik = new DestillatHistorik(fad, påfyldningsDato, LocalDate.now());
         this.destillatHistorik.add(destillatHistorik);
+        fad.setDestillat(null);
+        this.fad = newFad;
     }
 
     private void setAlkoholprocent() {
-        double result = 0;
+        double literEthanol = 0;
         for (Påfyldning påfyldning : påfyldninger) {
-            result += påfyldning.getDestillering().getAlkoholProcent();
+            literEthanol += (påfyldning.getDestillering().getAlkoholProcent() / 100) * påfyldning.getLiterPåfyldt();
         }
-        alkoholprocent = result / påfyldninger.size();
+        alkoholprocent = (literEthanol / antalLiter) * 100;
     }
 
     public boolean destillatKlar() {
+        Period periodPD = Period.between(påfyldningsDato, LocalDate.now());
+        if (periodPD.getYears() >= 3) {
+            return true;
+        }
         double days = 0;
         boolean result = false;
         for (DestillatHistorik dh : destillatHistorik) {

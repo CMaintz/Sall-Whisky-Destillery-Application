@@ -9,7 +9,7 @@ public class Storage {
     private static ArrayList<Korn> korne = new ArrayList<>();
     private static ArrayList<Destillering> destilleringer = new ArrayList<>();
     private static ArrayList<Lager> lagere = new ArrayList<>();
-    private static ArrayList<WhiskyFlaske> whiskyFlasker = new ArrayList<>();
+    private static ArrayList<WhiskyProdukt> whiskyProdukter = new ArrayList<>();
 
 
     public static ArrayList<Fad> getFade() {
@@ -43,12 +43,12 @@ public class Storage {
     public static void addLager(Lager lager) {
         lagere.add(lager);
     }
-    public static ArrayList<WhiskyFlaske> getWhiskyFlasker() {
-        return new ArrayList<>(whiskyFlasker);
+    public static ArrayList<WhiskyProdukt> getWhiskyProdukter() {
+        return new ArrayList<>(whiskyProdukter);
     }
 
-    public static void addWhiskyFlaske(WhiskyFlaske whiskyFlaske) {
-        whiskyFlasker.add(whiskyFlaske);
+    public static void addWhiskyFlaske(WhiskyProdukt whiskyProdukt) {
+        whiskyProdukter.add(whiskyProdukt);
     }
 
 }

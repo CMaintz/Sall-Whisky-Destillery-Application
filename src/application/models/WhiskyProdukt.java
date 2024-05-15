@@ -9,9 +9,7 @@ public class WhiskyProdukt {
     private String beskrivelse; //TODO Ved ikke om vi skal beholde den her eller bare lave det til en metode?
     private List<FadTapning> fadTapninger;
     private final List<WhiskyFlaske> fyldteFlasker;
-    private double antalLiterAlkohol; //TODO skal inte være en attribut. Vi skal bare udregne en alkoholprocent med en metode,
-    //TODO og evt. tilføje det til beskrivelsen.
-    private double literVandTilføjet; //TODO Fjern den her, og udregn uden attributter?
+    private double literVandTilføjet;
     private double literWhisky;
 
     public WhiskyProdukt(String navn, String beskrivelse, int literVandTilføjet) {
@@ -71,23 +69,16 @@ public class WhiskyProdukt {
     }
 
     private void udregnAlkoholprocent() {
-        double result = 0;
-        double liter = 0;
+        double literEthanol = 0;
         for (FadTapning fadTapning : fadTapninger) {
-            result += fadTapning.getDestillat().getAlkoholprocent();
-            liter += fadTapning.getLiterTappet();
+            literEthanol += (fadTapning.getDestillat().getAlkoholprocent() / 100) * fadTapning.getLiterTappet();
         }
-        alkoholProcent = result / fadTapninger.size();
-        double idk = liter / alkoholProcent;
-        if (literVandTilføjet > 0) {
-            //TODO det her skal laves om så man ikke har brug for antalLiterAlkohol, methinks
-            alkoholProcent = (idk * alkoholProcent) / (idk + literVandTilføjet);
-        }
+        alkoholProcent = (literEthanol / literWhisky) * 100;
     }
 
-    public void tilføjVand(int literVandTilføjet) { // TODO evt fjern den her?
-        this.literVandTilføjet = literVandTilføjet;
-        alkoholProcent = (antalLiterAlkohol * alkoholProcent) / (antalLiterAlkohol + literVandTilføjet);
+    public void tilføjVand(int literVandTilføjet) {
+        literWhisky += literVandTilføjet;
+        udregnAlkoholprocent();
     }
 
     public String whiskyType() {
@@ -97,7 +88,7 @@ public class WhiskyProdukt {
         } else {
             type = "SINGLE MALT";
         }
-        if (literVandTilføjet == 0) {
+        if (literVandTilføjet != 0) {
             type += ", CASK STRENGTH";
         }
         return type;
