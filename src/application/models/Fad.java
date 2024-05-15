@@ -1,37 +1,39 @@
 package application.models;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
+import java.time.Period;
+import java.util.ArrayList;
+
+import application.models.Påfyldning;
 
 public class Fad {
-    private static int antalFade;
-    private String fadNr;
-    private int literKapacitet;
+    private static int fadNr;
+    private String fadId;
+    private int størrelse;
+    private int alder;
     private Hylde hylde;
     private Destillat destillat;
     private FadHistorik fadHistorik;
 
-    public Fad(int literKapacitet) {
-        this.literKapacitet = literKapacitet;
-        antalFade++;
-        this.fadNr = antalFade + "";
+
+    public Fad(int størrelse, int alder, FadHistorik fadHistorik) {
+        this.størrelse = størrelse;
+        this.alder = alder;
+        this.fadHistorik = fadHistorik;
+        fadNr++;
+        this.fadId = fadNr + "";
     }
 
-    public FadHistorik createFadHistorik(String tidligereIndhold, String land, LocalDate fraÅr, String leverandør){
-        FadHistorik fh = new FadHistorik(tidligereIndhold, land, fraÅr, leverandør);
-        this.fadHistorik = fh;
-        return fh;
-    }
-    public String getFadNr() {
-        return fadNr;
+    public String getFadId() {
+        return fadId;
     }
 
-    public int getLiterKapacitet() {
-        return literKapacitet;
+    public int getStørrelse() {
+        return størrelse;
     }
 
-    public int getAlderMåneder() {
-        return (int) fadHistorik.getFraÅr().until(LocalDate.now(), ChronoUnit.MONTHS);
+    public int getAlder() {
+        return alder;
     }
 
     public Destillat getDestillat() {
@@ -42,22 +44,15 @@ public class Fad {
         this.hylde = hylde;
     }
 
-    public void setDestillat(Destillat destillat) {
-        this.destillat = destillat;
-    }
-
-    public Destillat addDestillat(Destillat destillat) {
-        if (destillat == null) {
+//    public Destillat addDestillat(Destillat destillat) {
+//        if (destillat == null) {
 //            fadHistorik.addDestillatHistorik(destillat);
-            this.destillat = destillat;
-            destillat.setFad(this);
-        }
-        return destillat;
-    }
+//            this.destillat = destillat;
+//        }
+//        return destillat;
+//    }
 
-    public FadHistorik getFadHistorik() {
-        return fadHistorik;
-    }
+
 
 //    public boolean erWhiskyKlar() {
 //        if (påFyldning != null) {
@@ -68,4 +63,17 @@ public class Fad {
 //        }
 //        return false;
 //    }
+
+    //Tostring
+    @Override
+    public String toString() {
+        return "Fad{" +
+                "fadId='" + fadId + '\'' +
+                ", størrelse=" + størrelse +
+                ", alder=" + alder +
+                ", hylde=" + hylde +
+                ", destillat=" + destillat +
+                ", fadHistorik=" + fadHistorik +
+                '}';
+    }
 }

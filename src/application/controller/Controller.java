@@ -82,4 +82,18 @@ public class Controller {
 //            ?????
         }
     }
+
+    public void createSomeObjects() {
+        //Create Fad
+        FadHistorik fadHistorik = new FadHistorik("Sherry", "Spanien", 2010, 2015, "Macallan");
+        Fad fad = createFad(100, 5, fadHistorik);
+
+        //Create Korn
+        Korn korn = createKorn("Byg", "Pilsner", "Mark1");
+
+        //Create Destillering
+        Destillering destillering = createDestillering("MaltBatch1", korn, "Mads", 100, 40, "Turf", "Kommentar");
+
+    }
+
 }

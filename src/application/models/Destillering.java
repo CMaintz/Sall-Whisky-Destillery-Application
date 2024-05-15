@@ -73,4 +73,18 @@ public class Destillering {
     public void setSlutDato(LocalDate slutDato) {
         this.slutDato = slutDato;
     }
+
+    //toString
+    @Override
+    public String toString() {
+        return "Destillering{" +
+                "maltBatch='" + maltBatch + '\'' +
+                ", korn=" + korn +
+                ", medarbejder='" + medarbejder + '\'' +
+                ", antalLiter=" + antalLiter +
+                ", alkoholProcent=" + alkoholProcent +
+                ", rygeMateriale='" + rygeMateriale + '\'' +
+                ", kommentar='" + kommentar + '\'' +
+                ", startDato=" + startDato;
+    }
 }
