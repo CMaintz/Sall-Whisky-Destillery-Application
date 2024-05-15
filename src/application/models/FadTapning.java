@@ -15,8 +15,8 @@ public class FadTapning {
 
     private void tapning(double literTappet) {
         if (fad.getDestillat().getAntalLiter() >= literTappet) {
-            this.literTappet += literTappet;
-            fad.getDestillat().setAntalLiter(literTappet);
+            this.literTappet = literTappet;
+            fad.getDestillat().fjernAntalLiter(literTappet);
         }
     }
 
