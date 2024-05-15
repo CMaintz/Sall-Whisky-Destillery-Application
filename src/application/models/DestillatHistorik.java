@@ -6,13 +6,11 @@ public class DestillatHistorik {
     private Fad fad;
     private LocalDate startDato;
     private LocalDate slutDato;
-    private Destillat destillat;
 
-    public DestillatHistorik(Fad fad, LocalDate startDato, LocalDate slutDato, Destillat destillat) {
+    public DestillatHistorik(Fad fad, LocalDate startDato, LocalDate slutDato) {
         this.fad = fad;
         this.startDato = startDato;
         this.slutDato = slutDato;
-        this.destillat = destillat;
     }
 
     public Fad getFad() {

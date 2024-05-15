@@ -9,8 +9,8 @@ public class WhiskyProdukt {
     private String beskrivelse; //TODO Ved ikke om vi skal beholde den her eller bare lave det til en metode?
     private List<FadTapning> fadTapninger;
     private final List<WhiskyFlaske> fyldteFlasker;
+    private double literVandTilføjet;
     private double literWhisky;
-    private String type = "";
 
     public WhiskyProdukt(String navn, String beskrivelse, int literVandTilføjet) {
         this.navn = navn;
@@ -21,7 +21,6 @@ public class WhiskyProdukt {
         this.literWhisky = 0;
         this.fadTapninger = new ArrayList<>();
         this.fyldteFlasker = new ArrayList<>();
-        whiskyType();
 
     }
 
@@ -80,17 +79,19 @@ public class WhiskyProdukt {
     public void tilføjVand(int literVandTilføjet) {
         literWhisky += literVandTilføjet;
         udregnAlkoholprocent();
-        if (literVandTilføjet != 0) {
-            type += ", CASK STRENGTH";
-        }
     }
 
-    private void whiskyType() {
+    private String whiskyType() {
+        String type = "";
         if (fadTapninger.size() == 1) {
             type = "SINGLE CASK";
         } else {
             type = "SINGLE MALT";
         }
+        if (literVandTilføjet != 0) {
+            type += ", CASK STRENGTH";
+        }
+        return type;
     }
 
     public double getSamletAntalLiter() {
@@ -106,7 +107,7 @@ public class WhiskyProdukt {
         String toReturn = "";
 
 
-        toReturn += "\n" + type;
+        toReturn += "\n" + whiskyType();
         return toReturn;
     }
 
