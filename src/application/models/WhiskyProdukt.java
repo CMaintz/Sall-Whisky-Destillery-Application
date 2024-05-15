@@ -9,8 +9,6 @@ public class WhiskyProdukt {
     private String beskrivelse; //TODO Ved ikke om vi skal beholde den her eller bare lave det til en metode?
     private List<FadTapning> fadTapninger;
     private final List<WhiskyFlaske> fyldteFlasker;
-    private double antalLiterAlkohol; //TODO skal inte være en attribut. Vi skal bare udregne en alkoholprocent med en metode,
-    //TODO og evt. tilføje det til beskrivelsen.
     private double literVandTilføjet; //TODO Fjern den her, og udregn uden attributter?
     private double literWhisky;
 
@@ -73,10 +71,13 @@ public class WhiskyProdukt {
     private void udregnAlkoholprocent() {
         double result = 0;
         double liter = 0;
+        double literAlkohol = 0;
         for (FadTapning fadTapning : fadTapninger) {
             result += fadTapning.getDestillat().getAlkoholprocent();
             liter += fadTapning.getLiterTappet();
+
         }
+//        Skal bruge liter alkohol for hver fadtapning, og så sammenligne
         alkoholProcent = result / fadTapninger.size();
         double idk = liter / alkoholProcent;
         if (literVandTilføjet > 0) {
@@ -84,6 +85,14 @@ public class WhiskyProdukt {
             alkoholProcent = (idk * alkoholProcent) / (idk + literVandTilføjet);
         }
     }
+//        private void setAlkoholprocent() {
+//        double result = 0;
+//        double literEthanol = 0;
+//        for (Påfyldning påfyldning : påfyldninger) {
+//            literEthanol += (påfyldning.getDestillering().getAlkoholProcent() / 100) * påfyldning.getLiterPåfyldt();
+//        }
+//        alkoholprocent = (literEthanol / antalLiter) * 100;
+//    }
 
     public void tilføjVand(int literVandTilføjet) { // TODO evt fjern den her?
         this.literVandTilføjet = literVandTilføjet;

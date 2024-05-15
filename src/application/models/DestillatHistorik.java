@@ -13,4 +13,11 @@ public class DestillatHistorik {
         this.slutDato = slutDato;
     }
 
+    public LocalDate getStartDato() {
+        return startDato;
+    }
+
+    public LocalDate getSlutDato() {
+        return slutDato;
+    }
 }

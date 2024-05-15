@@ -15,18 +15,17 @@ public class Destillat {
     private Fad fad;
 
     public Destillat(String navn) {
-        påfyldninger = new ArrayList<>();
-        destillatHistorik = new ArrayList<>();
-
         this.navn = navn;
         påfyldningsDato = LocalDate.now();
-        setAlkoholprocent();
+        påfyldninger = new ArrayList<>();
+        destillatHistorik = new ArrayList<>();
     }
 
     public Påfyldning createPåfyldning(String medarbejderNavn, double literPåfyldt, Destillering destillering){
         Påfyldning pf = new Påfyldning(medarbejderNavn, literPåfyldt, destillering);
         påfyldninger.add(pf);
         antalLiter += pf.getLiterPåfyldt();
+        setAlkoholprocent();
         return pf;
     }
     public ArrayList<Påfyldning> getPåfyldninger() {
@@ -59,16 +58,15 @@ public class Destillat {
 
 
     public void addDestillatHistorik() {
-        DestillatHistorik destillatHistorik = new DestillatHistorik(fad, påfyldningsDato, LocalDate.now(), this);
-        this.destillatHistorik.add(destillatHistorik);
+        this.destillatHistorik.add(new DestillatHistorik(fad, påfyldningsDato, LocalDate.now()));
     }
 
     private void setAlkoholprocent() {
-        double result = 0;
+        double literEthanol = 0;
         for (Påfyldning påfyldning : påfyldninger) {
-            result += påfyldning.getDestillering().getAlkoholProcent();
+            literEthanol += (påfyldning.getDestillering().getAlkoholProcent() / 100) * påfyldning.getLiterPåfyldt();
         }
-        alkoholprocent = result / påfyldninger.size();
+        alkoholprocent = (literEthanol / antalLiter) * 100;
     }
 
     public boolean destillatKlar() {
