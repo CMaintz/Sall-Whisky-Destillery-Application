@@ -70,7 +70,7 @@ public class Destillat {
     }
 
     public void addDestillatHistorik(Fad newFad) {
-        DestillatHistorik destillatHistorik = new DestillatHistorik(fad, påfyldningsDato, LocalDate.now(), this);
+        DestillatHistorik destillatHistorik = new DestillatHistorik(fad, påfyldningsDato, LocalDate.now());
         this.destillatHistorik.add(destillatHistorik);
         fad.setDestillat(null);
         this.fad = newFad;

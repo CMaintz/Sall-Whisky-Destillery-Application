@@ -81,7 +81,7 @@ public class WhiskyProdukt {
         udregnAlkoholprocent();
     }
 
-    private String whiskyType() {
+    public String whiskyType() {
         String type = "";
         if (fadTapninger.size() == 1) {
             type = "SINGLE CASK";
