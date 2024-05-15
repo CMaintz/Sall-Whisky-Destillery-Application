@@ -1,19 +1,16 @@
 package application.models;
-import application.models.Hylde;
-import application.models.Fad;
-
 
 
 public class Reol {
-    private int nummer;
+    private int reolNummer;
     private Hylde[] hylder;
 
-    public Reol(int nummer, int pladser) {
-        this.nummer = nummer;
-        this.hylder = new Hylde[pladser];
-        for (int i = 0; i < pladser; i++) {
-            Hylde hylde = new Hylde(i+1);
-            hylder[i] = hylde;
+    Reol(int antalHylder, int reolNummer) {
+        this.reolNummer = reolNummer;
+        this.hylder = new Hylde[antalHylder];
+
+        for (int i = 0; i < antalHylder; i++) {
+            hylder[i] = new Hylde(i + 1);
         }
     }
 
@@ -37,7 +34,7 @@ public class Reol {
 
     public void addFad(Fad fad, int plads) {
         if (hylder[plads-1] == null) {
-            hylder[plads-1].setFad(fad);
+            hylder[plads-1].placerFad(fad);
         }
     }
 }

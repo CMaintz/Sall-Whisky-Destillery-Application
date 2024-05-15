@@ -1,18 +1,25 @@
 package application.models;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
+
 public class FadHistorik {
     private String tidligereIndhold;
     private String land;
-    private int fraÅr;
-    private int tilÅr;
+    private LocalDate fraÅr;
+//   TODO Måske en antalÅrBrugt i stedet for?
     private String leverandør;
+    private List<Destillat> tidligereDestillater;
 
-    public FadHistorik(String tidligereIndhold, String land, int fraÅr, int tilÅr, String leverandør) {
+    FadHistorik(String tidligereIndhold, String land, LocalDate fraÅr, String leverandør) {
+//        TODO skal man kunne indlæse historik fra en tekstfil?
         this.tidligereIndhold = tidligereIndhold;
         this.land = land;
         this.fraÅr = fraÅr;
-        this.tilÅr = tilÅr;
         this.leverandør = leverandør;
+        this.tidligereDestillater = new ArrayList<>();
     }
 
     public String getTidligereIndhold() {
@@ -31,21 +38,10 @@ public class FadHistorik {
         this.land = land;
     }
 
-    public int getFraÅr() {
+    public LocalDate getFraÅr() {
         return fraÅr;
     }
 
-    public void setFraÅr(int fraÅr) {
-        this.fraÅr = fraÅr;
-    }
-
-    public int getTilÅr() {
-        return tilÅr;
-    }
-
-    public void setTilÅr(int tilÅr) {
-        this.tilÅr = tilÅr;
-    }
 
     public String getLeverandør() {
         return leverandør;
@@ -55,9 +51,7 @@ public class FadHistorik {
         this.leverandør = leverandør;
     }
 
-    public int getAlder() {
-        return tilÅr - fraÅr;
-    }
+
 
     @Override
     public String toString() {
@@ -65,7 +59,6 @@ public class FadHistorik {
                 "tidligereIndhold='" + tidligereIndhold + '\'' +
                 ", land='" + land + '\'' +
                 ", fraÅr=" + fraÅr +
-                ", tilÅr=" + tilÅr +
                 ", leverandør='" + leverandør + '\'' +
                 '}';
     }

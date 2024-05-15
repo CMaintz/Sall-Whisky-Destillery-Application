@@ -8,19 +8,23 @@ import application.models.Hylde;
 
 
 public class Lager {
-    private ArrayList<Reol> reoler = new ArrayList<>();
+    private final ArrayList<Reol> reoler = new ArrayList<>();
+    private int antalReoler;
     private String navn;
 
     public Lager(String navn) {
         this.navn = navn;
     }
 
-    public ArrayList<Reol> getReoler() {
-        return reoler;
+    public Reol createReol(int antalHylder) {
+        antalReoler++;
+        Reol toReturn = new Reol(antalHylder, antalReoler);
+        reoler.add(toReturn);
+        return toReturn;
     }
 
-    public void createReol(int nummer, int pladser) {
-        reoler.add(new Reol(nummer, pladser));
+    public ArrayList<Reol> getReoler() {
+        return new ArrayList<>(reoler);
     }
 
 

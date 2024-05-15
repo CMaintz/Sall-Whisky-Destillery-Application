@@ -1,39 +1,38 @@
 package application.models;
 
 import java.time.LocalDate;
-import java.time.Period;
-import java.util.ArrayList;
-
-import application.models.Påfyldning;
+import java.time.temporal.ChronoUnit;
 
 public class Fad {
-    private static int fadNr;
-    private String fadId;
-    private int størrelse;
-    private int alder;
+    private static int antalFade;
+    private String fadNr;
+    private int literKapacitet;
     private Hylde hylde;
     private Destillat destillat;
     private FadHistorik fadHistorik;
 
 
-    public Fad(int størrelse, int alder, FadHistorik fadHistorik) {
-        this.størrelse = størrelse;
-        this.alder = alder;
-        this.fadHistorik = fadHistorik;
-        fadNr++;
-        this.fadId = fadNr + "";
+    public Fad(int literKapacitet) {
+        this.literKapacitet = literKapacitet;
+        antalFade++;
+        this.fadNr = antalFade + "";
     }
 
-    public String getFadId() {
-        return fadId;
+    public FadHistorik createFadHistorik(String tidligereIndhold, String land, LocalDate fraÅr, String leverandør){
+        FadHistorik fh = new FadHistorik(tidligereIndhold, land, fraÅr, leverandør);
+        this.fadHistorik = fh;
+        return fh;
+    }
+    public String getFadNr() {
+        return fadNr;
     }
 
-    public int getStørrelse() {
-        return størrelse;
+    public int getLiterKapacitet() {
+        return literKapacitet;
     }
 
-    public int getAlder() {
-        return alder;
+    public int getAlderMåneder() {
+        return (int) fadHistorik.getFraÅr().until(LocalDate.now(), ChronoUnit.MONTHS);
     }
 
     public Destillat getDestillat() {
@@ -50,14 +49,16 @@ public class Fad {
 
     public Destillat addDestillat(Destillat destillat) {
         if (destillat == null) {
-            fadHistorik.addDestillatHistorik(destillat);
+//            fadHistorik.addDestillatHistorik(destillat);
             this.destillat = destillat;
             destillat.setFad(this);
         }
         return destillat;
     }
 
-
+    public FadHistorik getFadHistorik() {
+        return fadHistorik;
+    }
 
 //    public boolean erWhiskyKlar() {
 //        if (påFyldning != null) {

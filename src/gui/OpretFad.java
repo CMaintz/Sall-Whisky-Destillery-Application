@@ -58,7 +58,7 @@ public class OpretFad extends Stage {
 
         //---------------------------------------------------------------------------------
 
-        opretFad.setOnAction();
+//        opretFad.setOnAction();
     }
 
 }
