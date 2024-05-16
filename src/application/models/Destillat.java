@@ -73,9 +73,9 @@ public class Destillat {
     //Pre : this.fad != null
     public void addDestillatHistorik(Fad newFad) {
         DestillatHistorik destillatHistorik = new DestillatHistorik(fad, påfyldningsDato, LocalDate.now());
+        påfyldningsDato = LocalDate.now();
         this.destillatHistorik.add(destillatHistorik);
         fad.setDestillat(null);
-        this.fad = newFad;
     }
 
     private void setAlkoholprocent() {

@@ -46,8 +46,8 @@ public class Controller {
         return ft;
     }
 
-    public static WhiskyProdukt createWhiskyProdukt(String navn, String beskrivelse, int literVandTilføjet) {
-        WhiskyProdukt whiskyProdukt = new WhiskyProdukt(navn, beskrivelse, literVandTilføjet);
+    public static WhiskyProdukt createWhiskyProdukt(String navn, String beskrivelse) {
+        WhiskyProdukt whiskyProdukt = new WhiskyProdukt(navn, beskrivelse);
         return whiskyProdukt;
     }
 
@@ -66,20 +66,33 @@ public class Controller {
 
     public static void omhældningAfDestillat(Fad fadFra, Fad fadTil) {
         fadTil.addDestillat(fadFra.getDestillat());
-        fadFra.setDestillat(null);
+        fadFra.getDestillat().addDestillatHistorik(fadTil);
     }
-    public static void removeLager(Lager lager) {
+
+    public static boolean removeReol(Lager lager, Reol reol) {
         boolean remove = true;
-        for (Reol reol : lager.getReoler()) {
-            for (Hylde hylde : reol.getHylder()) {
+        for (Reol r : lager.getReoler()) {
+            for (Hylde hylde : r.getHylder()) {
                 if (hylde.getFad() != null) {
                     remove = false;
                 }
             }
         }
         if (remove) {
-            Storage.getLager().remove(lager);
-//            ?????
+//         TODO lav metode til at slette i storage
+        }
+        return remove;
+    }
+
+    public static void removeLager(Lager lager) {
+        boolean remove = true;
+        for (Reol reol : lager.getReoler()) {
+            if (removeReol(lager, reol)) {
+                remove = false;
+            }
+        }
+        if (remove) {
+            //         TODO lav metode til at slette i storage
         }
     }
 }

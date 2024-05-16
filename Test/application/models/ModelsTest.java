@@ -21,6 +21,7 @@ public class ModelsTest {
     @BeforeEach
     void setUp() {
         fad = new Fad(100);
+        fad.createFadHistorik("Sherry", "Spanien", LocalDate.of(2020,10,10), "TestLeverandør");
         destillat = new Destillat("Destillat1");
         destillat.setFad(fad);
         korn = new Korn("TestSort", "TestVariant", "Mark1");
@@ -62,6 +63,7 @@ public class ModelsTest {
 
     @Test
     void destillatKlarTest() {
+        destillat.setPåfyldningsDato(LocalDate.of(2022, 10, 10));
         assertFalse(destillat.destillatKlar());
         Destillat destillatTest = new Destillat("Test");
         destillat.setPåfyldningsDato(LocalDate.of(2020, 10, 10));
@@ -109,5 +111,20 @@ public class ModelsTest {
         fadTest.addDestillat(destillatTest);
         assertTrue(fadTest.getDestillat().equals(destillatTest));
         assertTrue(fadTest.getFadHistorik().getTidligereDestillater().contains(destillat));
+    }
+
+    @Test
+    void whiskyProduktWhiskyTypeTest() {
+        fad.addDestillat(destillat);
+        destillat.createPåfyldning("Jens", 30, destillering);
+        WhiskyProdukt whiskyProdukt = new WhiskyProdukt("TestWhiskyProdukt", "Test");
+        whiskyProdukt.createFadTapning("Jens", 30, fad);
+        assertEquals("Cask Strength", whiskyProdukt.whiskyType());
+
+        whiskyProdukt.tilføjVand(20);
+        assertEquals("Single Cask", whiskyProdukt.whiskyType());
+
+        whiskyProdukt.createFadTapning("Bob", 20, fad);
+        assertEquals("Single Malt", whiskyProdukt.whiskyType());
     }
 }

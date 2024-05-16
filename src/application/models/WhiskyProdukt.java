@@ -12,11 +12,10 @@ public class WhiskyProdukt {
     private double literVandTilføjet;
     private double literWhisky;
 
-    public WhiskyProdukt(String navn, String beskrivelse, int literVandTilføjet) {
+    public WhiskyProdukt(String navn, String beskrivelse) {
         this.navn = navn;
         this.beskrivelse = beskrivelse;
 //        this.udregnAlkoholprocent();
-        this.tilføjVand(literVandTilføjet);
 
         this.literWhisky = 0;
         this.fadTapninger = new ArrayList<>();
@@ -77,21 +76,20 @@ public class WhiskyProdukt {
     }
 
     public void tilføjVand(int literVandTilføjet) {
+        this.literVandTilføjet = literVandTilføjet;
         literWhisky += literVandTilføjet;
         udregnAlkoholprocent();
     }
 
     public String whiskyType() {
-        String type = "";
         if (fadTapninger.size() == 1) {
-            type = "SINGLE CASK";
+            if (literVandTilføjet == 0) {
+                return "Cask Strength";
+            }
+            return "Single Cask";
         } else {
-            type = "SINGLE MALT";
+            return "Single Malt";
         }
-        if (literVandTilføjet != 0) {
-            type += ", CASK STRENGTH";
-        }
-        return type;
     }
 
     public double getSamletAntalLiter() {
