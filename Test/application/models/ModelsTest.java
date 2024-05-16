@@ -45,6 +45,10 @@ public class ModelsTest {
         destillat.addDestillatHistorik(testFad);
         assertTrue(destillat.getFad().equals(testFad));
         assertTrue(destillat.getDestillatHistorik().get(0).getFad().equals(fad));
+        Fad testFad2 = new Fad(60);
+        destillat.addDestillatHistorik(testFad2);
+        assertTrue(destillat.getFad().equals(testFad2));
+        assertTrue(destillat.getDestillatHistorik().get(1).getFad().equals(testFad));
     }
 
     @Test
@@ -81,13 +85,29 @@ public class ModelsTest {
 
     @Test
     void testGetters() {
-        destillat.createPåfyldning("Jens", 30, destillering);
+        Påfyldning påfyldning = destillat.createPåfyldning("Jens", 30, destillering);
         assertEquals(50, destillat.getAlkoholprocent());
         assertEquals(30, destillat.getAntalLiter());
         assertTrue(destillat.getFad().equals(fad));
-        destillat.getPåfyldninger();
-        destillat.getPåfyldningsDato();
-        destillat.getDestillatHistorik();
-        destillat.getNavn();
+        assertTrue(destillat.getPåfyldninger().contains(påfyldning));
+        assertTrue(destillat.getPåfyldningsDato().equals(LocalDate.now()));
+        Fad fad = new Fad(40);
+        destillat.addDestillatHistorik(fad);
+        assertTrue(destillat.getDestillatHistorik().get(0).getFad().equals(this.fad));
+        assertTrue(destillat.getNavn().equals("Destillat1"));
+    }
+
+    @Test
+    void testFadKlasse() {
+        Fad fadTest = new Fad(100);
+        FadHistorik fadHistorik = fadTest.createFadHistorik("Sherry", "Spanien", LocalDate.of(2020, 10, 10), "TestLeverandør");
+        assertTrue(fadTest.getFadHistorik().equals(fadHistorik));
+
+        fadTest.addDestillat(destillat);
+        assertTrue(fadTest.getDestillat().equals(destillat));
+        Destillat destillatTest = new Destillat("Test");
+        fadTest.addDestillat(destillatTest);
+        assertTrue(fadTest.getDestillat().equals(destillatTest));
+        assertTrue(fadTest.getFadHistorik().getTidligereDestillater().contains(destillat));
     }
 }

@@ -51,6 +51,15 @@ public class FadHistorik {
         this.leverandør = leverandør;
     }
 
+    public List<Destillat> getTidligereDestillater() {
+        return tidligereDestillater;
+    }
+
+    public void addTidligereDestillat(Destillat destillat) {
+        if (!tidligereDestillater.contains(destillat)) {
+            tidligereDestillater.add(destillat);
+        }
+    }
 
 
     @Override
