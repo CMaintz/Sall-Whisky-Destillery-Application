@@ -49,7 +49,7 @@ public class Fad {
 
     public Destillat addDestillat(Destillat destillat) {
         if (destillat == null) {
-//            fadHistorik.addDestillatHistorik(destillat);
+            fadHistorik.addTidligereDestillat(destillat);
             this.destillat = destillat;
             destillat.setFad(this);
         }
@@ -59,14 +59,4 @@ public class Fad {
     public FadHistorik getFadHistorik() {
         return fadHistorik;
     }
-
-//    public boolean erWhiskyKlar() {
-//        if (påFyldning != null) {
-//            Period period = Period.between(påFyldning.getPåfyldningsDato(), LocalDate.now());
-//            if (period.getYears() >= 3) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
 }

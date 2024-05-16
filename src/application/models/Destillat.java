@@ -22,6 +22,7 @@ public class Destillat {
         påfyldningsDato = LocalDate.now();
     }
 
+    // Pre: literPåfyld > 0
     public Påfyldning createPåfyldning(String medarbejderNavn, double literPåfyldt, Destillering destillering){
         Påfyldning pf = new Påfyldning(medarbejderNavn, literPåfyldt, destillering);
         påfyldninger.add(pf);
@@ -69,6 +70,7 @@ public class Destillat {
         return destillatHistorik;
     }
 
+    //Pre : this.fad != null
     public void addDestillatHistorik(Fad newFad) {
         DestillatHistorik destillatHistorik = new DestillatHistorik(fad, påfyldningsDato, LocalDate.now());
         this.destillatHistorik.add(destillatHistorik);
@@ -89,16 +91,13 @@ public class Destillat {
         if (periodPD.getYears() >= 3) {
             return true;
         }
-        double days = 0;
-        boolean result = false;
-        for (DestillatHistorik dh : destillatHistorik) {
-            Period period = Period.between(dh.getStartDato(), dh.getSlutDato());
-            days += period.getDays();
+        if (destillatHistorik != null) {
+            Period period = Period.between(destillatHistorik.get(0).getStartDato(), LocalDate.now());
+            if (period.getYears() >= 3) {
+                return true;
+            }
         }
-        if (days >= 1095) {
-            result = true;
-        }
-        return result;
+        return false;
     }
 
     @Override
