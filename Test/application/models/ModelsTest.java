@@ -1,10 +1,7 @@
 // CombinedTest.java
-import application.controller.Controller;
 import application.models.*;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import storage.Storage;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -44,7 +41,7 @@ public class ModelsTest {
         Fad testFad = new Fad(80);
         destillat.addDestillatHistorik(testFad);
         assertTrue(destillat.getFad().equals(testFad));
-        assertTrue(destillat.getDestillatHistorik().get(0).getFad().equals(fad));
+        assertTrue(destillat.getModningsHistorik().get(0).getFad().equals(fad));
     }
 
     @Test
@@ -87,7 +84,7 @@ public class ModelsTest {
         assertTrue(destillat.getFad().equals(fad));
         destillat.getPåfyldninger();
         destillat.getPåfyldningsDato();
-        destillat.getDestillatHistorik();
+        destillat.getModningsHistorik();
         destillat.getNavn();
     }
 }

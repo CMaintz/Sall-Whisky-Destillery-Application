@@ -11,12 +11,12 @@ public class Destillat {
     private double antalLiter;
     private LocalDate påfyldningsDato;
     private double alkoholprocent;
-    List<DestillatHistorik> destillatHistorik;
+    List<DestillatHistorik> modningsHistorik;
     private Fad fad;
 
     public Destillat(String navn) {
         påfyldninger = new ArrayList<>();
-        destillatHistorik = new ArrayList<>();
+        modningsHistorik = new ArrayList<>();
 
         this.navn = navn;
         påfyldningsDato = LocalDate.now();
@@ -65,13 +65,13 @@ public class Destillat {
         return fad;
     }
 
-    public List<DestillatHistorik> getDestillatHistorik() {
-        return destillatHistorik;
+    public List<DestillatHistorik> getModningsHistorik() {
+        return modningsHistorik;
     }
 
     public void addDestillatHistorik(Fad newFad) {
         DestillatHistorik destillatHistorik = new DestillatHistorik(fad, påfyldningsDato, LocalDate.now());
-        this.destillatHistorik.add(destillatHistorik);
+        this.modningsHistorik.add(destillatHistorik);
         fad.setDestillat(null);
         this.fad = newFad;
     }
@@ -84,6 +84,7 @@ public class Destillat {
         alkoholprocent = (literEthanol / antalLiter) * 100;
     }
 
+//    Er det ikke nemmere at tjekke om destillatHistorik.get(0).getsStartDato().until(LocalDate.now()) > 3 years?
     public boolean destillatKlar() {
         Period periodPD = Period.between(påfyldningsDato, LocalDate.now());
         if (periodPD.getYears() >= 3) {
@@ -91,7 +92,7 @@ public class Destillat {
         }
         double days = 0;
         boolean result = false;
-        for (DestillatHistorik dh : destillatHistorik) {
+        for (DestillatHistorik dh : modningsHistorik) {
             Period period = Period.between(dh.getStartDato(), dh.getSlutDato());
             days += period.getDays();
         }

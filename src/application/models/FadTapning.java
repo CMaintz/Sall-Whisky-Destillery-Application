@@ -27,4 +27,5 @@ public class FadTapning {
     public double getLiterTappet() {
         return literTappet;
     }
+
 }

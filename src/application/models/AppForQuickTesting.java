@@ -23,19 +23,19 @@ public class AppForQuickTesting {
 
         System.out.println(fad.getDestillat().getAntalLiter());
 
-        WhiskyProdukt whiskyProdukt = new WhiskyProdukt("Highlander bryg", "idk, generate this auto?", 0);
+        WhiskyProdukt whiskyProdukt = new WhiskyProdukt("Highlander bryg");
         whiskyProdukt.createFadTapning("Maintz", 20, fad);
 
-        System.out.println(whiskyProdukt.getSamletAntalLiter());
+        System.out.println(whiskyProdukt.getLiterTotal());
 
         whiskyProdukt.addFadTapning(ft);
 
         System.out.println(fad.getDestillat().getAntalLiter());
 
-        System.out.println(whiskyProdukt.getSamletAntalLiter());
+        System.out.println(whiskyProdukt.getLiterTotal());
 
         whiskyProdukt.fyldPåFlasker();
-        System.out.println(whiskyProdukt.getSamletAntalLiter());
+        System.out.println(whiskyProdukt.getLiterTotal());
         System.out.println(whiskyProdukt.getFyldteFlasker());
 
 

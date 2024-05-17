@@ -1,16 +1,18 @@
 package application.models;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.temporal.ChronoUnit;
 
 public class Fad {
     private static int antalFade;
     private String fadNr;
     private int literKapacitet;
-//    private Hylde hylde; //TODO fjern? Behøves ikke da vi ikke gennemgår fadene for at finde dem der er modnede,
+    //    private Hylde hylde; //TODO fjern? Behøves ikke da vi ikke gennemgår fadene for at finde dem der er modnede,
     // men i stedet gennemgår vi lager; det er en envejs associering
     private Destillat destillat;
     private FadHistorik fadHistorik;
+
 
     public Fad(int literKapacitet) {
         this.literKapacitet = literKapacitet;
@@ -18,11 +20,12 @@ public class Fad {
         this.fadNr = antalFade + "";
     }
 
-    public FadHistorik createFadHistorik(String tidligereIndhold, String land, LocalDate fraÅr, String leverandør){
+    public FadHistorik createFadHistorik(String tidligereIndhold, String land, LocalDate fraÅr, String leverandør) {
         FadHistorik fh = new FadHistorik(tidligereIndhold, land, fraÅr, leverandør);
         this.fadHistorik = fh;
         return fh;
     }
+
     public String getFadNr() {
         return fadNr;
     }
@@ -49,15 +52,28 @@ public class Fad {
 
     public Destillat addDestillat(Destillat destillat) {
         if (destillat == null) {
-//            fadHistorik.addDestillatHistorik(destillat);
+            fadHistorik.addDestillat(destillat);
             this.destillat = destillat;
             destillat.setFad(this);
         }
         return destillat;
     }
 
+    public String getType() {
+        return fadHistorik.getTidligereIndhold();
+    }
+
+    public Period getAlder() {
+        return this.fadHistorik.getFraÅr().until(LocalDate.now());
+    }
+
     public FadHistorik getFadHistorik() {
         return fadHistorik;
+    }
+
+    @Override
+    public String toString() {
+        return "#" + fadNr + " " + getType() + " " + literKapacitet + "L";
     }
 
 //    public boolean erWhiskyKlar() {

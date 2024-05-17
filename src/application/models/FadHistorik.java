@@ -9,12 +9,11 @@ public class FadHistorik {
     private String tidligereIndhold;
     private String land;
     private LocalDate fraÅr;
-//   TODO Måske en antalÅrBrugt i stedet for?
+    private LocalDate tilÅr;
     private String leverandør;
     private List<Destillat> tidligereDestillater;
 
     FadHistorik(String tidligereIndhold, String land, LocalDate fraÅr, String leverandør) {
-//        TODO skal man kunne indlæse historik fra en tekstfil?
         this.tidligereIndhold = tidligereIndhold;
         this.land = land;
         this.fraÅr = fraÅr;
@@ -51,15 +50,14 @@ public class FadHistorik {
         this.leverandør = leverandør;
     }
 
+    public void addDestillat(Destillat destillat){
+        tidligereDestillater.add(destillat);
+    }
 
 
     @Override
     public String toString() {
-        return "FadHistorik{" +
-                "tidligereIndhold='" + tidligereIndhold + '\'' +
-                ", land='" + land + '\'' +
-                ", fraÅr=" + fraÅr +
-                ", leverandør='" + leverandør + '\'' +
-                '}';
+        return "fadtype: " + tidligereIndhold + "\nland: " + land
+                + "\nfra " + fraÅr + "\ntil " + tilÅr + "\nleverandør: " + leverandør;
     }
 }

@@ -46,22 +46,19 @@ public class Controller {
         return ft;
     }
 
-    public static WhiskyProdukt createWhiskyProdukt(String navn, String beskrivelse, int literVandTilføjet) {
-        WhiskyProdukt whiskyProdukt = new WhiskyProdukt(navn, beskrivelse, literVandTilføjet);
+    public static WhiskyProdukt createWhiskyProdukt(String navn, String beskrivelse) {
+        WhiskyProdukt whiskyProdukt = new WhiskyProdukt(navn);
         return whiskyProdukt;
     }
 
     //    pre: antalFlasker <= currentLiterWhisky
 
     public static void createWhiskyflasker(WhiskyProdukt whiskyProdukt) {
-        double liter = whiskyProdukt.getSamletAntalLiter();
-        //TODO Nedenstående kan også være en While (whiskyProdukt.getLiter > 0)
+        double liter = whiskyProdukt.getLiterTotal();
         for (int i = 0; i < liter; i++) {
             whiskyProdukt.fyldPåFlasker();
         }
-//        TODO setAntalLiter til 0 bagefter, eller sig literWhisky--; efter hver create?
-//         (som er tilfældet nu)
-//        whiskyProdukt.setAntalLiter(0);
+        whiskyProdukt.setAntalLiter(0);
     }
 
     public static void omhældningAfDestillat(Fad fadFra, Fad fadTil) {
