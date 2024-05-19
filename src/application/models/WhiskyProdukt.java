@@ -150,7 +150,7 @@ public class WhiskyProdukt {
         return toReturn;
     }
 
-    private double modningsHistorie() {
+    private String modningsHistorie() {
         if (fadTapninger.get(0).getDestillat().getPåfyldningsDato().until(LocalDate.now()).getYears() < 3) {
             String modningsTid = "";
             int måneder = 0;
@@ -159,13 +159,14 @@ public class WhiskyProdukt {
                     måneder += omhældning.getStartDato().until(omhældning.getSlutDato(), ChronoUnit.MONTHS);
                 }
             }
-            return måneder / 12;
+//            return måneder / 12;
         }
         String fade = fadTapninger.get(0).getDestillat().getFad().getType();
         fadTapninger.get(0).getDestillat().getPåfyldningsDato().until(LocalDate.now());
 //TODO kan vi ikke bare sige pre: newFad.getType == oldFad.getType,
 // så man ikke skal tjekke fadTyper i det mindste?
 // tror jeg nu næppe...
+        String modningsTid = "";
         for (FadTapning ft : fadTapninger) {
             String temp;
             if (ft.getDestillat().getOmhældninger().size() > 0) {
@@ -200,9 +201,9 @@ public class WhiskyProdukt {
         }
         if (lavestAntalTimer == højesteAntalTimer) {
             return "\nMæsket ved håndkraft og fermenteret i " + lavestAntalTimer + "\nDobbeltdestilleret langtsomt i direct fired kobber pot stills.";
-        } else {
-            return "\nMæsket ved håndkraft og fermenteret i " + lavestAntalTimer + " til " + højesteAntalTimer + "\nDobbeltdestilleret langtsomt i direct fired kobber pot stills.";
         }
+        return "\nMæsket ved håndkraft og fermenteret i " + lavestAntalTimer + " til " + højesteAntalTimer + "\nDobbeltdestilleret langtsomt i direct fired kobber pot stills.";
+
     }
 
 }
