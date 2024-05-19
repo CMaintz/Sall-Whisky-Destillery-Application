@@ -7,7 +7,7 @@ public class Omhældning {
     private LocalDate startDato;
     private LocalDate slutDato;
 
-    public Omhældning(Fad fad, LocalDate startDato, LocalDate slutDato) {
+    Omhældning(Fad fad, LocalDate startDato, LocalDate slutDato) {
         this.fad = fad;
         this.startDato = startDato;
         this.slutDato = slutDato;
