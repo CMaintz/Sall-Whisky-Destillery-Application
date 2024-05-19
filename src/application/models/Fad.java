@@ -8,8 +8,6 @@ public class Fad {
     private static int antalFade;
     private String fadNr;
     private int literKapacitet;
-    //    private Hylde hylde; //TODO fjern? Behøves ikke da vi ikke gennemgår fadene for at finde dem der er modnede,
-    // men i stedet gennemgår vi lager; det er en envejs associering
     private Destillat destillat;
     private FadHistorik fadHistorik;
 
@@ -41,10 +39,6 @@ public class Fad {
     public Destillat getDestillat() {
         return destillat;
     }
-
-//    public void setHylde(Hylde hylde) {
-//        this.hylde = hylde;
-//    }
 
     public void setDestillat(Destillat destillat) {
         this.destillat = destillat;

@@ -55,8 +55,9 @@ public class Controller {
 
     public static void createWhiskyflasker(WhiskyProdukt whiskyProdukt) {
         double liter = whiskyProdukt.getLiterTotal();
+        String produktHistorie = whiskyProdukt.genererHistorie();
         for (int i = 0; i < liter; i++) {
-            whiskyProdukt.fyldPåFlasker();
+            whiskyProdukt.createWhiskyFlaske(produktHistorie);
         }
         whiskyProdukt.setAntalLiter(0);
     }

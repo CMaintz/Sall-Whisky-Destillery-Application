@@ -11,12 +11,12 @@ public class Destillat {
     private double antalLiter;
     private LocalDate påfyldningsDato;
     private double alkoholprocent;
-    List<DestillatHistorik> modningsHistorik;
+    List<Omhældning> omhældninger;
     private Fad fad;
 
     public Destillat(String navn) {
         påfyldninger = new ArrayList<>();
-        modningsHistorik = new ArrayList<>();
+        omhældninger = new ArrayList<>();
 
         this.navn = navn;
         påfyldningsDato = LocalDate.now();
@@ -26,7 +26,7 @@ public class Destillat {
         Påfyldning pf = new Påfyldning(medarbejderNavn, literPåfyldt, destillering);
         påfyldninger.add(pf);
         antalLiter += pf.getLiterPåfyldt();
-        setAlkoholprocent();
+        udregnAlkoholprocent();
         return pf;
     }
     public ArrayList<Påfyldning> getPåfyldninger() {
@@ -65,18 +65,18 @@ public class Destillat {
         return fad;
     }
 
-    public List<DestillatHistorik> getModningsHistorik() {
-        return modningsHistorik;
+    public List<Omhældning> getOmhældninger() {
+        return omhældninger;
     }
 
-    public void addDestillatHistorik(Fad newFad) {
-        DestillatHistorik destillatHistorik = new DestillatHistorik(fad, påfyldningsDato, LocalDate.now());
-        this.modningsHistorik.add(destillatHistorik);
+    public void omhældDestillat(Fad newFad) {
+        Omhældning omhældning = new Omhældning(fad, påfyldningsDato, LocalDate.now());
+        this.omhældninger.add(omhældning);
         fad.setDestillat(null);
         this.fad = newFad;
     }
 
-    private void setAlkoholprocent() {
+    private void udregnAlkoholprocent() {
         double literEthanol = 0;
         for (Påfyldning påfyldning : påfyldninger) {
             literEthanol += (påfyldning.getDestillering().getAlkoholProcent() / 100) * påfyldning.getLiterPåfyldt();
@@ -84,7 +84,6 @@ public class Destillat {
         alkoholprocent = (literEthanol / antalLiter) * 100;
     }
 
-//    Er det ikke nemmere at tjekke om destillatHistorik.get(0).getsStartDato().until(LocalDate.now()) > 3 years?
     public boolean destillatKlar() {
         Period periodPD = Period.between(påfyldningsDato, LocalDate.now());
         if (periodPD.getYears() >= 3) {
@@ -92,7 +91,8 @@ public class Destillat {
         }
         double days = 0;
         boolean result = false;
-        for (DestillatHistorik dh : modningsHistorik) {
+//        TODO if omhældninger.size > 0?
+        for (Omhældning dh : omhældninger) {
             Period period = Period.between(dh.getStartDato(), dh.getSlutDato());
             days += period.getDays();
         }

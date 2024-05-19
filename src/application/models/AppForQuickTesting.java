@@ -34,7 +34,8 @@ public class AppForQuickTesting {
 
         System.out.println(whiskyProdukt.getLiterTotal());
 
-        whiskyProdukt.fyldPåFlasker();
+        String hist = "Her er en historie om produktet";
+        whiskyProdukt.createWhiskyFlaske(hist);
         System.out.println(whiskyProdukt.getLiterTotal());
         System.out.println(whiskyProdukt.getFyldteFlasker());
 

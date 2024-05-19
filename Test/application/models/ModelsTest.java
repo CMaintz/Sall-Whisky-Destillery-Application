@@ -39,9 +39,9 @@ public class ModelsTest {
     @Test
     void destillatAddFadHistorikTest() {
         Fad testFad = new Fad(80);
-        destillat.addDestillatHistorik(testFad);
+        destillat.omhældDestillat(testFad);
         assertTrue(destillat.getFad().equals(testFad));
-        assertTrue(destillat.getModningsHistorik().get(0).getFad().equals(fad));
+        assertTrue(destillat.getOmhældninger().get(0).getFad().equals(fad));
     }
 
     @Test
@@ -84,7 +84,7 @@ public class ModelsTest {
         assertTrue(destillat.getFad().equals(fad));
         destillat.getPåfyldninger();
         destillat.getPåfyldningsDato();
-        destillat.getModningsHistorik();
+        destillat.getOmhældninger();
         destillat.getNavn();
     }
 }

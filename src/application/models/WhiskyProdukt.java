@@ -1,13 +1,14 @@
 package application.models;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
 public class WhiskyProdukt {
     private String navn;
     private double alkoholProcent;
-    private List<FadTapning> indhold;
+    private List<FadTapning> fadTapninger;
     private final List<WhiskyFlaske> fyldteFlasker;
     private double literVandTilføjet;
     private double literTotal;
@@ -16,21 +17,21 @@ public class WhiskyProdukt {
         this.navn = navn;
         this.literTotal = 0;
         this.literVandTilføjet = 0;
-        this.indhold = new ArrayList<>();
+        this.fadTapninger = new ArrayList<>();
         this.fyldteFlasker = new ArrayList<>();
     }
 
     public FadTapning createFadTapning(String medarbejderNavn, double literTappet, Fad fad) {
         FadTapning ft = new FadTapning(medarbejderNavn, literTappet, fad);
-        indhold.add(ft);
+        fadTapninger.add(ft);
         literTotal += literTappet;
         udregnAlkoholprocent();
         return ft;
     }
 
     public void addFadTapning(FadTapning fadTapning) {
-        if (!indhold.contains(fadTapning)) {
-            this.indhold.add(fadTapning);
+        if (!fadTapninger.contains(fadTapning)) {
+            this.fadTapninger.add(fadTapning);
             literTotal += fadTapning.getLiterTappet();
         }
     }
@@ -40,8 +41,8 @@ public class WhiskyProdukt {
         this.literTotal = liter;
     }
 
-    public WhiskyFlaske fyldPåFlasker() {
-        WhiskyFlaske flaske = new WhiskyFlaske(fyldteFlasker.size() + 1, this);
+    public WhiskyFlaske createWhiskyFlaske(String produktHistorie) {
+        WhiskyFlaske flaske = new WhiskyFlaske(fyldteFlasker.size() + 1, this, produktHistorie);
         fyldteFlasker.add(flaske);
         return flaske;
     }
@@ -61,20 +62,20 @@ public class WhiskyProdukt {
 
     private void udregnAlkoholprocent() {
         double literEthanol = 0;
-        for (FadTapning fadTapning : indhold) {
+        for (FadTapning fadTapning : fadTapninger) {
             literEthanol += (fadTapning.getDestillat().getAlkoholprocent() / 100) * fadTapning.getLiterTappet();
         }
         alkoholProcent = (literEthanol / literTotal) * 100;
     }
 
-    public void tilføjVand(int literVandTilføjet) {
-        this.literVandTilføjet += literVandTilføjet;
-        literTotal += literVandTilføjet;
+    public void tilføjVand(int literVand) {
+        this.literVandTilføjet += literVand;
+        literTotal += literVand;
         udregnAlkoholprocent();
     }
 
     public String whiskyType() {
-        if (indhold.size() == 1) {
+        if (fadTapninger.size() == 1) {
             return literVandTilføjet == 0 ? "Cask Strength" : "Single Cask";
 //            if (literVandTilføjet == 0) {
 //                return "Cask Strength";
@@ -108,8 +109,8 @@ public class WhiskyProdukt {
 //        TODO skal holde styr på forskellige fade hvis der er omhældt..? Såååå... Jfc. En
 //         metode i destillat som laver en beskrivelse eller sådan noget, omkring dens historik?
 //         jfc
-        String modningOgFad = "\nModnet i " + indhold.get(0).getDestillat().getPåfyldningsDato().until(LocalDate.now())
-                + " år i omhyggeligt udvalgte ex-" + indhold.get(0).getDestillat().getFad().getFadHistorik().getTidligereIndhold()
+        String modningOgFad = "\nModnet i " + modningsHistorie()
+                + " år i omhyggeligt udvalgte ex-" + fadTapninger.get(0).getDestillat().getFad().getFadHistorik().getTidligereIndhold()
                 + " barrels.";
         String typeOgProcent = "\nØkologisk " + whiskyType() + "\n& Single Farm Whisky" + "\n 100cl. " + alkoholProcent + "% Vol.";
 //        if (indhold.size() > 1) {
@@ -121,7 +122,7 @@ public class WhiskyProdukt {
 //        String destilleret = "\nDobbeltdestilleret langtsomt i direct fired kobber pot stills.";
 
 
-        for (FadTapning ft : indhold) {
+        for (FadTapning ft : fadTapninger) {
             for (Påfyldning pf : ft.getDestillat().getPåfyldninger()) {
                 String tempVariant = pf.getDestillering().getKornSort().getVariant();
                 String tempSort = pf.getDestillering().getKornSort().getSort();
@@ -137,8 +138,8 @@ public class WhiskyProdukt {
 //            }
 //        }
 
-        for (FadTapning ft : indhold) {
-            for (DestillatHistorik dh : ft.getDestillat().getModningsHistorik()) {
+        for (FadTapning ft : fadTapninger) {
+            for (Omhældning dh : ft.getDestillat().getOmhældninger()) {
 //                toReturn += dh.getFad();
                 dh.getStartDato().until(dh.getSlutDato()).getMonths();
             }
@@ -149,12 +150,47 @@ public class WhiskyProdukt {
         return toReturn;
     }
 
+    private double modningsHistorie() {
+        if (fadTapninger.get(0).getDestillat().getPåfyldningsDato().until(LocalDate.now()).getYears() < 3) {
+            String modningsTid = "";
+            int måneder = 0;
+            for (FadTapning ft : fadTapninger) {
+                for (Omhældning omhældning : ft.getDestillat().getOmhældninger()) {
+                    måneder += omhældning.getStartDato().until(omhældning.getSlutDato(), ChronoUnit.MONTHS);
+                }
+            }
+            return måneder / 12;
+        }
+        String fade = fadTapninger.get(0).getDestillat().getFad().getType();
+        fadTapninger.get(0).getDestillat().getPåfyldningsDato().until(LocalDate.now());
+//TODO kan vi ikke bare sige pre: newFad.getType == oldFad.getType,
+// så man ikke skal tjekke fadTyper i det mindste?
+// tror jeg nu næppe...
+        for (FadTapning ft : fadTapninger) {
+            String temp;
+            if (ft.getDestillat().getOmhældninger().size() > 0) {
+                for (Omhældning omhældning : ft.getDestillat().getOmhældninger()) {
+                    temp = omhældning.getFad().getType();
+                    if (!fade.contains(temp)) {
+                        fade += " og " + temp;
+                    }
+                    modningsTid += (omhældning.getStartDato().until(omhældning.getSlutDato(), ChronoUnit.MONTHS)) / 12 + " og ";
+                }
+            }
+        }
+        String modningOgFad = "\nModnet i " + modningsTid
+                + " år i omhyggeligt udvalgte ex-" + fadTapninger.get(0).getDestillat().getFad().getFadHistorik().getTidligereIndhold()
+                + " barrels.";
+
+        return "\nModnet i " + modningsTid + " år i omhyggeligt udvalgte ex-" + fade + " barrels.";
+    }
+
     private String genererHistorieTimer() {
-        int lavestAntalTimer = indhold.get(0).getDestillat().getPåfyldninger().get(0).getDestillering().getTimerDestilleret();
-        int højesteAntalTimer = indhold.get(0).getDestillat().getPåfyldninger().get(0).getDestillering().getTimerDestilleret();
-        for (FadTapning ft : indhold) {
+        int lavestAntalTimer = fadTapninger.get(0).getDestillat().getPåfyldninger().get(0).getDestillering().getDestilleringsTid();
+        int højesteAntalTimer = lavestAntalTimer;
+        for (FadTapning ft : fadTapninger) {
             for (Påfyldning pf : ft.getDestillat().getPåfyldninger()) {
-                int tempTimer = pf.getDestillering().getTimerDestilleret();
+                int tempTimer = pf.getDestillering().getDestilleringsTid();
                 if (tempTimer > højesteAntalTimer) {
                     højesteAntalTimer = tempTimer;
                 } else if (tempTimer < lavestAntalTimer) {
