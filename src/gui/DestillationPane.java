@@ -4,6 +4,7 @@ import application.controller.Controller;
 import application.models.Destillat;
 import application.models.Destillering;
 import application.models.Fad;
+import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -12,6 +13,7 @@ import javafx.scene.layout.GridPane;
 import storage.Storage;
 
 public class DestillationPane extends GridPane {
+    private ListView<Destillering> destilleringListView;
     private Controller controller;
 
 
@@ -25,18 +27,21 @@ public class DestillationPane extends GridPane {
         this.setVgap(10);
         this.setGridLinesVisible(false);
 
+        destilleringListView = new ListView<Destillering>();
+
         //Knapper
-
-        Button opretDestillation = new Button("Opret destillering");
-
+        Button opretDestillering = new Button("Opret destillering");
         Button tilføjKorn = new Button("Tilføj korn");
 
 
         //Listviews
+        ObservableList<Destillering> destilleringList = FXCollections.observableArrayList(Controller.getDestilleringer());
+        destilleringListView.setItems(destilleringList);
 
 
-        this.add(opretDestillation, 0, 1);
+        this.add(opretDestillering, 0, 1);
         this.add(tilføjKorn, 0, 2);
+        this.add(destilleringListView, 1, 3);
 
 
 
@@ -46,7 +51,14 @@ public class DestillationPane extends GridPane {
 
 
         //Action til knapper
+        opretDestillering.setOnAction(e -> {
+            OpretDestillation newWindow = new OpretDestillation();
+            newWindow.show();
+        });
 
+        destilleringList.addListener((InvalidationListener) observable -> {
+            destilleringListView.setItems(FXCollections.observableArrayList(Controller.getDestilleringer()));
+        });
 
 
 

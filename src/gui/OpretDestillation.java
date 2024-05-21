@@ -1,10 +1,13 @@
 package gui;
 
+import application.controller.Controller;
+import application.models.Korn;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class OpretDestillation extends Stage {
@@ -15,7 +18,7 @@ public class OpretDestillation extends Stage {
         pane.setVgap(10);
 
 
-        Label lblDestillationsdato = new Label("Destillationsdato:");
+        Label lblDestillationsdato = new Label("Destilleringsdato:");
         pane.add(lblDestillationsdato, 0, 0);
         Label lblMaltBatch = new Label("Malt batch:");
         pane.add(lblMaltBatch, 0, 2);
@@ -37,7 +40,7 @@ public class OpretDestillation extends Stage {
         pane.add(dpDestillationsdato, 0, 1);
         TextField txtMaltBatch = new TextField();
         pane.add(txtMaltBatch, 0, 3);
-        ComboBox<String> cbKorn = new ComboBox<>();
+        ComboBox<Korn> cbKorn = new ComboBox<>();
         pane.add(cbKorn, 0, 5);
         TextField txtMedarbejder = new TextField();
         pane.add(txtMedarbejder, 0, 7);
@@ -50,14 +53,51 @@ public class OpretDestillation extends Stage {
         TextArea taKommentar = new TextArea();
         pane.add(taKommentar, 0, 15);
 
-        Button opretDestillation = new Button("Opret destillation");
+        Button opretDestillation = new Button("Opret destillering");
         pane.add(opretDestillation, 0, 16);
 
         Scene scene = new Scene(pane, 300, 700);
         this.setScene(scene);
-        this.setTitle("Opret Destillation");
+        this.setTitle("Opret Destillering");
 
         this.show();
+
+
+        ObservableList<Korn> kornList = FXCollections.observableArrayList(Controller.getKorn());
+
+        cbKorn.setItems(kornList);
+
+        //Action til knappen
+
+        opretDestillation.setOnAction(e -> {
+            String destillationsdato = dpDestillationsdato.getValue().toString();
+            String maltBatch = txtMaltBatch.getText();
+            Korn korn = cbKorn.getValue();
+            String medarbejder = txtMedarbejder.getText();
+            double mængdeVæske = Double.parseDouble(txtMængdeVæske.getText());
+            double alkoholProcent = Double.parseDouble(txtAlkoholProcent.getText());
+            String rygeMateriale = txtRygeMateriale.getText();
+            String kommentar = taKommentar.getText();
+
+            Controller.createDestillering(maltBatch, korn, medarbejder, mængdeVæske, alkoholProcent, rygeMateriale, kommentar);
+
+            dpDestillationsdato.setValue(null);
+            txtMaltBatch.setText("");
+            cbKorn.setValue(null);
+            txtMedarbejder.setText("");
+            txtMængdeVæske.setText("");
+            txtAlkoholProcent.setText("");
+            txtRygeMateriale.setText("");
+            taKommentar.setText("");
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Destillering oprettet");
+            alert.setHeaderText(null);
+            alert.setContentText("Destilleringen er oprettet");
+
+            alert.showAndWait();
+        });
+
 
     }
 }

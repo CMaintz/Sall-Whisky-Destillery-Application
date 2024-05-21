@@ -23,4 +23,8 @@ public class Korn {
         return markNavn;
     }
 
+    public String toString() {
+        return sort + " - " + variant + " - " + markNavn;
+    }
+
 }

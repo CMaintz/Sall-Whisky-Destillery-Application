@@ -4,6 +4,7 @@ import application.models.*;
 import storage.Storage;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Controller {
     public static Fad createFad(int størrelse, String tidligereIndhold, String land, LocalDate fraÅr, String leverandør) {
@@ -92,5 +93,13 @@ public class Controller {
         if (remove) {
             //         TODO lav metode til at slette i storage
         }
+    }
+
+    public static List<Destillering> getDestilleringer() {
+        return Storage.getDestillering();
+    }
+
+    public static Korn getKorn() {
+        return Storage.getKorn().get(0);
     }
 }
