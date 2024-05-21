@@ -6,7 +6,9 @@ public class FadTapning {
     private Fad fad;
     private Destillat destillat;
 
-    public FadTapning(String medarbejderNavn, double literTappet, Fad fad) {
+//    TODO: Burde ikke have tapning metoden; vi bør slet ikke kunne oprette
+//     en tapning hvis der ikke er liter til det i fadet
+    FadTapning(String medarbejderNavn, double literTappet, Fad fad) {
         this.medarbejderNavn = medarbejderNavn;
         this.fad = fad;
         destillat = fad.getDestillat();
@@ -27,4 +29,5 @@ public class FadTapning {
     public double getLiterTappet() {
         return literTappet;
     }
+
 }

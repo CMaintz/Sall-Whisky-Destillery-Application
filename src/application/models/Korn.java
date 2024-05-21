@@ -19,7 +19,7 @@ public class Korn {
         return variant;
     }
 
-    public String getMarkNavn() {
+    public String getMarkNavne() {
         return markNavn;
     }
 

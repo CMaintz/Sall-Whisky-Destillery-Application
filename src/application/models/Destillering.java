@@ -9,8 +9,7 @@ public class Destillering {
     private String maltBatch;
     private Korn korn;
     private String medarbejder;
-    private double antalLiter; //TODO remove this shit, only need one liter attribute
-    private double currentAntalLiter;
+    private double antalLiter;
     private double alkoholProcent;
     private String rygeMateriale;
     private String kommentar;
@@ -26,7 +25,6 @@ public class Destillering {
         this.alkoholProcent = alkoholProcent;
         this.rygeMateriale = rygeMateriale;
         this.kommentar = kommentar;
-        currentAntalLiter = this.antalLiter;
         startDato = LocalDate.now();
     }
 
@@ -63,16 +61,16 @@ public class Destillering {
     }
 
     public void fjernAntalLiter(double antalLiterTappet) {
-        currentAntalLiter -= antalLiterTappet;
-    }
-
-    public double getCurrentAntalLiter() {
-        return currentAntalLiter;
+        this.antalLiter -= antalLiterTappet;
     }
 
     public void setSlutDato(LocalDate slutDato) {
         this.slutDato = slutDato;
     }
+    public int getDestilleringsTid() {
+        return (int) startDato.until(slutDato, ChronoUnit.HOURS);
+    }
+
 
     //toString
     @Override

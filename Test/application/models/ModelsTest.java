@@ -1,10 +1,7 @@
 // CombinedTest.java
-import application.controller.Controller;
 import application.models.*;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import storage.Storage;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -43,13 +40,14 @@ public class ModelsTest {
     @Test
     void destillatAddFadHistorikTest() {
         Fad testFad = new Fad(80);
-        destillat.addDestillatHistorik(testFad);
+        destillat.omhældDestillat(testFad);
         assertTrue(destillat.getFad().equals(testFad));
         assertTrue(destillat.getDestillatHistorik().get(0).getFad().equals(fad));
         Fad testFad2 = new Fad(60);
         destillat.addDestillatHistorik(testFad2);
         assertTrue(destillat.getFad().equals(testFad2));
         assertTrue(destillat.getDestillatHistorik().get(1).getFad().equals(testFad));
+        assertTrue(destillat.getOmhældninger().get(0).getFad().equals(fad));
     }
 
     @Test
@@ -63,7 +61,6 @@ public class ModelsTest {
 
     @Test
     void destillatKlarTest() {
-        destillat.setPåfyldningsDato(LocalDate.of(2022, 10, 10));
         assertFalse(destillat.destillatKlar());
         Destillat destillatTest = new Destillat("Test");
         destillat.setPåfyldningsDato(LocalDate.of(2020, 10, 10));
@@ -87,10 +84,14 @@ public class ModelsTest {
 
     @Test
     void testGetters() {
-        Påfyldning påfyldning = destillat.createPåfyldning("Jens", 30, destillering);
+        destillat.createPåfyldning("Jens", 30, destillering);
         assertEquals(50, destillat.getAlkoholprocent());
         assertEquals(30, destillat.getAntalLiter());
         assertTrue(destillat.getFad().equals(fad));
+        destillat.getPåfyldninger();
+        destillat.getPåfyldningsDato();
+        destillat.getOmhældninger();
+        destillat.getNavn();
         assertTrue(destillat.getPåfyldninger().contains(påfyldning));
         assertTrue(destillat.getPåfyldningsDato().equals(LocalDate.now()));
         Fad fad = new Fad(40);

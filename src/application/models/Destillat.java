@@ -11,16 +11,15 @@ public class Destillat {
     private double antalLiter;
     private LocalDate påfyldningsDato;
     private double alkoholprocent;
-    List<DestillatHistorik> destillatHistorik;
+    List<Omhældning> omhældninger;
     private Fad fad;
 
     public Destillat(String navn) {
         påfyldninger = new ArrayList<>();
-        destillatHistorik = new ArrayList<>();
+        omhældninger = new ArrayList<>();
 
         this.navn = navn;
         påfyldningsDato = LocalDate.now();
-        setAlkoholprocent();
     }
 
     // Pre: literPåfyld > 0
@@ -28,7 +27,7 @@ public class Destillat {
         Påfyldning pf = new Påfyldning(medarbejderNavn, literPåfyldt, destillering);
         påfyldninger.add(pf);
         antalLiter += pf.getLiterPåfyldt();
-        setAlkoholprocent();
+        udregnAlkoholprocent();
         return pf;
     }
     public ArrayList<Påfyldning> getPåfyldninger() {
@@ -67,19 +66,18 @@ public class Destillat {
         return fad;
     }
 
-    public List<DestillatHistorik> getDestillatHistorik() {
-        return destillatHistorik;
+    public List<Omhældning> getOmhældninger() {
+        return omhældninger;
     }
 
-    //Pre : this.fad != null
-    public void addDestillatHistorik(Fad newFad) {
-        DestillatHistorik destillatHistorik = new DestillatHistorik(fad, påfyldningsDato, LocalDate.now());
-        påfyldningsDato = LocalDate.now();
-        this.destillatHistorik.add(destillatHistorik);
+    public void omhældDestillat(Fad newFad) {
+        Omhældning omhældning = new Omhældning(fad, påfyldningsDato, LocalDate.now());
+        this.omhældninger.add(omhældning);
         fad.setDestillat(null);
+        this.fad = newFad;
     }
 
-    private void setAlkoholprocent() {
+    private void udregnAlkoholprocent() {
         double literEthanol = 0;
         for (Påfyldning påfyldning : påfyldninger) {
             literEthanol += (påfyldning.getDestillering().getAlkoholProcent() / 100) * påfyldning.getLiterPåfyldt();
@@ -92,11 +90,15 @@ public class Destillat {
         if (periodPD.getYears() >= 3) {
             return true;
         }
-        if (destillatHistorik != null) {
-            Period period = Period.between(destillatHistorik.get(0).getStartDato(), LocalDate.now());
-            if (period.getYears() >= 3) {
-                return true;
-            }
+        double days = 0;
+        boolean result = false;
+//        TODO if omhældninger.size > 0?
+        for (Omhældning dh : omhældninger) {
+            Period period = Period.between(dh.getStartDato(), dh.getSlutDato());
+            days += period.getDays();
+        }
+        if (days >= 1095) {
+            result = true;
         }
         return false;
     }

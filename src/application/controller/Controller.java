@@ -47,26 +47,25 @@ public class Controller {
     }
 
     public static WhiskyProdukt createWhiskyProdukt(String navn, String beskrivelse) {
-        WhiskyProdukt whiskyProdukt = new WhiskyProdukt(navn, beskrivelse);
+        WhiskyProdukt whiskyProdukt = new WhiskyProdukt(navn);
         return whiskyProdukt;
     }
 
     //    pre: antalFlasker <= currentLiterWhisky
 
     public static void createWhiskyflasker(WhiskyProdukt whiskyProdukt) {
-        double liter = whiskyProdukt.getSamletAntalLiter();
-        //TODO Nedenstående kan også være en While (whiskyProdukt.getLiter > 0)
+        double liter = whiskyProdukt.getLiterTotal();
+        String produktHistorie = whiskyProdukt.genererHistorie();
         for (int i = 0; i < liter; i++) {
-            whiskyProdukt.fyldPåFlasker();
+            whiskyProdukt.createWhiskyFlaske(produktHistorie);
         }
-//        TODO setAntalLiter til 0 bagefter, eller sig literWhisky--; efter hver create?
-//         (som er tilfældet nu)
-//        whiskyProdukt.setAntalLiter(0);
+        whiskyProdukt.setAntalLiter(0);
     }
 
     public static void omhældningAfDestillat(Fad fadFra, Fad fadTil) {
         fadTil.addDestillat(fadFra.getDestillat());
         fadFra.getDestillat().addDestillatHistorik(fadTil);
+//        fadFra.setDestillat(null);
     }
 
     public static boolean removeReol(Lager lager, Reol reol) {
