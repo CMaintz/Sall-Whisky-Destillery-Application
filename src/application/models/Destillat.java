@@ -73,12 +73,13 @@ public class Destillat {
         }
     }
 
-    private void createModningsHistorik() {
+    private ModningsHistorik createModningsHistorik() {
         if (this.modningsHistorik.size() > 0) {
             this.modningsHistorik.get(this.modningsHistorik.size() - 1).setSlutDato(LocalDate.now());
         }
         ModningsHistorik modningsHistorik = new ModningsHistorik(fad, LocalDate.now());
         this.modningsHistorik.add(modningsHistorik);
+        return modningsHistorik;
     }
 
     private void udregnAlkoholprocent() {

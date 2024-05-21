@@ -64,8 +64,7 @@ public class Controller {
 // TODO vi skal sørge for at kunne påfylde et fad så addDestillat kaldes
     public static void omhældningAfDestillat(Fad fadFra, Fad fadTil) {
         fadTil.addDestillat(fadFra.getDestillat());
-        fadFra.getDestillat().addDestillatHistorik(fadTil);
-//        fadFra.setDestillat(null);
+        fadFra.setDestillat(null);
     }
 
     public static boolean removeReol(Lager lager, Reol reol) {

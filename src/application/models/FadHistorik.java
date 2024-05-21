@@ -1,7 +1,6 @@
 package application.models;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +53,7 @@ public class FadHistorik {
         return tidligereDestillater;
     }
 
-    public void addTidligereDestillat(Destillat destillat) {
+    public void addDestilat(Destillat destillat) {
         if (!tidligereDestillater.contains(destillat)) {
             tidligereDestillater.add(destillat);
         }
