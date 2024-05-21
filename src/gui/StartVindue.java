@@ -18,7 +18,6 @@ public class StartVindue extends Application {
     @Override
     public void init() {
 //        controller = Controller.getController();
-//        controller.createSomeObjects();
     }
 
     @Override
@@ -52,10 +51,10 @@ public class StartVindue extends Application {
     private void initTabPane(TabPane tabPane) {
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-        Tab tabForside = new Tab("Forside");
-        Tab tabDestillation = new Tab("Destillation");
-        Tab tabLager = new Tab("Lagerstyring");
-        Tab tabData = new Tab("Hent Faddata");
+        Tab tabForside = new Tab("Fade");
+        Tab tabDestillation = new Tab("Destillering");
+        Tab tabLager = new Tab("Lager");
+        Tab tabData = new Tab("Whiskyprodukt");
 
         DestillationPane destillationPane = new DestillationPane();
         tabDestillation.setContent(destillationPane);

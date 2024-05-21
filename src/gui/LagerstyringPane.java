@@ -22,7 +22,6 @@ public class LagerstyringPane extends GridPane {
 
     public LagerstyringPane() {
         controller = new Controller();
-        controller.createSomeObjects();
 
         lagerListView = new ListView<>();
         fadListView = new ListView<Fad>();

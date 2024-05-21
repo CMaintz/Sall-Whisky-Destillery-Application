@@ -45,7 +45,7 @@ public class Fad {
 
     public Destillat addDestillat(Destillat destillat) {
         if (destillat == null) {
-            this.fadHistorik.addDestillat(destillat);
+            this.fadHistorik.addTidligereDestillat(destillat);
             this.destillat = destillat;
             destillat.setFad(this);
         }
