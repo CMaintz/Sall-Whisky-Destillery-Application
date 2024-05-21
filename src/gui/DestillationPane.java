@@ -18,8 +18,6 @@ public class DestillationPane extends GridPane {
 
     public DestillationPane() {
         controller = new Controller();
-        controller.createSomeObjects();
-
         fadListView = new ListView<>();
         destilleringListView = new ListView<>();
 
@@ -78,19 +76,19 @@ public class DestillationPane extends GridPane {
             OpretKorn newWindow = new OpretKorn();
         });
 
-        påfyldFad.setOnAction((e -> {
-            Fad selectedFad = fadListView.getSelectionModel().getSelectedItem();
-            Destillering selectedDestillering = destilleringListView.getSelectionModel().getSelectedItem();
+//        påfyldFad.setOnAction((e -> {
+//            Fad selectedFad = fadListView.getSelectionModel().getSelectedItem();
+//            Destillering selectedDestillering = destilleringListView.getSelectionModel().getSelectedItem();
 
 
-            } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Fejl");
-                alert.setHeaderText(null);
-                alert.setContentText("Vælg venligst et fad og en destillering");
-                alert.showAndWait();
-            }
-        }));
+//            } else {
+//                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//                alert.setTitle("Fejl");
+//                alert.setHeaderText(null);
+//                alert.setContentText("Vælg venligst et fad og en destillering");
+//                alert.showAndWait();
+//            }
+//        }));
 
     }
 

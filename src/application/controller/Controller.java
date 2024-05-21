@@ -4,6 +4,7 @@ import application.models.*;
 import storage.Storage;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Controller {
     public static Fad createFad(int størrelse, String tidligereIndhold, String land, LocalDate fraÅr, String leverandør) {
@@ -94,4 +95,14 @@ public class Controller {
             //         TODO lav metode til at slette i storage
         }
     }
+
+    public static ArrayList<Lager> getLager() {
+        return Storage.getLager();
+    }
+
+    public static ArrayList<Fad> getFade() {
+        return Storage.getFade();
+    }
+
+
 }

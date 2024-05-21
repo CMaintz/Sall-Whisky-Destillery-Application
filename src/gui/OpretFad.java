@@ -70,7 +70,7 @@ public class OpretFad extends Stage {
         //Action til knappen
         opretFad.setOnAction(e -> {
             int literKapacitet = Integer.parseInt(txtLiterKapacitet.getText());
-            LocalD fraÅr = LocalDate.parse(txtFraÅr.getText());
+            LocalDate fraÅr = LocalDate.parse(txtFraÅr.getText());
             String tidligereIndhold = txtTidligereIndhold.getText();
             String land = txtLand.getText();
             String leverandør = txtLeverandør.getText();
