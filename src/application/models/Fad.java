@@ -46,7 +46,7 @@ public class Fad {
 
     public Destillat addDestillat(Destillat destillat) {
         if (destillat == null) {
-            fadHistorik.addDestillat(destillat);
+            this.fadHistorik.addDestillat(destillat);
             this.destillat = destillat;
             destillat.setFad(this);
         }
@@ -67,7 +67,7 @@ public class Fad {
 
     @Override
     public String toString() {
-        return "#" + fadNr + " " + getType() + " " + literKapacitet + "L";
+        return "#" + fadNr + " " + literKapacitet + "L " + getType();
     }
 
 //    public boolean erWhiskyKlar() {

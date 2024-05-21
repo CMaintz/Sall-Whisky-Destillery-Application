@@ -39,9 +39,10 @@ public class ModelsTest {
     @Test
     void destillatAddFadHistorikTest() {
         Fad testFad = new Fad(80);
-        destillat.omhældDestillat(testFad);
+//        TODO
+//        destillat.createModningsHistorik(testFad);
         assertTrue(destillat.getFad().equals(testFad));
-        assertTrue(destillat.getOmhældninger().get(0).getFad().equals(fad));
+        assertTrue(destillat.getModningsHistorik().get(0).getFad().equals(fad));
     }
 
     @Test
@@ -57,7 +58,8 @@ public class ModelsTest {
     void destillatKlarTest() {
         assertFalse(destillat.destillatKlar());
         Destillat destillatTest = new Destillat("Test");
-        destillat.setPåfyldningsDato(LocalDate.of(2020, 10, 10));
+//        TODO
+//        destillat.setPåfyldningsDato(LocalDate.of(2020, 10, 10));
         assertTrue(destillat.destillatKlar());
     }
 
@@ -65,7 +67,8 @@ public class ModelsTest {
     void testSetters() {
         Destillat destillat = new Destillat("Test Destillat");
 
-        destillat.setPåfyldningsDato(LocalDate.of(2022, 5, 15));
+//        TODO
+//        destillat.setPåfyldningsDato(LocalDate.of(2022, 5, 15));
         assertEquals(LocalDate.of(2022, 5, 15), destillat.getPåfyldningsDato());
 
         Fad fad = new Fad(50);
@@ -84,7 +87,7 @@ public class ModelsTest {
         assertTrue(destillat.getFad().equals(fad));
         destillat.getPåfyldninger();
         destillat.getPåfyldningsDato();
-        destillat.getOmhældninger();
+        destillat.getModningsHistorik();
         destillat.getNavn();
     }
 }

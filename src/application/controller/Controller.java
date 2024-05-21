@@ -54,14 +54,14 @@ public class Controller {
     //    pre: antalFlasker <= currentLiterWhisky
 
     public static void createWhiskyflasker(WhiskyProdukt whiskyProdukt) {
-        double liter = whiskyProdukt.getLiterTotal();
+        double liter = whiskyProdukt.getAntalLiter();
         String produktHistorie = whiskyProdukt.genererHistorie();
         for (int i = 0; i < liter; i++) {
             whiskyProdukt.createWhiskyFlaske(produktHistorie);
         }
         whiskyProdukt.setAntalLiter(0);
     }
-
+// TODO vi skal sørge for at kunne påfylde et fad så addDestillat kaldes
     public static void omhældningAfDestillat(Fad fadFra, Fad fadTil) {
         fadTil.addDestillat(fadFra.getDestillat());
         fadFra.setDestillat(null);
@@ -77,7 +77,6 @@ public class Controller {
         }
         if (remove) {
             Storage.getLager().remove(lager);
-//            ?????
         }
     }
 }
