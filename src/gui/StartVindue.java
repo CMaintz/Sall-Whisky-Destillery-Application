@@ -57,13 +57,12 @@ public class StartVindue extends Application {
         Tab tabLager = new Tab("Lagerstyring");
         Tab tabData = new Tab("Hent Faddata");
 
-
-//        DestillationPane destillationPane = new DestillationPane();
-//        tabDestillation.setContent(destillationPane);
-//        LagerstyringPane lagerstyringPane = new LagerstyringPane();
-//        tabLager.setContent(lagerstyringPane);
-//        DataPane dataPane = new DataPane();
-//        tabData.setContent(dataPane);
+        DestillationPane destillationPane = new DestillationPane();
+        tabDestillation.setContent(destillationPane);
+        LagerstyringPane lagerstyringPane = new LagerstyringPane();
+        tabLager.setContent(lagerstyringPane);
+        DataPane dataPane = new DataPane();
+        tabData.setContent(dataPane);
 
         tabPane.getTabs().add(tabForside);
         tabPane.getTabs().add(tabDestillation);
@@ -72,10 +71,11 @@ public class StartVindue extends Application {
 
         tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
             if (newTab == tabDestillation) {
-                DestillationPane destillationPane = new DestillationPane();
-                tabDestillation.setContent(destillationPane);
+                DestillationPane newDestillationPane = new DestillationPane();
+                tabDestillation.setContent(newDestillationPane);
             }
         });
+    }
 
 //        tabForside.setOnSelectionChanged(event -> forsidePane.updateControls());
 //        tabDestillation.setOnSelectionChanged(event -> destillationPane.updateControls());
@@ -83,4 +83,4 @@ public class StartVindue extends Application {
 //        tabData.setOnSelectionChanged(event -> dataPane.updateControls());
 //
     }
-}
+

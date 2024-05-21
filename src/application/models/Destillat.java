@@ -20,6 +20,7 @@ public class Destillat {
 
         this.navn = navn;
         påfyldningsDato = LocalDate.now();
+        setAlkoholprocent();
     }
 
     public Påfyldning createPåfyldning(String medarbejderNavn, double literPåfyldt, Destillering destillering){

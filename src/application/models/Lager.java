@@ -27,6 +27,18 @@ public class Lager {
         return new ArrayList<>(reoler);
     }
 
+public ArrayList<Fad> getFadeMedDestillat() {
+        ArrayList<Fad> result = new ArrayList<>();
+        for (Reol reol : reoler) {
+            for (Hylde hylde : reol.getHylder()) {
+                if (hylde.getFad() != null && hylde.getFad().getDestillat() != null) {
+                    result.add(hylde.getFad());
+                }
+            }
+        }
+        return result;
+    }
+
 
     public ArrayList<Fad> getFadeKlar() {
         ArrayList<Fad> result = new ArrayList<>();
@@ -38,6 +50,11 @@ public class Lager {
             }
         }
         return result;
+    }
+
+    //toString
+    public String toString() {
+        return "Lager: " + navn;
     }
 
 

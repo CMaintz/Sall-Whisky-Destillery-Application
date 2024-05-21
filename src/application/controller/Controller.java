@@ -64,10 +64,10 @@ public class Controller {
 //        whiskyProdukt.setAntalLiter(0);
     }
 
-    public static void omhældningAfDestillat(Fad fadFra, Fad fadTil) {
-        fadTil.addDestillat(fadFra.getDestillat());
-        fadFra.setDestillat(null);
-    }
+//    public static void omhældningAfDestillat(Fad fadFra, Fad fadTil) {
+//        fadTil.addDestillat(fadFra.getDestillat());
+//        fadFra.setDestillat(null);
+//    }
     public static void removeLager(Lager lager) {
         boolean remove = true;
         for (Reol reol : lager.getReoler()) {
@@ -82,18 +82,4 @@ public class Controller {
 //            ?????
         }
     }
-
-    public void createSomeObjects() {
-        //Create Fad
-        FadHistorik fadHistorik = new FadHistorik("Sherry", "Spanien", 2010, 2015, "Macallan");
-        Fad fad = createFad(100, 5, fadHistorik);
-
-        //Create Korn
-        Korn korn = createKorn("Byg", "Pilsner", "Mark1");
-
-        //Create Destillering
-        Destillering destillering = createDestillering("MaltBatch1", korn, "Mads", 100, 40, "Turf", "Kommentar");
-
-    }
-
 }

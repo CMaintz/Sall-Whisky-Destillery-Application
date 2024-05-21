@@ -13,7 +13,7 @@ public class FadHistorik {
     private String leverandør;
     private List<Destillat> tidligereDestillater;
 
-    FadHistorik(String tidligereIndhold, String land, LocalDate fraÅr, String leverandør) {
+    public FadHistorik(String tidligereIndhold, String land, LocalDate fraÅr, String leverandør) {
 //        TODO skal man kunne indlæse historik fra en tekstfil?
         this.tidligereIndhold = tidligereIndhold;
         this.land = land;

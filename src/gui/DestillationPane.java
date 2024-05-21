@@ -1,16 +1,14 @@
 package gui;
 
 import application.controller.Controller;
+import application.models.Destillat;
 import application.models.Destillering;
 import application.models.Fad;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.control.Button;
 import storage.Storage;
 
 public class DestillationPane extends GridPane {
@@ -58,6 +56,7 @@ public class DestillationPane extends GridPane {
 
 
 
+
         //Action til knapper
         opretFad.setOnAction(e -> {
             OpretFad newWindow = new OpretFad();
@@ -79,6 +78,19 @@ public class DestillationPane extends GridPane {
             OpretKorn newWindow = new OpretKorn();
         });
 
+        påfyldFad.setOnAction((e -> {
+            Fad selectedFad = fadListView.getSelectionModel().getSelectedItem();
+            Destillering selectedDestillering = destilleringListView.getSelectionModel().getSelectedItem();
+
+
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Fejl");
+                alert.setHeaderText(null);
+                alert.setContentText("Vælg venligst et fad og en destillering");
+                alert.showAndWait();
+            }
+        }));
 
     }
 
