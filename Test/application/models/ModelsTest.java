@@ -90,7 +90,7 @@ public class ModelsTest {
         assertTrue(destillat.getFad().equals(fad));
         destillat.getPåfyldninger();
         destillat.getPåfyldningsDato();
-        destillat.getOmhældninger();
+        destillat.getModningsHistorik();
         destillat.getNavn();
         assertTrue(destillat.getPåfyldninger().contains(påfyldning));
         assertTrue(destillat.getPåfyldningsDato().equals(LocalDate.now()));

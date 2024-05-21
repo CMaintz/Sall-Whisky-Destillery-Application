@@ -6,20 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Destillat {
-    private List<Påfyldning> påfyldninger;
+    private final List<Påfyldning> påfyldninger;
     private String navn;
     private double antalLiter;
-    private LocalDate påfyldningsDato;
     private double alkoholprocent;
-    List<Omhældning> omhældninger;
+    private final List<ModningsHistorik> modningsHistorik;
     private Fad fad;
 
     public Destillat(String navn) {
         påfyldninger = new ArrayList<>();
-        omhældninger = new ArrayList<>();
+        modningsHistorik = new ArrayList<>();
 
         this.navn = navn;
-        påfyldningsDato = LocalDate.now();
     }
 
     // Pre: literPåfyld > 0
@@ -39,7 +37,7 @@ public class Destillat {
     }
 
     public LocalDate getPåfyldningsDato() {
-        return påfyldningsDato;
+        return modningsHistorik.get(0).getStartDato();
     }
 
     public double getAlkoholprocent() {
@@ -56,25 +54,31 @@ public class Destillat {
 
     public void setFad(Fad fad) {
         this.fad = fad;
-    }
-
-    public void setPåfyldningsDato(LocalDate påfyldningsDato) {
-        this.påfyldningsDato = påfyldningsDato;
+        createModningsHistorik();
     }
 
     public Fad getFad() {
         return fad;
     }
 
-    public List<Omhældning> getOmhældninger() {
-        return omhældninger;
+    public List<ModningsHistorik> getModningsHistorik() {
+        return modningsHistorik;
     }
 
     public void omhældDestillat(Fad newFad) {
-        Omhældning omhældning = new Omhældning(fad, påfyldningsDato, LocalDate.now());
-        this.omhældninger.add(omhældning);
-        fad.setDestillat(null);
-        this.fad = newFad;
+        if (!this.fad.equals(newFad)) {
+            fad.setDestillat(null);
+            this.fad = newFad;
+            createModningsHistorik();
+        }
+    }
+
+    private void createModningsHistorik() {
+        if (this.modningsHistorik.size() > 0) {
+            this.modningsHistorik.get(this.modningsHistorik.size() - 1).setSlutDato(LocalDate.now());
+        }
+        ModningsHistorik modningsHistorik = new ModningsHistorik(fad, LocalDate.now());
+        this.modningsHistorik.add(modningsHistorik);
     }
 
     private void udregnAlkoholprocent() {
@@ -86,21 +90,22 @@ public class Destillat {
     }
 
     public boolean destillatKlar() {
-        Period periodPD = Period.between(påfyldningsDato, LocalDate.now());
+        Period periodPD = Period.between(modningsHistorik.get(0).getStartDato(), LocalDate.now());
         if (periodPD.getYears() >= 3) {
             return true;
         }
-        double days = 0;
-        boolean result = false;
-//        TODO if omhældninger.size > 0?
-        for (Omhældning dh : omhældninger) {
-            Period period = Period.between(dh.getStartDato(), dh.getSlutDato());
-            days += period.getDays();
-        }
-        if (days >= 1095) {
-            result = true;
-        }
         return false;
+//        double days = 0;
+//        boolean result = false;
+////        TODO if omhældninger.size > 0?
+//        for (ModningsHistorik dh : modningsHistorik) {
+//            Period period = Period.between(dh.getStartDato(), dh.getSlutDato());
+//            days += period.getDays();
+//        }
+//        if (days >= 1095) {
+//            result = true;
+//        }
+//        return result;
     }
 
     @Override
@@ -109,7 +114,6 @@ public class Destillat {
                 "påfyldning=" + påfyldninger +
                 ", navn='" + navn + '\'' +
                 ", antalLiter=" + antalLiter +
-                ", påfyldningsDato=" + påfyldningsDato +
                 '}';
     }
 }

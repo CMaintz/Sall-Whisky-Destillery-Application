@@ -8,15 +8,14 @@ import java.util.List;
 public class WhiskyProdukt {
     private String navn;
     private double alkoholProcent;
-    private String beskrivelse; //TODO Ved ikke om vi skal beholde den her eller bare lave det til en metode?
     private List<FadTapning> fadTapninger;
     private final List<WhiskyFlaske> fyldteFlasker;
     private double literVandTilføjet;
-    private double literTotal;
+    private double antalLiter;
 
     public WhiskyProdukt(String navn) {
         this.navn = navn;
-        this.literTotal = 0;
+        this.antalLiter = 0;
         this.literVandTilføjet = 0;
         this.fadTapninger = new ArrayList<>();
         this.fyldteFlasker = new ArrayList<>();
@@ -25,7 +24,7 @@ public class WhiskyProdukt {
     public FadTapning createFadTapning(String medarbejderNavn, double literTappet, Fad fad) {
         FadTapning ft = new FadTapning(medarbejderNavn, literTappet, fad);
         fadTapninger.add(ft);
-        literTotal += literTappet;
+        antalLiter += literTappet;
         udregnAlkoholprocent();
         return ft;
     }
@@ -33,13 +32,13 @@ public class WhiskyProdukt {
     public void addFadTapning(FadTapning fadTapning) {
         if (!fadTapninger.contains(fadTapning)) {
             this.fadTapninger.add(fadTapning);
-            literTotal += fadTapning.getLiterTappet();
+            antalLiter += fadTapning.getLiterTappet();
         }
     }
 
 
     public void setAntalLiter(int liter) {
-        this.literTotal = liter;
+        this.antalLiter = liter;
     }
 
     public WhiskyFlaske createWhiskyFlaske(String produktHistorie) {
@@ -66,33 +65,25 @@ public class WhiskyProdukt {
         for (FadTapning fadTapning : fadTapninger) {
             literEthanol += (fadTapning.getDestillat().getAlkoholprocent() / 100) * fadTapning.getLiterTappet();
         }
-        alkoholProcent = (literEthanol / literTotal) * 100;
+        alkoholProcent = (literEthanol / antalLiter) * 100;
     }
 
     public void tilføjVand(int literVand) {
         this.literVandTilføjet += literVand;
-        literTotal += literVand;
+        antalLiter += literVand;
         udregnAlkoholprocent();
     }
 
     public String whiskyType() {
         if (fadTapninger.size() == 1) {
             return literVandTilføjet == 0 ? "Cask Strength" : "Single Cask";
-//            if (literVandTilføjet == 0) {
-//                return "Cask Strength";
-//            }
-//            return "Single Cask";
-            if (literVandTilføjet == 0) {
-                return "Cask Strength";
-            }
-            return "Single Cask";
         } else {
             return "Single Malt";
         }
     }
 
-    public double getLiterTotal() {
-        return literTotal;
+    public double getAntalLiter() {
+        return antalLiter;
     }
 
     public double getLiterVandTilføjet() {
@@ -144,7 +135,7 @@ public class WhiskyProdukt {
 //        }
 
         for (FadTapning ft : fadTapninger) {
-            for (Omhældning dh : ft.getDestillat().getOmhældninger()) {
+            for (ModningsHistorik dh : ft.getDestillat().getModningsHistorik()) {
 //                toReturn += dh.getFad();
                 dh.getStartDato().until(dh.getSlutDato()).getMonths();
             }
@@ -160,8 +151,8 @@ public class WhiskyProdukt {
             String modningsTid = "";
             int måneder = 0;
             for (FadTapning ft : fadTapninger) {
-                for (Omhældning omhældning : ft.getDestillat().getOmhældninger()) {
-                    måneder += omhældning.getStartDato().until(omhældning.getSlutDato(), ChronoUnit.MONTHS);
+                for (ModningsHistorik modningsHistorik : ft.getDestillat().getModningsHistorik()) {
+                    måneder += modningsHistorik.getStartDato().until(modningsHistorik.getSlutDato(), ChronoUnit.MONTHS);
                 }
             }
 //            return måneder / 12;
@@ -170,17 +161,17 @@ public class WhiskyProdukt {
         fadTapninger.get(0).getDestillat().getPåfyldningsDato().until(LocalDate.now());
 //TODO kan vi ikke bare sige pre: newFad.getType == oldFad.getType,
 // så man ikke skal tjekke fadTyper i det mindste?
-// tror jeg nu næppe...
+// tror jeg nu næppe... SPØRG MARGRETHE
         String modningsTid = "";
         for (FadTapning ft : fadTapninger) {
             String temp;
-            if (ft.getDestillat().getOmhældninger().size() > 0) {
-                for (Omhældning omhældning : ft.getDestillat().getOmhældninger()) {
-                    temp = omhældning.getFad().getType();
+            if (ft.getDestillat().getModningsHistorik().size() > 0) {
+                for (ModningsHistorik modningsHistorik : ft.getDestillat().getModningsHistorik()) {
+                    temp = modningsHistorik.getFad().getType();
                     if (!fade.contains(temp)) {
                         fade += " og " + temp;
                     }
-                    modningsTid += (omhældning.getStartDato().until(omhældning.getSlutDato(), ChronoUnit.MONTHS)) / 12 + " og ";
+                    modningsTid += (modningsHistorik.getStartDato().until(modningsHistorik.getSlutDato(), ChronoUnit.MONTHS)) / 12 + " og ";
                 }
             }
         }
@@ -208,7 +199,6 @@ public class WhiskyProdukt {
             return "\nMæsket ved håndkraft og fermenteret i " + lavestAntalTimer + "\nDobbeltdestilleret langtsomt i direct fired kobber pot stills.";
         }
         return "\nMæsket ved håndkraft og fermenteret i " + lavestAntalTimer + " til " + højesteAntalTimer + "\nDobbeltdestilleret langtsomt i direct fired kobber pot stills.";
-
     }
 
 }
