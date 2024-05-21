@@ -52,11 +52,13 @@ public class StartVindue extends Application {
     private void initTabPane(TabPane tabPane) {
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-        Tab tabForside = new Tab("Forside");
+        Tab tabForside = new Tab("Fade");
         Tab tabDestillation = new Tab("Destillation");
         Tab tabLager = new Tab("Lagerstyring");
         Tab tabData = new Tab("Hent Faddata");
 
+        FadVindue fadVindue = new FadVindue();
+        tabForside.setContent(fadVindue);
         DestillationPane destillationPane = new DestillationPane();
         tabDestillation.setContent(destillationPane);
         LagerstyringPane lagerstyringPane = new LagerstyringPane();
@@ -76,6 +78,8 @@ public class StartVindue extends Application {
             }
         });
     }
+
+
 
 //        tabForside.setOnSelectionChanged(event -> forsidePane.updateControls());
 //        tabDestillation.setOnSelectionChanged(event -> destillationPane.updateControls());

@@ -1,6 +1,7 @@
 package application.controller;
 
 import application.models.*;
+import storage.ListStorage;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,10 +16,6 @@ public abstract class Controller {
         fad.createFadHistorik(tidligereIndhold, land, fraÅr, leverandør);
         storage.addFad(fad);
         return fad;
-    }
-
-    public static List<Fad> getFade() {
-        return storage.getFade();
     }
 
     public static Korn createKorn(String sort, String variant, String markNavn) {
@@ -73,6 +70,14 @@ public abstract class Controller {
     public static void omhældningAfDestillat(Fad fadFra, Fad fadTil) {
         fadTil.addDestillat(fadFra.getDestillat());
         fadFra.setDestillat(null);
+    }
+
+    public static List<Lager> getLager() {
+        return storage.getLagre();
+    }
+
+    public static List<Fad> getFade() {
+        return storage.getFade();
     }
 
 

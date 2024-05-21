@@ -19,7 +19,6 @@ public class DataPane extends GridPane {
 
     public DataPane() {
         controller = new Controller();
-        controller.createSomeObjects();
 
         fadListView = new ListView<Fad>();
 

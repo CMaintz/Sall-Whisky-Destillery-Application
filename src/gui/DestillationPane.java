@@ -1,6 +1,7 @@
 package gui;
 
 import application.controller.Controller;
+import application.models.Destillat;
 import application.models.Destillering;
 import application.models.Fad;
 import javafx.collections.FXCollections;
@@ -17,8 +18,6 @@ public class DestillationPane extends GridPane {
 
     public DestillationPane() {
         controller = new Controller();
-//        controller.createSomeObjects();
-
         fadListView = new ListView<>();
         destilleringListView = new ListView<>();
 
@@ -38,10 +37,10 @@ public class DestillationPane extends GridPane {
         påfyldFad.setPrefSize(100,150);
 
         //Listviews
-        ObservableList<Fad> fadList = FXCollections.observableArrayList(ListStorage.getFade());
+        ObservableList<Fad> fadList = FXCollections.observableArrayList(Storage.getFade());
         fadListView.setItems(fadList);
 
-        ObservableList<Destillering> destilleringList = FXCollections.observableArrayList(ListStorage.getDestillering());
+        ObservableList<Destillering> destilleringList = FXCollections.observableArrayList(Storage.getDestillering());
         destilleringListView.setItems(destilleringList);
 
         this.add(opretFad, 0, 0);
@@ -60,7 +59,7 @@ public class DestillationPane extends GridPane {
         opretFad.setOnAction(e -> {
             OpretFad newWindow = new OpretFad();
             newWindow.setOnHidden(event -> {
-                ObservableList<Fad> updatedFadList = FXCollections.observableArrayList(ListStorage.getFade());
+                ObservableList<Fad> updatedFadList = FXCollections.observableArrayList(Storage.getFade());
                 fadListView.setItems(updatedFadList);
             });
         });
@@ -68,7 +67,7 @@ public class DestillationPane extends GridPane {
         opretDestillation.setOnAction(e -> {
             OpretDestillation newWindow = new OpretDestillation();
             newWindow.setOnHidden(event -> {
-                ObservableList<Destillering> updatedDestilleringList = FXCollections.observableArrayList(ListStorage.getDestillering());
+                ObservableList<Destillering> updatedDestilleringList = FXCollections.observableArrayList(Storage.getDestillering());
                 destilleringListView.setItems(updatedDestilleringList);
             });
         });
@@ -77,20 +76,19 @@ public class DestillationPane extends GridPane {
             OpretKorn newWindow = new OpretKorn();
         });
 
-        påfyldFad.setOnAction((e -> {
-            Fad selectedFad = fadListView.getSelectionModel().getSelectedItem();
-            Destillering selectedDestillering = destilleringListView.getSelectionModel().getSelectedItem();
+//        påfyldFad.setOnAction((e -> {
+//            Fad selectedFad = fadListView.getSelectionModel().getSelectedItem();
+//            Destillering selectedDestillering = destilleringListView.getSelectionModel().getSelectedItem();
 
 
-//            }
-//            else {
+//            } else {
 //                Alert alert = new Alert(Alert.AlertType.INFORMATION);
 //                alert.setTitle("Fejl");
 //                alert.setHeaderText(null);
 //                alert.setContentText("Vælg venligst et fad og en destillering");
 //                alert.showAndWait();
 //            }
-        }));
+//        }));
 
     }
 

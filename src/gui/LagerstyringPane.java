@@ -22,7 +22,6 @@ public class LagerstyringPane extends GridPane {
 
     public LagerstyringPane() {
         controller = new Controller();
-        controller.createSomeObjects();
 
         lagerListView = new ListView<>();
         fadListView = new ListView<Fad>();
@@ -46,6 +45,8 @@ public class LagerstyringPane extends GridPane {
         //Listviews
         ObservableList<Lager> lagerList = FXCollections.observableArrayList(ListStorage.getLager());
         lagerListView.setItems(lagerList);
+
+        fadListView.getItems().setAll(Controller.getFade());
 
         Lager lager = lagerListView.getSelectionModel().getSelectedItem();
         if  (lager != null) {
