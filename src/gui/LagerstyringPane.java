@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import storage.Storage;
+import storage.ListStorage;
 
 public class LagerstyringPane extends GridPane {
     private Controller controller;
@@ -44,7 +44,7 @@ public class LagerstyringPane extends GridPane {
 
 
         //Listviews
-        ObservableList<Lager> lagerList = FXCollections.observableArrayList(Storage.getLager());
+        ObservableList<Lager> lagerList = FXCollections.observableArrayList(ListStorage.getLager());
         lagerListView.setItems(lagerList);
 
         Lager lager = lagerListView.getSelectionModel().getSelectedItem();
@@ -70,7 +70,7 @@ public class LagerstyringPane extends GridPane {
         opretLager.setOnAction(e -> {
              OpretLager newWindow = new OpretLager();
                 newWindow.setOnHidden(event -> {
-                 ObservableList<Lager> lagerList1 = FXCollections.observableArrayList(Storage.getLager());
+                 ObservableList<Lager> lagerList1 = FXCollections.observableArrayList(ListStorage.getLager());
                     lagerListView.setItems(lagerList1);
                 });
         });

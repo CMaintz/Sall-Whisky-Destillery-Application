@@ -1,5 +1,6 @@
 package application.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import application.models.Reol;
 import application.models.Fad;
@@ -7,7 +8,7 @@ import application.models.Hylde;
 
 
 
-public class Lager {
+public class Lager implements Serializable {
     private final ArrayList<Reol> reoler = new ArrayList<>();
     private int antalReoler;
     private String navn;

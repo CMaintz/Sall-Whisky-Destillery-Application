@@ -1,11 +1,12 @@
 package application.models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WhiskyProdukt {
+public class WhiskyProdukt implements Serializable {
     private String navn;
     private double alkoholProcent;
     private List<FadTapning> fadTapninger;

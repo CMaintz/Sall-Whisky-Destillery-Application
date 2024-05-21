@@ -1,10 +1,11 @@
 package application.models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
 
-public class Fad {
+public class Fad implements Serializable {
     private static int antalFade;
     private String fadNr;
     private int literKapacitet;

@@ -1,8 +1,9 @@
 package application.models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class ModningsHistorik {
+public class ModningsHistorik implements Serializable {
     private Fad fad;
     private LocalDate startDato;
     private LocalDate slutDato;

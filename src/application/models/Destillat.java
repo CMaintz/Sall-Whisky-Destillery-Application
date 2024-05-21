@@ -1,11 +1,12 @@
 package application.models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Destillat {
+public class Destillat implements Serializable {
     private final List<Påfyldning> påfyldninger;
     private String navn;
     private double antalLiter;

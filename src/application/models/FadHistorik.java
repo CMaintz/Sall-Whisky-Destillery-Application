@@ -1,10 +1,11 @@
 package application.models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FadHistorik {
+public class FadHistorik implements Serializable {
     private String tidligereIndhold;
     private String land;
     private LocalDate fraÅr;
@@ -53,7 +54,7 @@ public class FadHistorik {
         return tidligereDestillater;
     }
 
-    public void addDestilat(Destillat destillat) {
+    public void addDestillat(Destillat destillat) {
         if (!tidligereDestillater.contains(destillat)) {
             tidligereDestillater.add(destillat);
         }

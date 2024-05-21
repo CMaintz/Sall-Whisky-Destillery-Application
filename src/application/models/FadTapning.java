@@ -1,6 +1,8 @@
 package application.models;
 
-public class FadTapning {
+import java.io.Serializable;
+
+public class FadTapning implements Serializable {
     private String medarbejderNavn;
     private double literTappet;
     private Fad fad;

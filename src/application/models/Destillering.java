@@ -1,11 +1,13 @@
 package application.models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 //Når en destillering af whisky foretages, skal det registreres i systemet.
 //adminstrator indtaster detaljer om destilleringen, såsom startdato, slutdato, maltbatch, kornsort, medarbejder, mængde væske og alkholprocent.
 //Systemet skal kunne vise en liste over alle destilleringer, og det skal være muligt at søge i listen.
-public class Destillering {
+public class Destillering implements Serializable {
     private String maltBatch;
     private Korn korn;
     private String medarbejder;

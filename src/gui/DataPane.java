@@ -3,7 +3,6 @@ package gui;
 import application.controller.Controller;
 import application.models.Fad;
 import application.models.FadHistorik;
-import application.models.Lager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -11,7 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import storage.Storage;
+import storage.ListStorage;
 
 public class DataPane extends GridPane {
     private Controller controller;
@@ -38,7 +37,7 @@ public class DataPane extends GridPane {
 
 
         //Listviews
-        ObservableList<Fad> fadList = FXCollections.observableArrayList(Storage.getFade());
+        ObservableList<Fad> fadList = FXCollections.observableArrayList(ListStorage.getFade());
         fadListView.setItems(fadList.filtered(fad -> fad.getDestillat() != null));
 
         this.add(fadListView, 0, 3);

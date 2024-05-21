@@ -1,7 +1,6 @@
 package gui;
 
 import application.controller.Controller;
-import application.models.Destillat;
 import application.models.Destillering;
 import application.models.Fad;
 import javafx.collections.FXCollections;
@@ -9,7 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import storage.Storage;
+import storage.ListStorage;
 
 public class DestillationPane extends GridPane {
     private Controller controller;
@@ -39,10 +38,10 @@ public class DestillationPane extends GridPane {
         påfyldFad.setPrefSize(100,150);
 
         //Listviews
-        ObservableList<Fad> fadList = FXCollections.observableArrayList(Storage.getFade());
+        ObservableList<Fad> fadList = FXCollections.observableArrayList(ListStorage.getFade());
         fadListView.setItems(fadList);
 
-        ObservableList<Destillering> destilleringList = FXCollections.observableArrayList(Storage.getDestillering());
+        ObservableList<Destillering> destilleringList = FXCollections.observableArrayList(ListStorage.getDestillering());
         destilleringListView.setItems(destilleringList);
 
         this.add(opretFad, 0, 0);
@@ -61,7 +60,7 @@ public class DestillationPane extends GridPane {
         opretFad.setOnAction(e -> {
             OpretFad newWindow = new OpretFad();
             newWindow.setOnHidden(event -> {
-                ObservableList<Fad> updatedFadList = FXCollections.observableArrayList(Storage.getFade());
+                ObservableList<Fad> updatedFadList = FXCollections.observableArrayList(ListStorage.getFade());
                 fadListView.setItems(updatedFadList);
             });
         });
@@ -69,7 +68,7 @@ public class DestillationPane extends GridPane {
         opretDestillation.setOnAction(e -> {
             OpretDestillation newWindow = new OpretDestillation();
             newWindow.setOnHidden(event -> {
-                ObservableList<Destillering> updatedDestilleringList = FXCollections.observableArrayList(Storage.getDestillering());
+                ObservableList<Destillering> updatedDestilleringList = FXCollections.observableArrayList(ListStorage.getDestillering());
                 destilleringListView.setItems(updatedDestilleringList);
             });
         });

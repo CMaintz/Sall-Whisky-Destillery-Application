@@ -1,8 +1,9 @@
 package application.models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class WhiskyFlaske {
+public class WhiskyFlaske implements Serializable {
     private int flaskeNr;
     private String produktHistorie;
     private WhiskyProdukt whisky;

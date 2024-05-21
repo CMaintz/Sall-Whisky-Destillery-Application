@@ -1,7 +1,9 @@
 package application.models;
 
 
-public class Hylde {
+import java.io.Serializable;
+
+public class Hylde implements Serializable {
     private Fad fad;
     private int nummer;
 

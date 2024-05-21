@@ -1,27 +1,35 @@
 package application.controller;
 
 import application.models.*;
-import storage.Storage;
 
 import java.time.LocalDate;
+import java.util.List;
 
-public class Controller {
+public abstract class Controller {
+
+    public static Storage storage;
+    public static void setStorage(Storage storage) {Controller.storage = storage;}
+
     public static Fad createFad(int størrelse, String tidligereIndhold, String land, LocalDate fraÅr, String leverandør) {
         Fad fad = new Fad(størrelse);
         fad.createFadHistorik(tidligereIndhold, land, fraÅr, leverandør);
-        Storage.addFad(fad);
+        storage.addFad(fad);
         return fad;
+    }
+
+    public static List<Fad> getFade() {
+        return storage.getFade();
     }
 
     public static Korn createKorn(String sort, String variant, String markNavn) {
         Korn korn = new Korn(sort, variant, markNavn);
-        Storage.addKorn(korn);
+        storage.addKorntype(korn);
         return korn;
     }
 
     public static Destillering createDestillering(String maltBatch, Korn korn, String medarbejder, double mængdeVæske, double alkoholProcent, String rygeMateriale, String kommentar) {
         Destillering destillering = new Destillering(maltBatch, korn, medarbejder, mængdeVæske, alkoholProcent, rygeMateriale, kommentar);
-        Storage.addDestillering(destillering);
+        storage.addDestillering(destillering);
         return destillering;
     }
 
@@ -37,7 +45,7 @@ public class Controller {
 
     public static Lager createLager(String navn) {
         Lager lager = new Lager(navn);
-        Storage.addLager(lager);
+        storage.addLager(lager);
         return lager;
     }
 
@@ -46,8 +54,9 @@ public class Controller {
         return ft;
     }
 
-    public static WhiskyProdukt createWhiskyProdukt(String navn, String beskrivelse) {
+    public static WhiskyProdukt createWhiskyProdukt(String navn) {
         WhiskyProdukt whiskyProdukt = new WhiskyProdukt(navn);
+        storage.addWhiskyProdukt(whiskyProdukt);
         return whiskyProdukt;
     }
 
@@ -61,36 +70,10 @@ public class Controller {
         }
         whiskyProdukt.setAntalLiter(0);
     }
-// TODO vi skal sørge for at kunne påfylde et fad så addDestillat kaldes
     public static void omhældningAfDestillat(Fad fadFra, Fad fadTil) {
         fadTil.addDestillat(fadFra.getDestillat());
         fadFra.setDestillat(null);
     }
 
-    public static boolean removeReol(Lager lager, Reol reol) {
-        boolean remove = true;
-        for (Reol r : lager.getReoler()) {
-            for (Hylde hylde : r.getHylder()) {
-                if (hylde.getFad() != null) {
-                    remove = false;
-                }
-            }
-        }
-        if (remove) {
-//         TODO lav metode til at slette i storage
-        }
-        return remove;
-    }
 
-    public static void removeLager(Lager lager) {
-        boolean remove = true;
-        for (Reol reol : lager.getReoler()) {
-            if (removeReol(lager, reol)) {
-                remove = false;
-            }
-        }
-        if (remove) {
-            //         TODO lav metode til at slette i storage
-        }
-    }
 }
