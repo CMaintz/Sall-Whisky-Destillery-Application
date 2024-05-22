@@ -64,9 +64,7 @@ public class Controller {
     }
 // TODO vi skal sørge for at kunne påfylde et fad så addDestillat kaldes
     public static void omhældningAfDestillat(Fad fadFra, Fad fadTil) {
-        fadTil.addDestillat(fadFra.getDestillat());
-        fadFra.getDestillat().addDestillatHistorik(fadTil);
-//        fadFra.setDestillat(null);
+        fadFra.getDestillat().omhældDestillat(fadTil);
     }
 
     public static boolean removeReol(Lager lager, Reol reol) {
@@ -104,5 +102,24 @@ public class Controller {
         return Storage.getFade();
     }
 
+    public static ArrayList<Fad> getFyldtefade() {
+        ArrayList<Fad> result = new ArrayList<>();
+        for (Fad fad : Storage.getFade()) {
+            if (fad.getDestillat() != null) {
+                result.add(fad);
+            }
+        }
+        return result;
+    }
+
+    public static ArrayList<Fad> getTommeFade() {
+        ArrayList<Fad> result = new ArrayList<>();
+        for (Fad fad : Storage.getFade()) {
+            if (fad.getDestillat() == null) {
+                result.add(fad);
+            }
+        }
+        return result;
+    }
 
 }

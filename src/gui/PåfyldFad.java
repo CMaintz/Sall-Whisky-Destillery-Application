@@ -1,0 +1,136 @@
+package gui;
+
+import application.controller.Controller;
+import application.models.Destillat;
+import application.models.Destillering;
+import application.models.Fad;
+import application.models.Påfyldning;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import storage.Storage;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class PåfyldFad extends Stage {
+    private Fad fad;
+    private GridPane textFieldsGrid;
+    private List<TextField> textFieldsList = new ArrayList<>();
+    private ListView<Destillering> lvwDestilleringer;
+    private Button btnPåfyld = new Button("Påfyld Fad");
+    private TextField txfMedarbejderNavn;
+
+    public PåfyldFad(String title, Stage owner, Fad fad) {
+        this.fad = fad;
+        this.initOwner(owner);
+        this.initStyle(StageStyle.UTILITY);
+        this.initModality(Modality.APPLICATION_MODAL);
+        this.setMinHeight(200);
+        this.setMinWidth(400);
+        this.setResizable(false);
+
+        this.setTitle(title);
+        GridPane pane = new GridPane();
+        this.initContent(pane);
+
+        Scene scene = new Scene(pane);
+        this.setScene(scene);
+    }
+
+    private void initContent(GridPane pane) {
+        pane.setPadding(new Insets(20));
+        pane.setHgap(10);
+        pane.setVgap(10);
+
+        Label lblDestilleringer = new Label("Destilleringer");
+        pane.add(lblDestilleringer, 0, 0);
+
+        Label lblMedarbejderNavn = new Label("Medarbejder Navn");
+        pane.add(lblMedarbejderNavn, 0, 6);
+
+        lvwDestilleringer = new ListView<>();
+        lvwDestilleringer.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        pane.add(lvwDestilleringer, 0, 1, 2, 5);
+
+        ObservableList<Destillering> destilleringer = FXCollections.observableArrayList(Storage.getDestillering());
+        lvwDestilleringer.setItems(destilleringer);
+
+        lvwDestilleringer.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> updateTextFields());
+
+        txfMedarbejderNavn = new TextField();
+        pane.add(txfMedarbejderNavn, 1, 6);
+        txfMedarbejderNavn.setPrefWidth(185);
+
+        textFieldsGrid = new GridPane();
+        textFieldsGrid.setVgap(10);
+        textFieldsGrid.setHgap(10);
+        pane.add(textFieldsGrid, 0, 7, 2, 1);
+
+        btnPåfyld.setOnAction(event -> PåfyldAction());
+    }
+
+    private void updateTextFields() {
+        textFieldsGrid.getChildren().clear();
+        textFieldsList.clear();
+
+        int row = 0;
+        for (Destillering selectedDestillering : lvwDestilleringer.getSelectionModel().getSelectedItems()) {
+            TextField textField = new TextField();
+            textField.setPromptText("Indtast Liter " + selectedDestillering.toString());
+
+            textFieldsGrid.add(new Label(selectedDestillering.toString()), 0, row);
+            textField.setPrefWidth(185);
+            textFieldsGrid.add(textField, 1, row);
+
+            textFieldsList.add(textField);
+            row++;
+        }
+
+        textFieldsGrid.add(btnPåfyld, 0, row, 2, 1);
+    }
+
+    private void PåfyldAction() {
+        String medarbejderNavn = txfMedarbejderNavn.getText().trim();
+        if (medarbejderNavn.isEmpty()) {
+            showAlert("Missing Input", "Please enter the employee name");
+            return;
+        }
+
+        Destillat destillat = new Destillat("1");
+        int index = 0;
+        for (Destillering selectedDestillering : lvwDestilleringer.getSelectionModel().getSelectedItems()) {
+            TextField textField = textFieldsList.get(index);
+            try {
+                double volume = Double.parseDouble(textField.getText());
+                if (volume > 0) {
+                    Påfyldning påfyldning = destillat.createPåfyldning(medarbejderNavn, volume, selectedDestillering);
+                } else {
+                    showAlert("Invalid Volume", "Volume must be greater than 0");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                showAlert("Invalid Input", "Please enter a valid number for the volume");
+                return;
+            }
+            index++;
+        }
+
+        fad.addDestillat(destillat);
+        this.close();
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+}

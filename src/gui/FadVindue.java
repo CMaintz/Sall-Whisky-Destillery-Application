@@ -2,15 +2,12 @@ package gui;
 
 import application.controller.Controller;
 import application.models.Fad;
-import javafx.animation.FadeTransition;
-import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-
 
 public class FadVindue extends GridPane {
 
@@ -21,11 +18,9 @@ public class FadVindue extends GridPane {
     private Button btnVisHistorik = new Button();
     private Button btnPåfyldFad = new Button();
     private Button btnOmhæld = new Button();
-    private KonferenceInputWindow konferenceInputWindow;
-    private HotelInputWindow hotelInputWindow;
-    private UdflugtInputWindow udflugtInputWindow;
-    private UdflugtViewWindow udflugtViewWindow;
-    private HotelViewWindow hotelViewWindow;
+    private OpretFad opretFadWindow;
+    private PåfyldFad påfyldFad;
+
 
     public FadVindue() {
         GridPane pane = new GridPane();
@@ -43,109 +38,90 @@ public class FadVindue extends GridPane {
         pane.add(lvwTommeFade, 1, 1, 2, 5);
         lvwTommeFade.setPrefWidth(250);
         lvwTommeFade.setPrefHeight(200);
-        //TODO find tomme fade
-        lvwTommeFade.getItems().setAll(Controller.getFade());
+        lvwTommeFade.getItems().setAll(Controller.getTommeFade());
 
         Label lblFyldteFade = new Label("Fyldte fade");
-        pane.add(lblFyldteFade, 2, 0);
+        pane.add(lblFyldteFade, 3, 0);
 
         lvwFyldteFade = new ListView<>();
-        pane.add(lvwFyldteFade, 2, 1, 3, 5);
+        pane.add(lvwFyldteFade, 3, 1, 3, 5);
         lvwFyldteFade.setPrefWidth(250);
         lvwFyldteFade.setPrefHeight(200);
-        //TODO find fyldte fade
-        lvwFyldteFade.getItems().setAll(Controller.getFade());
-
-        Label lblUdflugter = new Label("Udflugter");
-        pane.add(lblUdflugter, 3, 0);
-
-        lvwudflugter = new ListView<>();
-        pane.add(lvwudflugter, 3, 1, 4, 4);
-        lvwudflugter.setPrefWidth(250);
-        lvwudflugter.setPrefHeight(200);
-
-        ChangeListener<Konference> listener = (ov, o, n) -> this.konferenceItemSelected();
-        lvwkonference.getSelectionModel().selectedItemProperty().addListener(listener);
+        lvwFyldteFade.getItems().setAll(Controller.getFyldtefade());
 
         lblError = new Label();
         pane.add(lblError, 1, 8);
         lblError.setStyle("-fx-text-fill: red");
 
-        btnOpretKonference.setText("Opret konference");
-        pane.add(btnOpretKonference, 0, 5);
+        btnRegistrerNytFad.setText("Registrer Nyt Fad");
+        pane.add(btnRegistrerNytFad, 0, 0);
 
-        btnOpretHotel.setText("Opret hotel");
-        pane.add(btnOpretHotel, 1, 5);
+        btnVisHistorik.setText("Vis Historik");
+        pane.add(btnVisHistorik, 0, 1);
 
-        btnOpretUdflugt.setText("Opret udflugt");
-        pane.add(btnOpretUdflugt, 3, 5);
+        btnPåfyldFad.setText("Påfyld Fad");
+        pane.add(btnPåfyldFad, 1, 6);
 
-        btnOpretHotelTilvalg.setText("Opret hoteltilvalg");
-        pane.add(btnOpretHotelTilvalg, 1, 6);
+        btnOmhæld.setText("Omhæld");
+        pane.add(btnOmhæld, 3, 6);
 
-        btnVisHotel.setText("Vis hotel");
-        pane.add(btnVisHotel, 1, 7);
-
-        btnVisUdflugt.setText("Vis udflugt");
-        pane.add(btnVisUdflugt, 3, 6);
-
-        btnOpretKonference.setOnAction(event -> opretKonferenceAction());
-
-        btnOpretHotel.setOnAction(event -> opretHotelAction());
-
-        btnOpretUdflugt.setOnAction(event -> opretUdflugtAction());
-
-        btnOpretHotelTilvalg.setOnAction(event -> opretHotelTilvalgAction());
-
-        btnVisHotel.setOnAction(event -> visHotelAction());
-
-        btnVisUdflugt.setOnAction(event -> visUdflugtAction());
-
+        btnRegistrerNytFad.setOnAction(event -> registrerNytFadAction());
+        btnVisHistorik.setOnAction(event -> visHistorikAction());
+        btnPåfyldFad.setOnAction(event -> påfyldFadAction());
+        btnOmhæld.setOnAction(event -> omhældAction());
     }
 
-    private void konferenceItemSelected() {
-        Konference selected = lvwkonference.getSelectionModel().getSelectedItem();
-        if (selected != null) {
-            lvwhotel.getItems().setAll(selected.getHoteller());
-            lvwudflugter.getItems().setAll(selected.getUdflugter());
+    private void registrerNytFadAction() {
+        opretFadWindow = new OpretFad("Opret Fad", new Stage());
+        opretFadWindow.showAndWait();
+        updateListViews();
+    }
+
+    private void visHistorikAction() {
+        lblError.setText("");
+        Fad selectedFad = lvwTommeFade.getSelectionModel().getSelectedItem();
+
+        if (selectedFad == null) {
+            selectedFad = lvwFyldteFade.getSelectionModel().getSelectedItem();
+            if (selectedFad == null) {
+                lblError.setText("Vælg et fad");
+            }
         }
-    }
-
-    private void opretKonferenceAction() {
-        konferenceInputWindow = new KonferenceInputWindow("Opret ny konference", new Stage());
-        konferenceInputWindow.showAndWait();
-        lvwkonference.getItems().setAll(Controller.getKonferencer());
-    }
-
-    private void opretHotelAction() {
-        hotelInputWindow = new HotelInputWindow("Opret nyt hotel", new Stage());
-        hotelInputWindow.showAndWait();
-    }
-
-    private void opretUdflugtAction() {
-        udflugtInputWindow = new UdflugtInputWindow("Opret ny udflugt", new Stage());
-        udflugtInputWindow.showAndWait();
-    }
-
-    private void opretHotelTilvalgAction() {
-        Hotel selectedHotel = lvwhotel.getSelectionModel().getSelectedItem();
-
-        if (selectedHotel == null) {
-            lblError.setText("Vælg et hotel");
-        } else {
-            HotelTilvalgWindow hotelTilvalgWindow = new HotelTilvalgWindow("Opret ny hoteltilvalg", new Stage(), selectedHotel);
-            hotelTilvalgWindow.showAndWait();
+        if (lblError.getText().isEmpty()) {
+            VisHistorik visHistorik = new VisHistorik("Vis Fadhistorik", new Stage(), selectedFad);
+            visHistorik.showAndWait();
             lblError.setText("");
         }
     }
 
-    private void visHotelAction() {
-        hotelViewWindow = new HotelViewWindow("Oversigt over hoteller", new Stage());
-        hotelViewWindow.showAndWait();
+    private void påfyldFadAction() {
+        Fad selectedFad = lvwTommeFade.getSelectionModel().getSelectedItem();
+
+        if (selectedFad == null) {
+            lblError.setText("Vælg tomt fad");
+        } else {
+            påfyldFad = new PåfyldFad("Opret Fad", new Stage(), selectedFad);
+            påfyldFad.showAndWait();
+            updateListViews();
+        }
     }
 
-    private void visUdflugtAction() {
-        udflugtViewWindow = new UdflugtViewWindow("Oversigt over udflugter", new Stage());
-        udflugtViewWindow.showAndWait();
+    private void omhældAction() {
+        Fad fadTil = lvwTommeFade.getSelectionModel().getSelectedItem();
+        Fad fadFra = lvwFyldteFade.getSelectionModel().getSelectedItem();
+
+        if (fadTil == null) {
+            lblError.setText("Vælg tomt fad");
+        } else if (fadFra == null) {
+            lblError.setText("Vælg fyldt fad");
+        } else {
+            Controller.omhældningAfDestillat(fadFra, fadTil);
+        }
+        updateListViews();
+    }
+
+    private void updateListViews() {
+        lvwTommeFade.getItems().setAll(Controller.getTommeFade());
+        lvwFyldteFade.getItems().setAll(Controller.getFyldtefade());
     }
 }

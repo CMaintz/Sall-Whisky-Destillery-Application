@@ -56,13 +56,13 @@ public class DestillationPane extends GridPane {
 
 
         //Action til knapper
-        opretFad.setOnAction(e -> {
-            OpretFad newWindow = new OpretFad();
-            newWindow.setOnHidden(event -> {
-                ObservableList<Fad> updatedFadList = FXCollections.observableArrayList(Storage.getFade());
-                fadListView.setItems(updatedFadList);
-            });
-        });
+//        opretFad.setOnAction(e -> {
+//            OpretFad newWindow = new OpretFad();
+//            newWindow.setOnHidden(event -> {
+//                ObservableList<Fad> updatedFadList = FXCollections.observableArrayList(Storage.getFade());
+//                fadListView.setItems(updatedFadList);
+//            });
+//        });
 
         opretDestillation.setOnAction(e -> {
             OpretDestillation newWindow = new OpretDestillation();

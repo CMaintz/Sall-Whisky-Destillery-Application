@@ -14,8 +14,7 @@ import java.time.LocalDate;
 
 public class OpretFad extends Stage {
 
-    Button opretFad = new Button("Opret fad");
-    public OpretFad() {
+    public OpretFad(String title, Stage owner) {
         GridPane pane = new GridPane();
         pane.setPadding(new Insets(20));
         pane.setHgap(20);
@@ -62,7 +61,6 @@ public class OpretFad extends Stage {
         this.setScene(scene);
         this.setTitle("Opret Fad");
 
-        this.show();
 
 
         //---------------------------------------------------------------------------------

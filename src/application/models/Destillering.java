@@ -1,6 +1,7 @@
 package application.models;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 //Når en destillering af whisky foretages, skal det registreres i systemet.
 //adminstrator indtaster detaljer om destilleringen, såsom startdato, slutdato, maltbatch, kornsort, medarbejder, mængde væske og alkholprocent.

@@ -69,6 +69,7 @@ public class Destillat {
         if (!this.fad.equals(newFad)) {
             fad.setDestillat(null);
             this.fad = newFad;
+            newFad.setDestillat(this);
             createModningsHistorik();
         }
     }

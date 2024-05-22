@@ -52,13 +52,13 @@ public class StartVindue extends Application {
     private void initTabPane(TabPane tabPane) {
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-        Tab tabForside = new Tab("Fade");
+        Tab tabFade = new Tab("Fade");
         Tab tabDestillation = new Tab("Destillation");
         Tab tabLager = new Tab("Lagerstyring");
         Tab tabData = new Tab("Hent Faddata");
 
         FadVindue fadVindue = new FadVindue();
-        tabForside.setContent(fadVindue);
+        tabFade.setContent(fadVindue);
         DestillationPane destillationPane = new DestillationPane();
         tabDestillation.setContent(destillationPane);
         LagerstyringPane lagerstyringPane = new LagerstyringPane();
@@ -66,7 +66,7 @@ public class StartVindue extends Application {
         DataPane dataPane = new DataPane();
         tabData.setContent(dataPane);
 
-        tabPane.getTabs().add(tabForside);
+        tabPane.getTabs().add(tabFade);
         tabPane.getTabs().add(tabDestillation);
         tabPane.getTabs().add(tabLager);
         tabPane.getTabs().add(tabData);
@@ -75,6 +75,13 @@ public class StartVindue extends Application {
             if (newTab == tabDestillation) {
                 DestillationPane newDestillationPane = new DestillationPane();
                 tabDestillation.setContent(newDestillationPane);
+            }
+        });
+
+        tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
+            if (newTab == tabFade) {
+                FadVindue newFadVindue = new FadVindue();
+                tabFade.setContent(fadVindue);
             }
         });
     }
