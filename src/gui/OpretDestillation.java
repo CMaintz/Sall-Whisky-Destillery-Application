@@ -66,7 +66,7 @@ public class OpretDestillation extends Stage {
         this.show();
 
 
-        ObservableList<Korn> kornList = FXCollections.observableArrayList(Controller.getKorn());
+        ObservableList<Korn> kornList = FXCollections.observableArrayList(Controller.getKorntyper());
 
         cbKorn.setItems(kornList);
 
