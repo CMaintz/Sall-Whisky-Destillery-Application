@@ -2,7 +2,12 @@ package application.controller;
 
 import application.models.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,23 +60,70 @@ public abstract class Controller {
         return ft;
     }
 
+    public static int udregnTotalLiter (List<Destillat> destillater, int vand) {
+        int toReturn = 0;
+        if (!destillater.isEmpty()) {
+            for (Destillat destillat : destillater) {
+                toReturn += destillat.getAntalLiter();
+            }
+        }
+        return toReturn + vand;
+    }
+    public static double udregnAlkoholprocent(List<Destillat> destillater, int vand) {
+        double literEthanol = 0;
+        double antalLiter = vand;
+        for (Destillat destillat : destillater) {
+            literEthanol += (destillat.getAlkoholprocent() / 100) * destillat.getAntalLiter();
+            antalLiter += destillat.getAntalLiter();
+        }
+        return (literEthanol / antalLiter) * 100;
+    }
+
     public static WhiskyProdukt createWhiskyProdukt(String navn) {
         WhiskyProdukt whiskyProdukt = new WhiskyProdukt(navn);
         storage.addWhiskyProdukt(whiskyProdukt);
         return whiskyProdukt;
     }
 
+    public static List<Fad> getFadeMedFærdigDestillat() {
+        ArrayList<Fad> toReturn = new ArrayList<>();
+        for (Fad fad : getFyldtefade()) {
+            if (fad.getDestillat().destillatKlar()) {
+                toReturn.add(fad);
+            }
+        }
+        return toReturn;
+    }
+
+    public static void setDestillatStartDato(Destillat destillat, LocalDate nyStartDato) {
+        destillat.setStartDato(nyStartDato);
+    }
+
+    public static void gemProduktHistorieTilFil(WhiskyFlaske whiskyFlaske) {
+        String fileName = whiskyFlaske.getWhisky().getNavn() + "Historie.txt";
+        try {
+            PrintWriter writer = new PrintWriter((fileName));
+            writer.print(whiskyFlaske.getProduktHistorie());
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     //    pre: antalFlasker <= currentLiterWhisky
 
     public static void createWhiskyflasker(WhiskyProdukt whiskyProdukt) {
         double liter = whiskyProdukt.getAntalLiter();
-        String derp = "Her er en historie!";
-//        String produktHistorie = whiskyProdukt.genererHistorie();
+//        String derp = "Her er en historie!";
+        String produktHistorie = whiskyProdukt.genererHistorie();
         for (int i = 0; i < liter; i++) {
-            whiskyProdukt.createWhiskyFlaske(derp);
-//            whiskyProdukt.createWhiskyFlaske(produktHistorie);
+//            whiskyProdukt.createWhiskyFlaske(derp);
+            whiskyProdukt.createWhiskyFlaske(produktHistorie);
         }
         whiskyProdukt.setAntalLiter(0);
+    }
+
+    public static void setDestilleringsStarttid(Destillering destillering, LocalDateTime startTid) {
+        destillering.setStartDato(startTid);
     }
     public static void omhældningAfDestillat(Fad fadFra, Fad fadTil) {
         fadFra.getDestillat().omhældDestillat(fadTil);
@@ -118,4 +170,7 @@ public abstract class Controller {
         return result;
     }
 
+    public static void fadPåfyldning(Fad fad, Destillat destillat) {
+        fad.addDestillat(destillat);
+    }
 }

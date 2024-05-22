@@ -39,17 +39,20 @@ public class ModelsTest {
 
     @Test
     void destillatAddModningTest() {
-        Fad testFad = new Fad(80);
-        destillat.omhældDestillat(testFad);
-        assertTrue(destillat.getFad().equals(testFad));
         assertTrue(destillat.getModningsHistorik().get(0).getFad().equals(fad));
+        Fad testFad = new Fad(80);
+        testFad.createFadHistorik("test", "dk", null, null, null);
+        destillat.omhældDestillat(testFad);
+        assertTrue(destillat.getModningsHistorik().get(1).getFad().equals(testFad));
+        assertTrue(destillat.getFad().equals(testFad));
         Fad testFad2 = new Fad(60);
+        testFad2.createFadHistorik("test", "dk", null, null, null);
         destillat.omhældDestillat(testFad2);
         assertTrue(destillat.getFad().equals(testFad2));
 
+        assertEquals(3, destillat.getModningsHistorik().size());
         assertTrue(destillat.getModningsHistorik().get(2).getFad().equals(testFad2));
 
-        assertEquals(3, destillat.getModningsHistorik().size());
     }
 
     @Test
@@ -73,8 +76,7 @@ public class ModelsTest {
     void testSetters() {
         Destillat destillat = new Destillat();
 
-        Fad fad = new Fad(50);
-        destillat.setFad(fad);
+        fad.addDestillat(destillat);
         assertEquals(fad, destillat.getFad());
 
         destillat.fjernAntalLiter(5.0);

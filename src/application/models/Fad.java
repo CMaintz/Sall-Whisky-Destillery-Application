@@ -40,14 +40,15 @@ public class Fad implements Serializable {
         return destillat;
     }
 
-    public void setDestillat(Destillat destillat) {
-        this.destillat = destillat;
+    public void removeDestillat() {
+        this.destillat = null;
     }
 
     public void addDestillat(Destillat destillat) {
         if (destillat != null) {
             this.fadHistorik.addDestillat(destillat);
             this.destillat = destillat;
+            destillat.setFad(this);
         }
     }
 
@@ -68,13 +69,4 @@ public class Fad implements Serializable {
         return "#" + fadNr + " " + literKapacitet + "L " + getType();
     }
 
-//    public boolean erWhiskyKlar() {
-//        if (påFyldning != null) {
-//            Period period = Period.between(påFyldning.getPåfyldningsDato(), LocalDate.now());
-//            if (period.getYears() >= 3) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
 }

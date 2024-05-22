@@ -1,7 +1,7 @@
 package application.models;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 public class Påfyldning implements Serializable {
@@ -15,7 +15,9 @@ public class Påfyldning implements Serializable {
         this.literPåfyldt = literPåfyldt;
         this.destillering = destillering;
         destillering.fjernAntalLiter(literPåfyldt);
-        destillering.setSlutDato(LocalDate.now());
+        if (destillering.getSlutDato() == null) {
+            destillering.setSlutDato(LocalDateTime.now());
+        }
     }
 
     public String getMedarbejderNavn() {
@@ -30,10 +32,12 @@ public class Påfyldning implements Serializable {
         return destillering;
     }
 
-
+    public String getDetaljer() {
+        return literPåfyldt + "L, " + "påfyldt af: " + medarbejderNavn + "\ndestillering: " + destillering.getDetaljer();
+    }
 
     @Override
     public String toString() {
-        return medarbejderNavn + ", " + literPåfyldt + ", " + destillering;
+        return literPåfyldt + medarbejderNavn + destillering.toString();
     }
 }

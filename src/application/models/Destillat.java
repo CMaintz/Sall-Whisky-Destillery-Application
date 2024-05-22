@@ -1,6 +1,7 @@
 package application.models;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -27,6 +28,10 @@ public class Destillat implements Serializable {
         udregnAlkoholprocent();
         return pf;
     }
+
+    public void setStartDato(LocalDate startDato) {
+        modningsHistorik.get(0).setStartDato(startDato);
+    }
     public ArrayList<Påfyldning> getPåfyldninger() {
         return new ArrayList<>(påfyldninger);
     }
@@ -47,26 +52,32 @@ public class Destillat implements Serializable {
         this.antalLiter -= antalLiter;
     }
 
-    public void setFad(Fad fad) {
-        this.fad = fad;
-        createModningsHistorik();
-    }
-
     public Fad getFad() {
         return fad;
     }
 
     public List<ModningsHistorik> getModningsHistorik() {
-        return modningsHistorik;
+        return new ArrayList<>(modningsHistorik);
     }
 
+//    pre..?
     public void omhældDestillat(Fad newFad) {
-            fad.setDestillat(null);
-            this.fad = newFad;
+            this.fad.removeDestillat();
             newFad.addDestillat(this);
-            createModningsHistorik();
     }
 
+    private int getLiterPåfyldt() {
+        int toReturn = 0;
+        for (Påfyldning påfyldning : påfyldninger) {
+            toReturn += påfyldning.getLiterPåfyldt();
+        }
+        return toReturn;
+    }
+
+    public void setFad(Fad fad) {
+        this.fad = fad;
+        createModningsHistorik();
+    }
     private ModningsHistorik createModningsHistorik() {
         if (this.modningsHistorik.size() > 0) {
             this.modningsHistorik.get(this.modningsHistorik.size() - 1).setSlutDato(LocalDate.now());
@@ -90,24 +101,21 @@ public class Destillat implements Serializable {
             return true;
         }
         return false;
-//        double days = 0;
-//        boolean result = false;
-////        TODO if omhældninger.size > 0?
-//        for (ModningsHistorik dh : modningsHistorik) {
-//            Period period = Period.between(dh.getStartDato(), dh.getSlutDato());
-//            days += period.getDays();
-//        }
-//        if (days >= 1095) {
-//            result = true;
-//        }
-//        return result;
     }
 
     @Override
     public String toString() {
-        return "Destillat{" +
-                "påfyldning=" + påfyldninger +
-                ", antalLiter=" + antalLiter +
-                '}';
+        DecimalFormat numberFormatter = new DecimalFormat("#.00");
+        return numberFormatter.format(alkoholprocent) + "% Vol. " +  antalLiter + "L";
+    }
+
+    public String getDetaljer() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Påfyldninger: \n");
+        for (Påfyldning påfyldning : påfyldninger) {
+            sb.append(påfyldning.getDetaljer() + "\n");
+            sb.append("\n");
+        }
+        return sb.toString();
     }
 }

@@ -13,9 +13,9 @@ public class WhiskyPane extends GridPane {
     private ListView<WhiskyFlaske> lvwFlasker;
     private TextArea txaWhiskyInfo, txaProduktHistorie;
     private Label lblWhiskyInfo, lblFlasker;
-    private Button btnFyldFlasker;
+    private Button btnFyldFlasker, btnGemTilFil;
     private static final int PREF_WIDTH = 100;
-    private static final int PREF_HEIGHT = 240;
+    private static final int PREF_HEIGHT = 280;
 
     public WhiskyPane() {
         this.setPadding(new Insets(5));
@@ -33,11 +33,9 @@ public class WhiskyPane extends GridPane {
 
         lvwWhiskyProdukter = new ListView<>();
         pane.add(lvwWhiskyProdukter, 0, 1);
-        lvwWhiskyProdukter.setPrefWidth(PREF_WIDTH + 40);
+        lvwWhiskyProdukter.setPrefWidth(PREF_WIDTH + 10);
         lvwWhiskyProdukter.setPrefHeight(PREF_HEIGHT);
         lvwWhiskyProdukter.getItems().setAll(Controller.getWhiskyProdukter());
-        lvwWhiskyProdukter.getSelectionModel().selectFirst();
-
 
         ChangeListener<WhiskyProdukt> whiskyListener = (ov, oldWhisky, newWhisky) -> selectedProductChanged();
         lvwWhiskyProdukter.getSelectionModel().selectedItemProperty().addListener(whiskyListener);
@@ -47,7 +45,7 @@ public class WhiskyPane extends GridPane {
 
         txaWhiskyInfo = new TextArea();
         txaWhiskyInfo.setEditable(false);
-        txaWhiskyInfo.setPrefWidth(PREF_WIDTH * 2);
+        txaWhiskyInfo.setPrefWidth(PREF_WIDTH * 2.8);
         txaWhiskyInfo.setPrefHeight(PREF_HEIGHT);
         pane.add(txaWhiskyInfo, 1, 1);
         txaWhiskyInfo.setText(lvwWhiskyProdukter.getItems().get(0).getDetaljer());
@@ -56,9 +54,11 @@ public class WhiskyPane extends GridPane {
         pane.add(lblFlasker, 2, 0);
 
         lvwFlasker = new ListView<>();
-        lvwFlasker.setPrefWidth(PREF_WIDTH);
+        lvwFlasker.setPrefWidth(PREF_WIDTH - 10);
         lvwFlasker.setPrefHeight(PREF_HEIGHT);
         pane.add(lvwFlasker, 2, 1);
+        lvwFlasker.getItems().setAll(lvwWhiskyProdukter.getItems().get(0).getFyldteFlasker());
+        lvwFlasker.getSelectionModel().select(0);
 
         ChangeListener<WhiskyFlaske> flaskeListener = (ov, oldFlaske, newFlaske) -> this.selectedFlaskeChanged();
         lvwFlasker.getSelectionModel().selectedItemProperty().addListener(flaskeListener);
@@ -68,9 +68,16 @@ public class WhiskyPane extends GridPane {
 
         txaProduktHistorie = new TextArea();
         txaProduktHistorie.setEditable(false);
-        txaProduktHistorie.setPrefWidth(PREF_WIDTH * 2);
+        txaProduktHistorie.setPrefWidth(PREF_WIDTH * 4.1);
         txaProduktHistorie.setPrefHeight(PREF_HEIGHT);
         pane.add(txaProduktHistorie, 3, 1);
+        if (lvwFlasker.getItems().size() > 0) {
+            txaProduktHistorie.setText(lvwFlasker.getItems().get(0).getProduktHistorie());
+        }
+
+        btnGemTilFil = new Button("Opret etiket fil");
+        pane.add(btnGemTilFil, 3, 2);
+        btnGemTilFil.setOnAction(event -> createFilAction());
 
         Button btnNewWhisky = new Button("Opret Whisky");
         pane.add(btnNewWhisky, 0, 2);
@@ -80,6 +87,20 @@ public class WhiskyPane extends GridPane {
         pane.add(btnFyldFlasker, 0, 3);
         btnFyldFlasker.setOnAction(event -> createFlaskeAction());
         btnFyldFlasker.setDisable(true);
+    }
+
+    private void createFilAction() {
+        WhiskyFlaske whiskyFlaske = lvwFlasker.getSelectionModel().getSelectedItem();
+        if (whiskyFlaske != null) {
+            Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmation.setHeaderText("Gem historie til fil");
+            confirmation.setTitle("Bekræft fil");
+            confirmation.setContentText("Er du sikker på du vil gemme produkthistorien som fil?");
+            confirmation.showAndWait();
+            if (confirmation.getResult() == ButtonType.OK) {
+                Controller.gemProduktHistorieTilFil(whiskyFlaske);
+            }
+        }
     }
 
 
@@ -120,10 +141,13 @@ public class WhiskyPane extends GridPane {
             lblFlasker.setText(whisky.getNavn() + " flasker");
             if (whisky.getFyldteFlasker().size() > 0) {
                 lvwFlasker.getItems().setAll(whisky.getFyldteFlasker());
+                lvwFlasker.getSelectionModel().select(0);
+                btnGemTilFil.setDisable(false);
                 btnFyldFlasker.setDisable(true);
                 txaProduktHistorie.setText(lvwFlasker.getItems().get(0).getProduktHistorie());
             } else {
                 lvwFlasker.getItems().clear();
+                btnGemTilFil.setDisable(true);
                 txaProduktHistorie.clear();
                 btnFyldFlasker.setDisable(false);
             }
@@ -135,6 +159,7 @@ public class WhiskyPane extends GridPane {
         WhiskyFlaske whiskyFlaske = lvwFlasker.getSelectionModel().getSelectedItem();
         if (whiskyFlaske != null) {
             txaProduktHistorie.setText(whiskyFlaske.getProduktHistorie());
+            btnGemTilFil.setDisable(false);
         }
     }
 
