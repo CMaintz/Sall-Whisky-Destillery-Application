@@ -64,21 +64,28 @@ public class VisHistorik extends Stage {
         pane.add(txfTidligereIndhold, 1, 0);
         txfTidligereIndhold.setPrefWidth(185);
         txfTidligereIndhold.setText(fad.getFadHistorik().getTidligereIndhold());
+        txfTidligereIndhold.setEditable(false);
+
 
         txfLand = new TextField();
         pane.add(txfLand, 1, 1);
         txfLand.setPrefWidth(185);
         txfLand.setText(fad.getFadHistorik().getLand());
+        txfLand.setEditable(false);
 
         txfFraÅr = new TextField();
         pane.add(txfFraÅr, 1, 2);
         txfFraÅr.setPrefWidth(185);
         txfFraÅr.setText(fad.getFadHistorik().getFraÅr().toString());
+        txfFraÅr.setEditable(false);
+
 
         txfLeverandør = new TextField();
         pane.add(txfLeverandør, 1, 4);
         txfLeverandør.setPrefWidth(185);
         txfLeverandør.setText(fad.getFadHistorik().getLeverandør());
+        txfLeverandør.setEditable(false);
+
 
         lvwDestillater = new ListView<>();
         pane.add(lvwDestillater, 1, 5, 2, 5);

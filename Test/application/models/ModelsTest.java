@@ -1,10 +1,12 @@
 // CombinedTest.java
 import application.models.*;
+import javafx.beans.binding.When;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -125,5 +127,27 @@ public class ModelsTest {
 
         whiskyProdukt.createFadTapning("Bob", 20, fad);
         assertEquals("Single Malt", whiskyProdukt.whiskyType());
+    }
+    @Test
+    void testGenererHistorie() {
+        WhiskyProdukt whiskyProdukt = new WhiskyProdukt("Sample Whisky");
+
+        Fad fad = new Fad(40);
+        fad.createFadHistorik("Sherry", "Spanien", LocalDate.of(2010,10,10), LocalDate.of(2020, 10, 10), "LeverandørTest");
+        Destillat destillat1 = new Destillat();
+        destillat1.createPåfyldning("Jens", 20, destillering);
+
+        fad.addDestillat(destillat1);
+        FadTapning fadTapning = whiskyProdukt.createFadTapning("Sample Medarbejder", 10, fad);
+
+        String generatedHistory = whiskyProdukt.genererHistorie();
+
+        String expectedHistory = "\nSkabt af egne hænder med Lars' økologiske Variant Sort, "
+                + "\nSået og høstet fra den jyske muld på Lars' marker Mark, "
+                + "\nMæsket ved håndkraft og fermenteret i 48"
+                + "\nModnet i 0 år i omhyggeligt udvalgte ex-Sample Fad barrels."
+                + "\nØkologisk Single Malt\n& Single Farm Whisky\n 100cl. 50% Vol.";
+
+        assertEquals(expectedHistory, generatedHistory);
     }
 }

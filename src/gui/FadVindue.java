@@ -54,10 +54,10 @@ public class FadVindue extends GridPane {
         lblError.setStyle("-fx-text-fill: red");
 
         btnRegistrerNytFad.setText("Registrer Nyt Fad");
-        pane.add(btnRegistrerNytFad, 0, 0);
+        pane.add(btnRegistrerNytFad, 0, 1);
 
         btnVisHistorik.setText("Vis Historik");
-        pane.add(btnVisHistorik, 0, 1);
+        pane.add(btnVisHistorik, 0, 2);
 
         btnPåfyldFad.setText("Påfyld Fad");
         pane.add(btnPåfyldFad, 1, 6);

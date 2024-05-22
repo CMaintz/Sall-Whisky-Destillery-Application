@@ -48,6 +48,7 @@ public class Fad implements Serializable {
         if (destillat != null) {
             this.fadHistorik.addDestillat(destillat);
             this.destillat = destillat;
+            destillat.setFad(this);
         }
     }
 

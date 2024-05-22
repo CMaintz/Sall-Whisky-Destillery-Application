@@ -118,4 +118,9 @@ public abstract class Controller {
         return result;
     }
 
+    public static void flytFad(Fad fad, Hylde hyldeFra, Hylde hyldeTil) {
+        hyldeFra.fjernFad();
+        hyldeTil.placerFad(fad);
+    }
+
 }

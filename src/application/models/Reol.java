@@ -2,6 +2,8 @@ package application.models;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Reol implements Serializable {
     private int reolNummer;
@@ -14,6 +16,16 @@ public class Reol implements Serializable {
         for (int i = 0; i < antalHylder; i++) {
             hylder[i] = new Hylde(i + 1);
         }
+    }
+
+    public Hylde[] getHylderUdenFad() {
+        List<Hylde> hylderUdenFad = new ArrayList<>();
+        for (Hylde hylde : hylder) {
+            if (hylde.getFad() == null) {
+                hylderUdenFad.add(hylde);
+            }
+        }
+        return hylderUdenFad.toArray(new Hylde[0]);
     }
 
     public Hylde[] getHylder() {

@@ -1,10 +1,7 @@
 package gui;
 
 import application.controller.Controller;
-import application.models.Destillat;
-import application.models.Destillering;
-import application.models.Fad;
-import application.models.Påfyldning;
+import application.models.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -25,6 +22,9 @@ public class PåfyldFad extends Stage {
     private ListView<Destillering> lvwDestilleringer;
     private Button btnPåfyld = new Button("Påfyld Fad");
     private TextField txfMedarbejderNavn;
+    private ComboBox<Lager> cbLagere;
+    private ComboBox<Reol> cbReoler;
+    private ComboBox<Hylde> cbHylder;
 
     public PåfyldFad(String title, Stage owner, Fad fad) {
         this.fad = fad;
@@ -92,7 +92,34 @@ public class PåfyldFad extends Stage {
             row++;
         }
 
-        textFieldsGrid.add(btnPåfyld, 0, row, 2, 1);
+        cbLagere = new ComboBox<>();
+        textFieldsGrid.add(new Label("Lager"), 0, row);
+        textFieldsGrid.add(cbLagere, 1, row);
+        cbLagere.getItems().setAll(Controller.getLagre());
+
+        cbReoler = new ComboBox<>();
+        textFieldsGrid.add(new Label("Reol"), 0, row + 1);
+        textFieldsGrid.add(cbReoler, 1, row + 1);
+
+        cbHylder = new ComboBox<>();
+        textFieldsGrid.add(new Label("Hylde"), 0, row + 2);
+        textFieldsGrid.add(cbHylder, 1, row + 2);
+
+        cbLagere.setOnAction(event -> {
+            Lager selectedLager = cbLagere.getSelectionModel().getSelectedItem();
+            if (selectedLager != null) {
+                cbReoler.getItems().setAll(selectedLager.getReolerMedLedigPlads());
+            }
+        });
+
+        cbReoler.setOnAction(event -> {
+            Reol selectedReol = cbReoler.getSelectionModel().getSelectedItem();
+            if (selectedReol != null) {
+                cbHylder.getItems().setAll(selectedReol.getHylderUdenFad());
+            }
+        });
+
+        textFieldsGrid.add(btnPåfyld, 0, row + 3, 2, 1);
     }
 
     private void PåfyldAction() {
@@ -120,10 +147,26 @@ public class PåfyldFad extends Stage {
             }
             index++;
         }
-
+        Lager lager = cbLagere.getSelectionModel().getSelectedItem();
+        if (lager == null) {
+            showAlert("Invalid Lager", "Vælg et Lager");
+            return;
+        }
+        Reol reol = cbReoler.getSelectionModel().getSelectedItem();
+        if (reol == null) {
+            showAlert("Invalid Reol", "Vælg en reol");
+            return;
+        }
+        Hylde hylde = cbHylder.getSelectionModel().getSelectedItem();
+        if (hylde == null) {
+            showAlert("Invalid Hylde", "Vælg en hylde");
+            return;
+        }
         fad.addDestillat(destillat);
+        hylde.placerFad(fad);
         this.close();
     }
+
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);

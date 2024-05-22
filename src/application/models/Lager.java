@@ -29,6 +29,16 @@ public class Lager implements Serializable {
         return new ArrayList<>(reoler);
     }
 
+    public ArrayList<Reol> getReolerMedLedigPlads() {
+        ArrayList<Reol> result = new ArrayList<>();
+        for (Reol reol : reoler) {
+            if (reol.getHylderUdenFad().length > 0) {
+                result.add(reol);
+            }
+        }
+        return result;
+    }
+
 public ArrayList<Fad> getFadeMedDestillat() {
         ArrayList<Fad> result = new ArrayList<>();
         for (Reol reol : reoler) {

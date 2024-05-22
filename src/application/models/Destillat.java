@@ -16,7 +16,6 @@ public class Destillat implements Serializable {
     public Destillat() {
         påfyldninger = new ArrayList<>();
         modningsHistorik = new ArrayList<>();
-
     }
 
     // Pre: literPåfyld > 0

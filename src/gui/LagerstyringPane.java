@@ -2,105 +2,145 @@ package gui;
 
 import application.controller.Controller;
 import application.models.Fad;
+import application.models.Hylde;
 import application.models.Lager;
+import application.models.Reol;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class LagerstyringPane extends GridPane {
-    private Controller controller;
-    private ListView<Lager> lagerListView;
-    private ListView<Fad> fadListView;
+    private ListView<Lager> lvwLagre;
+    private ListView<Reol> lvwReoler;
+    private ListView<Hylde> lvwHylder;
+    private TextArea taInfo = new TextArea();
 
     public LagerstyringPane() {
-//        controller = new Controller();
+        GridPane pane = new GridPane();
+        this.add(pane, 0, 0);
+        pane.setGridLinesVisible(false);
+        pane.setPadding(new Insets(10));
+        pane.setHgap(10);
+        pane.setVgap(10);
+        pane.setStyle("-fx-border-color: black");
 
-        lagerListView = new ListView<>();
-        fadListView = new ListView<Fad>();
+        // Labels
+        Label lblLagre = new Label("Lagre");
+        pane.add(lblLagre, 0, 1);
 
-        this.setPadding(new Insets(20));
-        this.setHgap(20);
-        this.setVgap(10);
-        this.setGridLinesVisible(false);
+        Label lblReoler = new Label("Reoler");
+        pane.add(lblReoler, 1, 1);
 
-        Label lagerLabel = new Label("Lagre:");
-        Label fadLabel = new Label("Fyldte fade:");
+        Label lblHylder = new Label("Hylder");
+        pane.add(lblHylder, 2, 1);
 
+        // ListViews
+        lvwLagre = new ListView<>();
+        pane.add(lvwLagre, 0, 2);
+        lvwLagre.setPrefWidth(180);
+        lvwLagre.setPrefHeight(350);
 
+        lvwReoler = new ListView<>();
+        pane.add(lvwReoler, 1, 2);
+        lvwReoler.setPrefWidth(180);
+        lvwReoler.setPrefHeight(350);
 
-        //Knapper
-        Button opretLager = new Button("Opret lager");
-        Button visLagerIndhold = new Button("Vis lagerindhold");
-        Button tilføjTilLager = new Button("Tilføj til lager");
+        lvwHylder = new ListView<>();
+        pane.add(lvwHylder, 2, 2);
+        lvwHylder.setPrefWidth(180);
+        lvwHylder.setPrefHeight(350);
 
+        ObservableList<Lager> lagre = FXCollections.observableArrayList(Controller.getLagre());
+        lvwLagre.setItems(lagre);
 
-        //Listviews
-        ObservableList<Lager> lagerList = FXCollections.observableArrayList(Controller.getLagre());
-        lagerListView.setItems(lagerList);
+        lvwLagre.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> updateReoler(newValue));
+        lvwReoler.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> updateHylder(newValue));
+        lvwHylder.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> updateFadInfo(newValue));
 
-        fadListView.getItems().setAll(Controller.getFade());
+        Button btnOpretLager = new Button();
+        Button btnFlytFad = new Button();
 
-        Lager lager = lagerListView.getSelectionModel().getSelectedItem();
-        if  (lager != null) {
-            ObservableList<Fad> fadList = FXCollections.observableArrayList(lager.getFadeMedDestillat());
-            fadListView.setItems(fadList);
-        }
+        btnOpretLager.setText("Opret Lager");
+        pane.add(btnOpretLager, 0, 0);
 
-        this.add(opretLager, 0, 0);
-        this.add(lagerListView, 0, 3);
-        this.add(fadListView, 2, 3);
-        this.add(lagerLabel, 0, 2);
-        this.add(fadLabel, 2, 2);
-        this.add(visLagerIndhold, 3, 3);
-        this.add(tilføjTilLager, 3, 4);
+        btnFlytFad.setText("Flyt fad");
+        pane.add(btnFlytFad, 1, 0);
 
-
-
-
-
-
-        //Action til knapper
-        opretLager.setOnAction(e -> {
-             OpretLager newWindow = new OpretLager();
-                newWindow.setOnHidden(event -> {
-                 ObservableList<Lager> lagerList1 = FXCollections.observableArrayList(Controller.getLagre());
-                    lagerListView.setItems(lagerList1);
-                });
-        });
-
-        visLagerIndhold.setOnAction(e -> {
-            Lager selectedLager = lagerListView.getSelectionModel().getSelectedItem();
-
-            if(selectedLager != null) {
-                Stage stage = new Stage();
-                stage.setTitle("Lagerindhold");
-
-                ListView<Fad> fadListView = new ListView<>();
-                fadListView.getItems().addAll(selectedLager.getFadeMedDestillat());
-
-                Scene scene = new Scene(fadListView, 300, 300);
-                stage.setScene(scene);
-
-                stage.show();
-
-            } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Fejl");
-                alert.setHeaderText(null);
-                alert.setContentText("Vælg et lager først");
-                alert.showAndWait();
-            }
-        });
+        pane.add(taInfo, 3, 1, 4, 5);
+        taInfo.setPrefWidth(250);
+        taInfo.setPrefHeight(200);
+        taInfo.setEditable(false);
 
 
-
+        btnOpretLager.setOnAction(event -> opretLagerAction());
+        btnFlytFad.setOnAction(event -> flytFadAction());
     }
 
+    private void opretLagerAction() {
+        OpretFad opretFad = new OpretFad("Opret Fad", new Stage());
+        opretFad.showAndWait();
+    }
+
+    private void updateFadInfo(Hylde selectedHylde) {
+        if (selectedHylde != null && selectedHylde.getFad() != null) {
+            Fad fad = selectedHylde.getFad();
+            String fadInfo = String.format(
+                    "Fad Nr: %s\nLiter Kapacitet: %d\nAlder (måneder): %d\nType: %s\nDestillat: %s",
+                    fad.getFadNr(),
+                    fad.getLiterKapacitet(),
+                    fad.getAlderMåneder(),
+                    fad.getType(),
+                    fad.getDestillat() != null ? fad.getDestillat().toString() : "N/A"
+            );
+            taInfo.setText(fadInfo);
+        } else {
+            taInfo.clear();
+        }
+    }
+
+
+
+    private void flytFadAction() {
+        Hylde hylde = lvwHylder.getSelectionModel().getSelectedItem();
+        if (hylde != null) {
+            Fad fad = hylde.getFad();
+            if (fad != null) {
+                FlytFadWindow flytFadWindow = new FlytFadWindow(fad, hylde);
+                flytFadWindow.showAndWait();
+            } else {
+                showAlert("Invalid Input", "Vælg en hylde med et fad på");
+                return;
+            }
+        } else {
+            showAlert("Invalid Input", "Vælg en hylde");
+            return;
+        }
+    }
+
+    private void updateReoler(Lager selectedLager) {
+        if (selectedLager != null) {
+            ObservableList<Reol> reoler = FXCollections.observableArrayList(selectedLager.getReoler());
+            lvwReoler.setItems(reoler);
+            lvwHylder.getItems().clear();
+        }
+    }
+
+    private void updateHylder(Reol selectedReol) {
+        if (selectedReol != null) {
+            ObservableList<Hylde> hylder = FXCollections.observableArrayList(selectedReol.getHylder());
+            lvwHylder.setItems(hylder);
+        }
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }
