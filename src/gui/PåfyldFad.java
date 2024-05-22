@@ -14,7 +14,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import storage.Storage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +58,7 @@ public class PåfyldFad extends Stage {
         lvwDestilleringer.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         pane.add(lvwDestilleringer, 0, 1, 2, 5);
 
-        ObservableList<Destillering> destilleringer = FXCollections.observableArrayList(Storage.getDestillering());
+        ObservableList<Destillering> destilleringer = FXCollections.observableArrayList(Controller.getDestilleringer());
         lvwDestilleringer.setItems(destilleringer);
 
         lvwDestilleringer.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> updateTextFields());
@@ -103,7 +102,7 @@ public class PåfyldFad extends Stage {
             return;
         }
 
-        Destillat destillat = new Destillat("1");
+        Destillat destillat = new Destillat();
         int index = 0;
         for (Destillering selectedDestillering : lvwDestilleringer.getSelectionModel().getSelectedItems()) {
             TextField textField = textFieldsList.get(index);
