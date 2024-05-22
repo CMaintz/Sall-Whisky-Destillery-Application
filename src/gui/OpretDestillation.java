@@ -1,6 +1,7 @@
 package gui;
 
 import application.controller.Controller;
+import application.models.Destillering;
 import application.models.Korn;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,7 +12,9 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class OpretDestillation extends Stage {
+    private ListView<Destillering> destilleringListView;
     public OpretDestillation() {
+        destilleringListView = new ListView<>();
         GridPane pane = new GridPane();
         pane.setPadding(new Insets(20));
         pane.setHgap(20);
@@ -68,7 +71,6 @@ public class OpretDestillation extends Stage {
         cbKorn.setItems(kornList);
 
         //Action til knappen
-
         opretDestillation.setOnAction(e -> {
             String destillationsdato = dpDestillationsdato.getValue().toString();
             String maltBatch = txtMaltBatch.getText();
@@ -79,7 +81,9 @@ public class OpretDestillation extends Stage {
             String rygeMateriale = txtRygeMateriale.getText();
             String kommentar = taKommentar.getText();
 
-            Controller.createDestillering(maltBatch, korn, medarbejder, mængdeVæske, alkoholProcent, rygeMateriale, kommentar);
+            Destillering destillering = Controller.createDestillering(maltBatch, korn, medarbejder, mængdeVæske, alkoholProcent, rygeMateriale, kommentar);
+
+            destilleringListView.getItems().add(destillering);
 
             dpDestillationsdato.setValue(null);
             txtMaltBatch.setText("");
@@ -94,8 +98,8 @@ public class OpretDestillation extends Stage {
             alert.setTitle("Destillering oprettet");
             alert.setHeaderText(null);
             alert.setContentText("Destilleringen er oprettet");
-
             alert.showAndWait();
+
         });
 
 
