@@ -1,10 +1,11 @@
 package application.models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
 
-public class Fad {
+public class Fad implements Serializable {
     private static int antalFade;
     private String fadNr;
     private int literKapacitet;
@@ -17,8 +18,8 @@ public class Fad {
         this.fadNr = antalFade + "";
     }
 
-    public FadHistorik createFadHistorik(String tidligereIndhold, String land, LocalDate fraÅr, String leverandør) {
-        FadHistorik fh = new FadHistorik(tidligereIndhold, land, fraÅr, leverandør);
+    public FadHistorik createFadHistorik(String tidligereIndhold, String land, LocalDate fraÅr, LocalDate tilÅr, String leverandør) {
+        FadHistorik fh = new FadHistorik(tidligereIndhold, land, fraÅr, tilÅr, leverandør);
         this.fadHistorik = fh;
         return fh;
     }
@@ -43,13 +44,11 @@ public class Fad {
         this.destillat = destillat;
     }
 
-    public Destillat addDestillat(Destillat destillat) {
+    public void addDestillat(Destillat destillat) {
         if (destillat != null) {
-            this.fadHistorik.addTidligereDestillat(destillat);
+            this.fadHistorik.addDestillat(destillat);
             this.destillat = destillat;
-            destillat.setFad(this);
         }
-        return destillat;
     }
 
     public String getType() {

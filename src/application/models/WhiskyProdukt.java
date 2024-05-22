@@ -1,14 +1,15 @@
 package application.models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WhiskyProdukt {
+public class WhiskyProdukt implements Serializable {
     private String navn;
-    private double alkoholProcent;
-    private List<FadTapning> fadTapninger;
+    private int alkoholProcent;
+    private final List<FadTapning> fadTapninger;
     private final List<WhiskyFlaske> fyldteFlasker;
     private double literVandTilføjet;
     private double antalLiter;
@@ -59,13 +60,12 @@ public class WhiskyProdukt {
         return alkoholProcent;
     }
 
-
     private void udregnAlkoholprocent() {
-        double literEthanol = 0;
+        int literEthanol = 0;
         for (FadTapning fadTapning : fadTapninger) {
             literEthanol += (fadTapning.getDestillat().getAlkoholprocent() / 100) * fadTapning.getLiterTappet();
         }
-        alkoholProcent = (literEthanol / antalLiter) * 100;
+        alkoholProcent = (int) ((literEthanol / antalLiter) * 100);
     }
 
     public void tilføjVand(int literVand) {
@@ -97,7 +97,8 @@ public class WhiskyProdukt {
         String toReturn;
 
         //TODO er det nemmere med en StringBuilder? Hmm
-        String korn = "Skabt af egne hænder med Lars' økologiske ";
+        String navn = getNavn().toUpperCase();
+        String korn = "\nSkabt af egne hænder med Lars' økologiske ";
         String mark = "\nSået og høstet fra den jyske muld på Lars' marker ";
         //lav to lokale variabler til at finde ud af hvor længe mæskningen er sket; en til den mæskning med færrest timer,
         //og en til den mæskning med flest timer, som bruges mens man itererer gennem destilleringer.
@@ -201,4 +202,19 @@ public class WhiskyProdukt {
         return "\nMæsket ved håndkraft og fermenteret i " + lavestAntalTimer + " til " + højesteAntalTimer + "\nDobbeltdestilleret langtsomt i direct fired kobber pot stills.";
     }
 
+    public String getDetaljer() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Destillater: \n");
+        for (FadTapning ft : fadTapninger) {
+            sb.append(ft.getDestillat() + "\n");
+        }
+
+
+        return sb.toString();
+    }
+
+    @Override
+    public String toString() {
+        return navn + " " + alkoholProcent + " % Vol.";
+    }
 }

@@ -1,6 +1,8 @@
 package application.models;
 
-public class Korn {
+import java.io.Serializable;
+
+public class Korn implements Serializable {
     private String sort;
     private String variant;
     private String markNavn;

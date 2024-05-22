@@ -1,9 +1,10 @@
 package application.models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 
-public class Påfyldning {
+public class Påfyldning implements Serializable {
     private String medarbejderNavn;
     private double literPåfyldt;
     private Destillering destillering;

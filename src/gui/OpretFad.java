@@ -68,12 +68,14 @@ public class OpretFad extends Stage {
         //Action til knappen
         opretFad.setOnAction(e -> {
             int literKapacitet = Integer.parseInt(txtLiterKapacitet.getText());
+//            TODO datepicker?
+//            LocalDate tilÅr = LocalDate.parse(txtTilÅr.gettext());
             LocalDate fraÅr = LocalDate.parse(txtFraÅr.getText());
             String tidligereIndhold = txtTidligereIndhold.getText();
             String land = txtLand.getText();;
             String leverandør = txtLeverandør.getText();
 
-            Controller.createFad(literKapacitet, tidligereIndhold, land, fraÅr, leverandør);
+//            Controller.createFad(literKapacitet, tidligereIndhold, land, fraÅr, tilÅr, leverandør);
 
             txtLiterKapacitet.setText("");
             txtFraÅr.setText("");
