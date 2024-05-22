@@ -1,7 +1,9 @@
 package application.models;
 
 
-public class Reol {
+import java.io.Serializable;
+
+public class Reol implements Serializable {
     private int reolNummer;
     private Hylde[] hylder;
 

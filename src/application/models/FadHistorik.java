@@ -1,11 +1,11 @@
 package application.models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FadHistorik {
+public class FadHistorik implements Serializable {
     private String tidligereIndhold;
     private String land;
     private LocalDate fraÅr;
@@ -13,7 +13,7 @@ public class FadHistorik {
     private String leverandør;
     private List<Destillat> tidligereDestillater;
 
-    FadHistorik(String tidligereIndhold, String land, LocalDate fraÅr, String leverandør) {
+    FadHistorik(String tidligereIndhold, String land, LocalDate fraÅr, LocalDate tilÅr, String leverandør) {
         this.tidligereIndhold = tidligereIndhold;
         this.land = land;
         this.fraÅr = fraÅr;
@@ -57,7 +57,7 @@ public class FadHistorik {
         return tidligereDestillater;
     }
 
-    public void addTidligereDestillat(Destillat destillat) {
+    public void addDestillat(Destillat destillat) {
         if (!tidligereDestillater.contains(destillat)) {
             tidligereDestillater.add(destillat);
         }

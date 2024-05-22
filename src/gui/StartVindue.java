@@ -56,6 +56,7 @@ public class StartVindue extends Application {
         Tab tabDestillation = new Tab("Destillation");
         Tab tabLager = new Tab("Lagerstyring");
         Tab tabData = new Tab("Hent Faddata");
+        Tab tabWhisky = new Tab("Whisky");
 
         FadVindue fadVindue = new FadVindue();
         tabFade.setContent(fadVindue);
@@ -65,11 +66,14 @@ public class StartVindue extends Application {
         tabLager.setContent(lagerstyringPane);
         DataPane dataPane = new DataPane();
         tabData.setContent(dataPane);
+        WhiskyPane whiskyPane = new WhiskyPane();
+        tabWhisky.setContent(whiskyPane);
 
         tabPane.getTabs().add(tabFade);
         tabPane.getTabs().add(tabDestillation);
         tabPane.getTabs().add(tabLager);
         tabPane.getTabs().add(tabData);
+        tabPane.getTabs().add(tabWhisky);
 
         tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
             if (newTab == tabDestillation) {

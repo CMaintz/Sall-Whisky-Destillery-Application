@@ -1,8 +1,9 @@
 package application.models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class WhiskyFlaske {
+public class WhiskyFlaske implements Serializable {
     private int flaskeNr;
     private String produktHistorie;
     private WhiskyProdukt whisky;
@@ -12,7 +13,7 @@ public class WhiskyFlaske {
         this.flaskeNr = flaskeNr;
         this.whisky = whisky;
         flaskningsDato = LocalDate.now();
-        this.produktHistorie = produktHistorie;
+        this.produktHistorie = "Flaske #" + flaskeNr + " " + produktHistorie;
     }
 
     public int getFlaskeNr() {
@@ -30,4 +31,10 @@ public class WhiskyFlaske {
     public LocalDate getFlaskningsDato() {
         return flaskningsDato;
     }
+
+    @Override
+    public String toString() {
+        return "Flaske #" + flaskeNr;
+    }
+
 }

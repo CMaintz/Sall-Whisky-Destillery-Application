@@ -1,23 +1,22 @@
 package application.models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Destillat {
+public class Destillat implements Serializable {
     private final List<Påfyldning> påfyldninger;
-    private String navn;
     private double antalLiter;
     private double alkoholprocent;
     private final List<ModningsHistorik> modningsHistorik;
     private Fad fad;
 
-    public Destillat(String navn) {
+    public Destillat() {
         påfyldninger = new ArrayList<>();
         modningsHistorik = new ArrayList<>();
 
-        this.navn = navn;
     }
 
     // Pre: literPåfyld > 0
@@ -30,10 +29,6 @@ public class Destillat {
     }
     public ArrayList<Påfyldning> getPåfyldninger() {
         return new ArrayList<>(påfyldninger);
-    }
-
-    public String getNavn() {
-        return navn;
     }
 
     public LocalDate getPåfyldningsDato() {
@@ -66,20 +61,19 @@ public class Destillat {
     }
 
     public void omhældDestillat(Fad newFad) {
-        if (!this.fad.equals(newFad)) {
             fad.setDestillat(null);
             this.fad = newFad;
             newFad.setDestillat(this);
             createModningsHistorik();
-        }
     }
 
-    private void createModningsHistorik() {
+    private ModningsHistorik createModningsHistorik() {
         if (this.modningsHistorik.size() > 0) {
             this.modningsHistorik.get(this.modningsHistorik.size() - 1).setSlutDato(LocalDate.now());
         }
         ModningsHistorik modningsHistorik = new ModningsHistorik(fad, LocalDate.now());
         this.modningsHistorik.add(modningsHistorik);
+        return modningsHistorik;
     }
 
     private void udregnAlkoholprocent() {
@@ -113,7 +107,6 @@ public class Destillat {
     public String toString() {
         return "Destillat{" +
                 "påfyldning=" + påfyldninger +
-                ", navn='" + navn + '\'' +
                 ", antalLiter=" + antalLiter +
                 '}';
     }

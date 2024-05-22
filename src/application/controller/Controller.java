@@ -1,28 +1,31 @@
 package application.controller;
 
 import application.models.*;
-import storage.Storage;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.List;
 
-public class Controller {
-    public static Fad createFad(int størrelse, String tidligereIndhold, String land, LocalDate fraÅr, String leverandør) {
+public abstract class Controller {
+
+    private static Storage storage;
+    public static void setStorage(Storage storage) {Controller.storage = storage;}
+
+    public static Fad createFad(int størrelse, String tidligereIndhold, String land, LocalDate fraÅr, LocalDate tilÅr, String leverandør) {
         Fad fad = new Fad(størrelse);
-        fad.createFadHistorik(tidligereIndhold, land, fraÅr, leverandør);
-        Storage.addFad(fad);
+        fad.createFadHistorik(tidligereIndhold, land, fraÅr, tilÅr,  leverandør);
+        storage.addFad(fad);
         return fad;
     }
 
     public static Korn createKorn(String sort, String variant, String markNavn) {
         Korn korn = new Korn(sort, variant, markNavn);
-        Storage.addKorn(korn);
+        storage.addKorntype(korn);
         return korn;
     }
 
     public static Destillering createDestillering(String maltBatch, Korn korn, String medarbejder, double mængdeVæske, double alkoholProcent, String rygeMateriale, String kommentar) {
         Destillering destillering = new Destillering(maltBatch, korn, medarbejder, mængdeVæske, alkoholProcent, rygeMateriale, kommentar);
-        Storage.addDestillering(destillering);
+        storage.addDestillering(destillering);
         return destillering;
     }
 
@@ -31,24 +34,29 @@ public class Controller {
         return påfyldning;
     }
 
-    public static Destillat createDestilat(String navn) {
-        Destillat destillat = new Destillat(navn);
+    public static Destillat createDestillat() {
+        Destillat destillat = new Destillat();
         return destillat;
     }
 
+    public static Reol createReol(Lager lager, int antalHylder) {
+        Reol reol = lager.createReol(antalHylder);
+        return reol;
+    }
     public static Lager createLager(String navn) {
         Lager lager = new Lager(navn);
-        Storage.addLager(lager);
+        storage.addLager(lager);
         return lager;
     }
 
-    public static FadTapning createFadTapning(String medarbejdernavn, double literTappet, Fad fad, WhiskyProdukt whiskyProdukt) {
-        FadTapning ft = whiskyProdukt.createFadTapning(medarbejdernavn, literTappet, fad);
+    public static FadTapning createFadTapning(String medarbejdernavn, Fad fad, WhiskyProdukt whiskyProdukt) {
+        FadTapning ft = whiskyProdukt.createFadTapning(medarbejdernavn, fad.getDestillat().getAntalLiter(), fad);
         return ft;
     }
 
-    public static WhiskyProdukt createWhiskyProdukt(String navn, String beskrivelse) {
+    public static WhiskyProdukt createWhiskyProdukt(String navn) {
         WhiskyProdukt whiskyProdukt = new WhiskyProdukt(navn);
+        storage.addWhiskyProdukt(whiskyProdukt);
         return whiskyProdukt;
     }
 
@@ -56,54 +64,41 @@ public class Controller {
 
     public static void createWhiskyflasker(WhiskyProdukt whiskyProdukt) {
         double liter = whiskyProdukt.getAntalLiter();
-        String produktHistorie = whiskyProdukt.genererHistorie();
+        String derp = "Her er en historie!";
+//        String produktHistorie = whiskyProdukt.genererHistorie();
         for (int i = 0; i < liter; i++) {
-            whiskyProdukt.createWhiskyFlaske(produktHistorie);
+            whiskyProdukt.createWhiskyFlaske(derp);
+//            whiskyProdukt.createWhiskyFlaske(produktHistorie);
         }
         whiskyProdukt.setAntalLiter(0);
     }
-// TODO vi skal sørge for at kunne påfylde et fad så addDestillat kaldes
     public static void omhældningAfDestillat(Fad fadFra, Fad fadTil) {
         fadFra.getDestillat().omhældDestillat(fadTil);
     }
 
-    public static boolean removeReol(Lager lager, Reol reol) {
-        boolean remove = true;
-        for (Reol r : lager.getReoler()) {
-            for (Hylde hylde : r.getHylder()) {
-                if (hylde.getFad() != null) {
-                    remove = false;
-                }
-            }
-        }
-        if (remove) {
-//         TODO lav metode til at slette i storage
-        }
-        return remove;
+    public static List<Lager> getLagre() {
+        return storage.getLagre();
     }
 
-    public static void removeLager(Lager lager) {
-        boolean remove = true;
-        for (Reol reol : lager.getReoler()) {
-            if (removeReol(lager, reol)) {
-                remove = false;
-            }
-        }
-        if (remove) {
-            //         TODO lav metode til at slette i storage
-        }
+    public static List<Fad> getFade() {
+        return storage.getFade();
     }
 
-    public static ArrayList<Lager> getLager() {
-        return Storage.getLager();
+
+    public static List<Destillering> getDestilleringer() {
+        return storage.getDestilleringer();
     }
 
-    public static ArrayList<Fad> getFade() {
-        return Storage.getFade();
+    public static List<WhiskyProdukt> getWhiskyProdukter() {
+        return storage.getWhiskyProdukter();
     }
 
-    public static ArrayList<Fad> getFyldtefade() {
-        ArrayList<Fad> result = new ArrayList<>();
+    public static List<Korn> getKorntyper() {
+        return storage.getKorntyper();
+    }
+
+    public static List<Fad> getFyldtefade() {
+        List<Fad> result = new ArrayList<>();
         for (Fad fad : Storage.getFade()) {
             if (fad.getDestillat() != null) {
                 result.add(fad);
@@ -112,8 +107,8 @@ public class Controller {
         return result;
     }
 
-    public static ArrayList<Fad> getTommeFade() {
-        ArrayList<Fad> result = new ArrayList<>();
+    public static List<Fad> getTommeFade() {
+        List<Fad> result = new ArrayList<>();
         for (Fad fad : Storage.getFade()) {
             if (fad.getDestillat() == null) {
                 result.add(fad);
