@@ -41,6 +41,9 @@ public class FadHistorik {
         return fraÅr;
     }
 
+    public LocalDate getTilÅr() {
+        return tilÅr;
+    }
 
     public String getLeverandør() {
         return leverandør;

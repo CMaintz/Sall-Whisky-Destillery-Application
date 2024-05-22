@@ -18,6 +18,7 @@ public class StartVindue extends Application {
     @Override
     public void init() {
 //        controller = Controller.getController();
+//        controller.createSomeObjects();
     }
 
     @Override
@@ -51,11 +52,13 @@ public class StartVindue extends Application {
     private void initTabPane(TabPane tabPane) {
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-        Tab tabForside = new Tab("Fade");
-        Tab tabDestillation = new Tab("Destillering");
-        Tab tabLager = new Tab("Lager");
-        Tab tabData = new Tab("Whiskyprodukt");
+        Tab tabFade = new Tab("Fade");
+        Tab tabDestillation = new Tab("Destillation");
+        Tab tabLager = new Tab("Lagerstyring");
+        Tab tabData = new Tab("Hent Faddata");
 
+        FadVindue fadVindue = new FadVindue();
+        tabFade.setContent(fadVindue);
         DestillationPane destillationPane = new DestillationPane();
         tabDestillation.setContent(destillationPane);
         LagerstyringPane lagerstyringPane = new LagerstyringPane();
@@ -63,7 +66,7 @@ public class StartVindue extends Application {
         DataPane dataPane = new DataPane();
         tabData.setContent(dataPane);
 
-        tabPane.getTabs().add(tabForside);
+        tabPane.getTabs().add(tabFade);
         tabPane.getTabs().add(tabDestillation);
         tabPane.getTabs().add(tabLager);
         tabPane.getTabs().add(tabData);
@@ -74,7 +77,16 @@ public class StartVindue extends Application {
                 tabDestillation.setContent(newDestillationPane);
             }
         });
+
+        tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
+            if (newTab == tabFade) {
+                FadVindue newFadVindue = new FadVindue();
+                tabFade.setContent(fadVindue);
+            }
+        });
     }
+
+
 
 //        tabForside.setOnSelectionChanged(event -> forsidePane.updateControls());
 //        tabDestillation.setOnSelectionChanged(event -> destillationPane.updateControls());

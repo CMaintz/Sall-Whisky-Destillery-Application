@@ -4,7 +4,7 @@ import application.models.*;
 import storage.Storage;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.ArrayList;
 
 public class Controller {
     public static Fad createFad(int størrelse, String tidligereIndhold, String land, LocalDate fraÅr, String leverandør) {
@@ -64,8 +64,7 @@ public class Controller {
     }
 // TODO vi skal sørge for at kunne påfylde et fad så addDestillat kaldes
     public static void omhældningAfDestillat(Fad fadFra, Fad fadTil) {
-        fadTil.addDestillat(fadFra.getDestillat());
-        fadFra.setDestillat(null);
+        fadFra.getDestillat().omhældDestillat(fadTil);
     }
 
     public static boolean removeReol(Lager lager, Reol reol) {
@@ -95,11 +94,32 @@ public class Controller {
         }
     }
 
-    public static List<Destillering> getDestilleringer() {
-        return Storage.getDestillering();
+    public static ArrayList<Lager> getLager() {
+        return Storage.getLager();
     }
 
-    public static Korn getKorn() {
-        return Storage.getKorn().get(0);
+    public static ArrayList<Fad> getFade() {
+        return Storage.getFade();
     }
+
+    public static ArrayList<Fad> getFyldtefade() {
+        ArrayList<Fad> result = new ArrayList<>();
+        for (Fad fad : Storage.getFade()) {
+            if (fad.getDestillat() != null) {
+                result.add(fad);
+            }
+        }
+        return result;
+    }
+
+    public static ArrayList<Fad> getTommeFade() {
+        ArrayList<Fad> result = new ArrayList<>();
+        for (Fad fad : Storage.getFade()) {
+            if (fad.getDestillat() == null) {
+                result.add(fad);
+            }
+        }
+        return result;
+    }
+
 }
