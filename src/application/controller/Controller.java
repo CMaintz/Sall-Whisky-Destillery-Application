@@ -3,6 +3,7 @@ package application.controller;
 import application.models.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Controller {
@@ -91,7 +92,7 @@ public abstract class Controller {
 
     public static List<Fad> getFyldtefade() {
         List<Fad> result = new ArrayList<>();
-        for (Fad fad : Storage.getFade()) {
+        for (Fad fad : storage.getFade()) {
             if (fad.getDestillat() != null) {
                 result.add(fad);
             }
@@ -109,7 +110,7 @@ public abstract class Controller {
 
     public static List<Fad> getTommeFade() {
         List<Fad> result = new ArrayList<>();
-        for (Fad fad : Storage.getFade()) {
+        for (Fad fad : storage.getFade()) {
             if (fad.getDestillat() == null) {
                 result.add(fad);
             }

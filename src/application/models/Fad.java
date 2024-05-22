@@ -44,13 +44,11 @@ public class Fad implements Serializable {
         this.destillat = destillat;
     }
 
-    public Destillat addDestillat(Destillat destillat) {
+    public void addDestillat(Destillat destillat) {
         if (destillat != null) {
             this.fadHistorik.addDestillat(destillat);
             this.destillat = destillat;
-            destillat.setFad(this);
         }
-        return destillat;
     }
 
     public String getType() {
