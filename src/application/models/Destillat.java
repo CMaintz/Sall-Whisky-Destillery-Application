@@ -61,10 +61,13 @@ public class Destillat implements Serializable {
     }
 
     public void omhældDestillat(Fad newFad) {
+//        if (!this.fad.equals(newFad)) {
             fad.setDestillat(null);
             this.fad = newFad;
             newFad.setDestillat(this);
+            // skal være addDestillat, ikke set?
             createModningsHistorik();
+//        }
     }
 
     private ModningsHistorik createModningsHistorik() {

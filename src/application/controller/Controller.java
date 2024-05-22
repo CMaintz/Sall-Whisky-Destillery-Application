@@ -89,14 +89,6 @@ public abstract class Controller {
         return storage.getDestilleringer();
     }
 
-    public static List<WhiskyProdukt> getWhiskyProdukter() {
-        return storage.getWhiskyProdukter();
-    }
-
-    public static List<Korn> getKorntyper() {
-        return storage.getKorntyper();
-    }
-
     public static List<Fad> getFyldtefade() {
         List<Fad> result = new ArrayList<>();
         for (Fad fad : Storage.getFade()) {
@@ -105,6 +97,14 @@ public abstract class Controller {
             }
         }
         return result;
+    }
+
+    public static List<WhiskyProdukt> getWhiskyProdukter() {
+        return storage.getWhiskyProdukter();
+    }
+
+    public static List<Korn> getKorntyper() {
+        return storage.getKorntyper();
     }
 
     public static List<Fad> getTommeFade() {
