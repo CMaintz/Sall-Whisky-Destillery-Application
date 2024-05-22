@@ -14,6 +14,10 @@ public class ModningsHistorik implements Serializable {
         this.slutDato = null;
     }
 
+    public void setStartDato(LocalDate startDato) {
+        this.startDato = startDato;
+    }
+
     public Fad getFad() {
         return fad;
     }

@@ -18,8 +18,8 @@ public class Fad implements Serializable {
         this.fadNr = antalFade + "";
     }
 
-    public FadHistorik createFadHistorik(String tidligereIndhold, String land, LocalDate fraÅr, String leverandør) {
-        FadHistorik fh = new FadHistorik(tidligereIndhold, land, fraÅr, leverandør);
+    public FadHistorik createFadHistorik(String tidligereIndhold, String land, LocalDate fraÅr, LocalDate tilÅr, String leverandør) {
+        FadHistorik fh = new FadHistorik(tidligereIndhold, land, fraÅr, tilÅr, leverandør);
         this.fadHistorik = fh;
         return fh;
     }
@@ -45,7 +45,7 @@ public class Fad implements Serializable {
     }
 
     public Destillat addDestillat(Destillat destillat) {
-        if (destillat == null) {
+        if (destillat != null) {
             this.fadHistorik.addDestillat(destillat);
             this.destillat = destillat;
             destillat.setFad(this);

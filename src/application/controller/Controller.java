@@ -1,19 +1,18 @@
 package application.controller;
 
 import application.models.*;
-import storage.ListStorage;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public abstract class Controller {
 
-    public static Storage storage;
+    private static Storage storage;
     public static void setStorage(Storage storage) {Controller.storage = storage;}
 
-    public static Fad createFad(int størrelse, String tidligereIndhold, String land, LocalDate fraÅr, String leverandør) {
+    public static Fad createFad(int størrelse, String tidligereIndhold, String land, LocalDate fraÅr, LocalDate tilÅr, String leverandør) {
         Fad fad = new Fad(størrelse);
-        fad.createFadHistorik(tidligereIndhold, land, fraÅr, leverandør);
+        fad.createFadHistorik(tidligereIndhold, land, fraÅr, tilÅr,  leverandør);
         storage.addFad(fad);
         return fad;
     }
@@ -35,19 +34,23 @@ public abstract class Controller {
         return påfyldning;
     }
 
-    public static Destillat createDestilat(String navn) {
-        Destillat destillat = new Destillat(navn);
+    public static Destillat createDestillat() {
+        Destillat destillat = new Destillat();
         return destillat;
     }
 
+    public static Reol createReol(Lager lager, int antalHylder) {
+        Reol reol = lager.createReol(antalHylder);
+        return reol;
+    }
     public static Lager createLager(String navn) {
         Lager lager = new Lager(navn);
         storage.addLager(lager);
         return lager;
     }
 
-    public static FadTapning createFadTapning(String medarbejdernavn, double literTappet, Fad fad, WhiskyProdukt whiskyProdukt) {
-        FadTapning ft = whiskyProdukt.createFadTapning(medarbejdernavn, literTappet, fad);
+    public static FadTapning createFadTapning(String medarbejdernavn, Fad fad, WhiskyProdukt whiskyProdukt) {
+        FadTapning ft = whiskyProdukt.createFadTapning(medarbejdernavn, fad.getDestillat().getAntalLiter(), fad);
         return ft;
     }
 
@@ -61,9 +64,11 @@ public abstract class Controller {
 
     public static void createWhiskyflasker(WhiskyProdukt whiskyProdukt) {
         double liter = whiskyProdukt.getAntalLiter();
-        String produktHistorie = whiskyProdukt.genererHistorie();
+        String derp = "Her er en historie!";
+//        String produktHistorie = whiskyProdukt.genererHistorie();
         for (int i = 0; i < liter; i++) {
-            whiskyProdukt.createWhiskyFlaske(produktHistorie);
+            whiskyProdukt.createWhiskyFlaske(derp);
+//            whiskyProdukt.createWhiskyFlaske(produktHistorie);
         }
         whiskyProdukt.setAntalLiter(0);
     }
@@ -72,7 +77,7 @@ public abstract class Controller {
         fadFra.setDestillat(null);
     }
 
-    public static List<Lager> getLager() {
+    public static List<Lager> getLagre() {
         return storage.getLagre();
     }
 
@@ -81,4 +86,15 @@ public abstract class Controller {
     }
 
 
+    public static List<Destillering> getDestilleringer() {
+        return storage.getDestilleringer();
+    }
+
+    public static List<WhiskyProdukt> getWhiskyProdukter() {
+        return storage.getWhiskyProdukter();
+    }
+
+    public static List<Korn> getKorntyper() {
+        return storage.getKorntyper();
+    }
 }

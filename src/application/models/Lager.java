@@ -2,6 +2,8 @@ package application.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+
 import application.models.Reol;
 import application.models.Fad;
 import application.models.Hylde;
@@ -9,17 +11,16 @@ import application.models.Hylde;
 
 
 public class Lager implements Serializable {
-    private final ArrayList<Reol> reoler = new ArrayList<>();
-    private int antalReoler;
+    private final List<Reol> reoler;
     private String navn;
 
     public Lager(String navn) {
         this.navn = navn;
+        reoler = new ArrayList<>();
     }
 
     public Reol createReol(int antalHylder) {
-        antalReoler++;
-        Reol toReturn = new Reol(antalHylder, antalReoler);
+        Reol toReturn = new Reol(antalHylder, reoler.size() + 1);
         reoler.add(toReturn);
         return toReturn;
     }

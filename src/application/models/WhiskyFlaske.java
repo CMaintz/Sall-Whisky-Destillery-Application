@@ -13,7 +13,7 @@ public class WhiskyFlaske implements Serializable {
         this.flaskeNr = flaskeNr;
         this.whisky = whisky;
         flaskningsDato = LocalDate.now();
-        this.produktHistorie = produktHistorie;
+        this.produktHistorie = "Flaske #" + flaskeNr + " " + produktHistorie;
     }
 
     public int getFlaskeNr() {
@@ -31,4 +31,10 @@ public class WhiskyFlaske implements Serializable {
     public LocalDate getFlaskningsDato() {
         return flaskningsDato;
     }
+
+    @Override
+    public String toString() {
+        return "Flaske #" + flaskeNr;
+    }
+
 }

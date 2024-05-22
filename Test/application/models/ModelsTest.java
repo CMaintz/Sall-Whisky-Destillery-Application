@@ -18,9 +18,9 @@ public class ModelsTest {
     @BeforeEach
     void setUp() {
         fad = new Fad(100);
-        fad.createFadHistorik("Sherry", "Spanien", LocalDate.of(2020,10,10), "TestLeverandør");
-        destillat = new Destillat("Destillat1");
-        destillat.setFad(fad);
+        fad.createFadHistorik("Sherry", "Spanien", LocalDate.of(2020,10,10), LocalDate.of(2024, 1, 1), "TestLeverandør");
+        destillat = new Destillat();
+        fad.addDestillat(destillat);
         korn = new Korn("TestSort", "TestVariant", "Mark1");
         destillering = new Destillering("TestMaltBatch", korn, "Medarbejder1", 40, 50, "Røg1", "Smager godt");
     }
@@ -38,16 +38,18 @@ public class ModelsTest {
     }
 
     @Test
-    void destillatAddFadHistorikTest() {
+    void destillatAddModningTest() {
         Fad testFad = new Fad(80);
         destillat.omhældDestillat(testFad);
         assertTrue(destillat.getFad().equals(testFad));
-        assertTrue(destillat.getDestillatHistorik().get(0).getFad().equals(fad));
+        assertTrue(destillat.getModningsHistorik().get(0).getFad().equals(fad));
         Fad testFad2 = new Fad(60);
-        destillat.addDestillatHistorik(testFad2);
+        destillat.omhældDestillat(testFad2);
         assertTrue(destillat.getFad().equals(testFad2));
-        assertTrue(destillat.getDestillatHistorik().get(1).getFad().equals(testFad));
-        assertTrue(destillat.getOmhældninger().get(0).getFad().equals(fad));
+
+        assertTrue(destillat.getModningsHistorik().get(2).getFad().equals(testFad2));
+
+        assertEquals(3, destillat.getModningsHistorik().size());
     }
 
     @Test
@@ -62,17 +64,14 @@ public class ModelsTest {
     @Test
     void destillatKlarTest() {
         assertFalse(destillat.destillatKlar());
-        Destillat destillatTest = new Destillat("Test");
-        destillat.setPåfyldningsDato(LocalDate.of(2020, 10, 10));
+        Destillat destillatTest = new Destillat();
+        destillat.getModningsHistorik().get(0).setStartDato(LocalDate.of(2020, 10, 10));
         assertTrue(destillat.destillatKlar());
     }
 
     @Test
     void testSetters() {
-        Destillat destillat = new Destillat("Test Destillat");
-
-        destillat.setPåfyldningsDato(LocalDate.of(2022, 5, 15));
-        assertEquals(LocalDate.of(2022, 5, 15), destillat.getPåfyldningsDato());
+        Destillat destillat = new Destillat();
 
         Fad fad = new Fad(50);
         destillat.setFad(fad);
@@ -84,31 +83,30 @@ public class ModelsTest {
 
     @Test
     void testGetters() {
-        destillat.createPåfyldning("Jens", 30, destillering);
+        Påfyldning påfyldning = destillat.createPåfyldning("Jens", 30, destillering);
         assertEquals(50, destillat.getAlkoholprocent());
         assertEquals(30, destillat.getAntalLiter());
         assertTrue(destillat.getFad().equals(fad));
         destillat.getPåfyldninger();
         destillat.getPåfyldningsDato();
         destillat.getModningsHistorik();
-        destillat.getNavn();
         assertTrue(destillat.getPåfyldninger().contains(påfyldning));
         assertTrue(destillat.getPåfyldningsDato().equals(LocalDate.now()));
         Fad fad = new Fad(40);
-        destillat.addDestillatHistorik(fad);
-        assertTrue(destillat.getDestillatHistorik().get(0).getFad().equals(this.fad));
-        assertTrue(destillat.getNavn().equals("Destillat1"));
+        fad.createFadHistorik("test", "test", LocalDate.now(), LocalDate.now(), "test");
+        fad.addDestillat(destillat);
+        assertTrue(destillat.getModningsHistorik().get(0).getFad().equals(this.fad));
     }
 
     @Test
     void testFadKlasse() {
         Fad fadTest = new Fad(100);
-        FadHistorik fadHistorik = fadTest.createFadHistorik("Sherry", "Spanien", LocalDate.of(2020, 10, 10), "TestLeverandør");
+        FadHistorik fadHistorik = fadTest.createFadHistorik("Sherry", "Spanien", LocalDate.of(2020, 10, 10), LocalDate.of(2024, 1, 1), "TestLeverandør");
         assertTrue(fadTest.getFadHistorik().equals(fadHistorik));
 
         fadTest.addDestillat(destillat);
         assertTrue(fadTest.getDestillat().equals(destillat));
-        Destillat destillatTest = new Destillat("Test");
+        Destillat destillatTest = new Destillat();
         fadTest.addDestillat(destillatTest);
         assertTrue(fadTest.getDestillat().equals(destillatTest));
         assertTrue(fadTest.getFadHistorik().getTidligereDestillater().contains(destillat));
@@ -118,7 +116,7 @@ public class ModelsTest {
     void whiskyProduktWhiskyTypeTest() {
         fad.addDestillat(destillat);
         destillat.createPåfyldning("Jens", 30, destillering);
-        WhiskyProdukt whiskyProdukt = new WhiskyProdukt("TestWhiskyProdukt", "Test");
+        WhiskyProdukt whiskyProdukt = new WhiskyProdukt("TestWhiskyProdukt");
         whiskyProdukt.createFadTapning("Jens", 30, fad);
         assertEquals("Cask Strength", whiskyProdukt.whiskyType());
 

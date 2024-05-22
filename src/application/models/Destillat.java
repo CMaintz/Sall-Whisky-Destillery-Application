@@ -8,17 +8,15 @@ import java.util.List;
 
 public class Destillat implements Serializable {
     private final List<Påfyldning> påfyldninger;
-    private String navn;
     private double antalLiter;
     private double alkoholprocent;
     private final List<ModningsHistorik> modningsHistorik;
     private Fad fad;
 
-    public Destillat(String navn) {
+    public Destillat() {
         påfyldninger = new ArrayList<>();
         modningsHistorik = new ArrayList<>();
 
-        this.navn = navn;
     }
 
     // Pre: literPåfyld > 0
@@ -31,10 +29,6 @@ public class Destillat implements Serializable {
     }
     public ArrayList<Påfyldning> getPåfyldninger() {
         return new ArrayList<>(påfyldninger);
-    }
-
-    public String getNavn() {
-        return navn;
     }
 
     public LocalDate getPåfyldningsDato() {
@@ -67,11 +61,11 @@ public class Destillat implements Serializable {
     }
 
     public void omhældDestillat(Fad newFad) {
-        if (!this.fad.equals(newFad)) {
+//        if (!this.fad.equals(newFad)) {
             fad.setDestillat(null);
             this.fad = newFad;
             createModningsHistorik();
-        }
+//        }
     }
 
     private ModningsHistorik createModningsHistorik() {
@@ -114,7 +108,6 @@ public class Destillat implements Serializable {
     public String toString() {
         return "Destillat{" +
                 "påfyldning=" + påfyldninger +
-                ", navn='" + navn + '\'' +
                 ", antalLiter=" + antalLiter +
                 '}';
     }

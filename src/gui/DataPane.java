@@ -10,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import storage.ListStorage;
 
 public class DataPane extends GridPane {
     private Controller controller;
@@ -18,7 +17,7 @@ public class DataPane extends GridPane {
     private ListView<Fad> fadListView;
 
     public DataPane() {
-        controller = new Controller();
+//        controller = new Controller();
 
         fadListView = new ListView<Fad>();
 
@@ -36,8 +35,8 @@ public class DataPane extends GridPane {
 
 
         //Listviews
-        ObservableList<Fad> fadList = FXCollections.observableArrayList(ListStorage.getFade());
-        fadListView.setItems(fadList.filtered(fad -> fad.getDestillat() != null));
+//        ObservableList<Fad> fadList = FXCollections.observableArrayList(ListStorage.getFade());
+//        fadListView.setItems(fadList.filtered(fad -> fad.getDestillat() != null));
 
         this.add(fadListView, 0, 3);
         this.add(fadLabel, 0, 2);
