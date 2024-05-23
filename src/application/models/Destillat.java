@@ -1,6 +1,7 @@
 package application.models;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -18,7 +19,6 @@ public class Destillat implements Serializable {
         modningsHistorik = new ArrayList<>();
     }
 
-    // Pre: literPåfyld > 0
     public Påfyldning createPåfyldning(String medarbejderNavn, double literPåfyldt, Destillering destillering) {
         if (literPåfyldt <= 0 || literPåfyldt > destillering.getAntalLiter()) {
             throw new IllegalArgumentException("Invalid volume for påfyldning.");
@@ -29,6 +29,10 @@ public class Destillat implements Serializable {
         antalLiter += pf.getLiterPåfyldt();
         udregnAlkoholprocent();
         return pf;
+    }
+
+    public void setStartDato(LocalDate startDato) {
+        modningsHistorik.get(0).setStartDato(startDato);
     }
 
     public ArrayList<Påfyldning> getPåfyldninger() {
@@ -51,24 +55,30 @@ public class Destillat implements Serializable {
         this.antalLiter -= antalLiter;
     }
 
-    public void setFad(Fad fad) {
-        this.fad = fad;
-        createModningsHistorik();
-    }
-
     public Fad getFad() {
         return fad;
     }
 
     public List<ModningsHistorik> getModningsHistorik() {
-        return modningsHistorik;
+        return new ArrayList<>(modningsHistorik);
     }
 
     public void omhældDestillat(Fad newFad) {
-            fad.setDestillat(null);
-            this.fad = newFad;
+            this.fad.removeDestillat();
             newFad.addDestillat(this);
-            createModningsHistorik();
+    }
+
+    private int getLiterPåfyldt() {
+        int toReturn = 0;
+        for (Påfyldning påfyldning : påfyldninger) {
+            toReturn += påfyldning.getLiterPåfyldt();
+        }
+        return toReturn;
+    }
+
+    public void setFad(Fad fad) {
+        this.fad = fad;
+        createModningsHistorik();
     }
 
     private ModningsHistorik createModningsHistorik() {
@@ -94,24 +104,21 @@ public class Destillat implements Serializable {
             return true;
         }
         return false;
-//        double days = 0;
-//        boolean result = false;
-////        TODO if omhældninger.size > 0?
-//        for (ModningsHistorik dh : modningsHistorik) {
-//            Period period = Period.between(dh.getStartDato(), dh.getSlutDato());
-//            days += period.getDays();
-//        }
-//        if (days >= 1095) {
-//            result = true;
-//        }
-//        return result;
     }
 
     @Override
     public String toString() {
-        return "Destillat{" +
-                "påfyldning=" + påfyldninger +
-                ", antalLiter=" + antalLiter +
-                '}';
+        DecimalFormat numberFormatter = new DecimalFormat("#.00");
+        return numberFormatter.format(alkoholprocent) + "% Vol. " +  antalLiter + "L";
+    }
+
+    public String getDetaljer() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Påfyldninger: \n");
+        for (Påfyldning påfyldning : påfyldninger) {
+            sb.append(påfyldning.getDetaljer() + "\n");
+            sb.append("\n");
+        }
+        return sb.toString();
     }
 }

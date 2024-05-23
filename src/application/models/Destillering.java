@@ -2,12 +2,15 @@ package application.models;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 //Når en destillering af whisky foretages, skal det registreres i systemet.
 //adminstrator indtaster detaljer om destilleringen, såsom startdato, slutdato, maltbatch, kornsort, medarbejder, mængde væske og alkholprocent.
 //Systemet skal kunne vise en liste over alle destilleringer, og det skal være muligt at søge i listen.
 public class Destillering implements Serializable {
+    private static int antalDestilleringer;
+    private int newSpiritbatchNr;
     private String maltBatch;
     private Korn korn;
     private String medarbejder;
@@ -15,11 +18,13 @@ public class Destillering implements Serializable {
     private double alkoholProcent;
     private String rygeMateriale;
     private String kommentar;
-    private LocalDate startDato;
-    private LocalDate slutDato;
+    private LocalDateTime startDato;
+    private LocalDateTime slutDato;
 
 
     public Destillering(String maltBatch, Korn korn, String medarbejder, double antalLiter, double alkoholProcent, String rygeMateriale, String kommentar) {
+        antalDestilleringer++;
+        this.newSpiritbatchNr = antalDestilleringer;
         this.maltBatch = maltBatch;
         this.korn = korn;
         this.medarbejder = medarbejder;
@@ -27,7 +32,7 @@ public class Destillering implements Serializable {
         this.alkoholProcent = alkoholProcent;
         this.rygeMateriale = rygeMateriale;
         this.kommentar = kommentar;
-        startDato = LocalDate.now();
+        startDato = LocalDateTime.now();
     }
 
     public String getMaltBatch() {
@@ -66,25 +71,36 @@ public class Destillering implements Serializable {
         this.antalLiter -= antalLiterTappet;
     }
 
-    public void setSlutDato(LocalDate slutDato) {
+    public void setSlutDato(LocalDateTime slutDato) {
         this.slutDato = slutDato;
     }
-    public int getDestilleringsTid() {
-        return (int) startDato.until(slutDato, ChronoUnit.HOURS);
+
+    public void setStartDato(LocalDateTime startDato) {
+        this.startDato = startDato;
     }
 
+    public LocalDateTime getSlutDato() {
+        return slutDato;
+    }
 
-    //toString
+    public long getDestilleringsTid() {
+        return startDato.until(slutDato, ChronoUnit.HOURS) + 1;
+    }
+
+    public String getDetaljer() {
+        String toReturn = "Maltbatch: " + maltBatch + "\nKorn: " + korn + "\nmedarbejder: " + medarbejder + "\n" + antalLiter + "L, " + alkoholProcent + "% Vol.";
+        if (rygeMateriale != null) {
+            toReturn += ", rygemateriale: " + rygeMateriale;
+        }
+        if (kommentar != null) {
+            toReturn += "\nkommentar:" + kommentar;
+        }
+
+    return toReturn;
+    }
+
     @Override
     public String toString() {
-        return "Destillering{" +
-                "maltBatch='" + maltBatch + '\'' +
-                ", korn=" + korn +
-                ", medarbejder='" + medarbejder + '\'' +
-                ", antalLiter=" + antalLiter +
-                ", alkoholProcent=" + alkoholProcent +
-                ", rygeMateriale='" + rygeMateriale + '\'' +
-                ", kommentar='" + kommentar + '\'' +
-                ", startDato=" + startDato;
+        return maltBatch + ", " + korn + ", " + medarbejder + ", " + antalLiter + ", " + alkoholProcent + ", " + rygeMateriale + ", " + kommentar;
     }
 }

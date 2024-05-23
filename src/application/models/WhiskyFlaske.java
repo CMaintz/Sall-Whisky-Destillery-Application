@@ -13,7 +13,7 @@ public class WhiskyFlaske implements Serializable {
         this.flaskeNr = flaskeNr;
         this.whisky = whisky;
         flaskningsDato = LocalDate.now();
-        this.produktHistorie = "Flaske #" + flaskeNr + " " + produktHistorie;
+        this.produktHistorie = produktHistorie;
     }
 
     public int getFlaskeNr() {
