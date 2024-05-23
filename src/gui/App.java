@@ -15,7 +15,7 @@ public class App {
             storage = new ListStorage();
             System.out.println("Empty ListStorage created");
 //        }
-        Controller.setStorage(storage);
+        Controller.setStorage(storage);;
 
         if (Controller.getFade().isEmpty()) {
             initStorage();
