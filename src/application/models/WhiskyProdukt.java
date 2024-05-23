@@ -129,6 +129,15 @@ public class WhiskyProdukt implements Serializable {
     }
 
     /**
+     * Gets antal liter.
+     *
+     * @return the antal liter
+     */
+    public double getAntalLiter() {
+        return antalLiter;
+    }
+
+    /**
      * Whisky type string.
      *
      * @return the string
@@ -136,18 +145,8 @@ public class WhiskyProdukt implements Serializable {
     public String whiskyType() {
         if (fadTapninger.size() == 1 && fadTapninger.get(0).getDestillat().getModningsHistorik().size() == 1) {
             return literVandTilføjet == 0 ? "Cask Strength" : "Single Cask";
-        } else {
-            return "Single Malt";
         }
-    }
-
-    /**
-     * Gets antal liter.
-     *
-     * @return the antal liter
-     */
-    public double getAntalLiter() {
-        return antalLiter;
+        return "Single Malt";
     }
 
     /**
@@ -187,7 +186,7 @@ public class WhiskyProdukt implements Serializable {
     /**
      * Retrieves a list of unique strings representing the names of the fields used in the whisky production process.
      *
-     * @return  a list of strings containing the names of the fields used in the whisky production process
+     * @return a list of strings containing the names of the fields used in the whisky production process
      */
     private List<String> historieMarker() {
         List<String> toReturn = new ArrayList<>();
@@ -205,7 +204,7 @@ public class WhiskyProdukt implements Serializable {
     /**
      * Retrieves a list of unique strings representing the variant and sort of each corn used in the whisky production process.
      *
-     * @return  a list of strings containing the variant and sort of each corn used in the whisky production process
+     * @return a list of strings containing the variant and sort of each corn used in the whisky production process
      */
     private List<String> historieKorn() {
         List<String> toReturn = new ArrayList<>();
@@ -224,7 +223,7 @@ public class WhiskyProdukt implements Serializable {
     /**
      * Calculates the number of months between the date of bottling and the last modification date of the first destillation in the whiskyProdukt.
      *
-     * @return  a string representing the number of years. If the number of years is less than 12, returns the corresponding Danish word.
+     * @return a string representing the number of years. If the number of years is less than 12, returns the corresponding Danish word.
      */
     private String historieModningstid() {
         Period måneder = null;
@@ -237,9 +236,9 @@ public class WhiskyProdukt implements Serializable {
     /**
      * Calculates the range of destilleringstid (destillation time) for all the fadTapninger in the whiskyProdukt.
      *
-     * @return  a string representing the range of destilleringstid in hours. If the lowest and highest values are the same,
-     *          returns the value followed by "timer". Otherwise, returns the lowest value followed by "til" and the highest value,
-     *          both followed by "timer".
+     * @return a string representing the range of destilleringstid in hours. If the lowest and highest values are the same,
+     * returns the value followed by "timer". Otherwise, returns the lowest value followed by "til" and the highest value,
+     * both followed by "timer".
      */
     private String historieDestilleringstid() {
         long lavestAntalTimer = fadTapninger.get(0).getDestillat().getPåfyldninger().get(0).getDestillering().getDestilleringsTid();

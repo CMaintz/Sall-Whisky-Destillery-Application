@@ -43,8 +43,6 @@ public class OpretLager extends Stage {
             this.close();
         });
 
-
-        //TODO Måske tilføj reoler til lageret
     }
 
 }
