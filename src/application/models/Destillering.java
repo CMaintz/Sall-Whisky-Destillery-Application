@@ -95,7 +95,6 @@ public class Destillering implements Serializable {
         if (kommentar != null) {
             toReturn += "\nkommentar:" + kommentar;
         }
-
     return toReturn;
     }
 

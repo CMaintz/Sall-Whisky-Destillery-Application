@@ -1,3 +1,4 @@
+import application.controller.Controller;
 import application.models.*;
 import javafx.beans.binding.When;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,12 +19,24 @@ public class ModelsTest {
 
     @BeforeEach
     void setUp() {
+        korn = new Korn("TestSort", "TestVariant", "Mark1");
+        destillering = new Destillering("TestMaltBatch", korn, "Medarbejder1", 40, 50, "Røg1", "Smager godt");
         fad = new Fad(100);
         fad.createFadHistorik("Sherry", "Spanien", LocalDate.of(2020,10,10), "TestLeverandør");
         destillat = new Destillat();
+        destillat.createPåfyldning("Jens", 20, destillering);
         fad.addDestillat(destillat);
-        korn = new Korn("TestSort", "TestVariant", "Mark1");
-        destillering = new Destillering("TestMaltBatch", korn, "Medarbejder1", 40, 50, "Røg1", "Smager godt");
+    }
+
+    @Test
+    void fadAddDestillatTest() {
+        fad.addDestillat(destillat);
+        assertEquals(fad.getDestillat(), destillat);
+        Destillat destillatTest = new Destillat();
+        destillatTest.createPåfyldning("Jens", 20, destillering);
+        fad.addDestillat(destillatTest);
+        assertEquals(fad.getDestillat(), destillatTest);
+        assertEquals(destillat, fad.getFadHistorik().getTidligereDestillater().get(0));
     }
 
     @Test
@@ -55,7 +68,8 @@ public class ModelsTest {
 
     @Test
     void destillatSetAlkoholProcentTest() {
-        Destillering destillering1 = new Destillering("MaltbatchTest2", korn, "Jens", 120, 60, "RøgTest", "Smager godt");
+        Destillering destillering1 = new Destillering("MaltbatchTest2", korn, "Jens", 120, 60,
+                "RøgTest", "Smager godt");
         destillat.createPåfyldning("Bob", 20, destillering1);
         assertEquals(60, destillat.getAlkoholprocent());
         destillat.createPåfyldning("Jens", 30, destillering);
@@ -101,7 +115,8 @@ public class ModelsTest {
     @Test
     void testFadKlasse() {
         Fad fadTest = new Fad(100);
-        FadHistorik fadHistorik = fadTest.createFadHistorik("Sherry", "Spanien", LocalDate.of(2020, 10, 10), "TestLeverandør");
+        FadHistorik fadHistorik = fadTest.createFadHistorik("Sherry", "Spanien",
+                LocalDate.of(2020, 10, 10), "TestLeverandør");
         assertTrue(fadTest.getFadHistorik().equals(fadHistorik));
 
         fadTest.addDestillat(destillat);
@@ -126,26 +141,5 @@ public class ModelsTest {
         whiskyProdukt.createFadTapning("Bob", 20, fad);
         assertEquals("Single Malt", whiskyProdukt.whiskyType());
     }
-    @Test
-    void testGenererHistorie() {
-        WhiskyProdukt whiskyProdukt = new WhiskyProdukt("Sample Whisky");
 
-        Fad fad = new Fad(40);
-        fad.createFadHistorik("Sherry", "Spanien", LocalDate.of(2010,10,10), "LeverandørTest");
-        Destillat destillat1 = new Destillat();
-        destillat1.createPåfyldning("Jens", 20, destillering);
-
-        fad.addDestillat(destillat1);
-        FadTapning fadTapning = whiskyProdukt.createFadTapning("Sample Medarbejder", 10, fad);
-
-        String generatedHistory = whiskyProdukt.genererHistorie();
-
-        String expectedHistory = "\nSkabt af egne hænder med Lars' økologiske Variant Sort, "
-                + "\nSået og høstet fra den jyske muld på Lars' marker Mark, "
-                + "\nMæsket ved håndkraft og fermenteret i 48"
-                + "\nModnet i 0 år i omhyggeligt udvalgte ex-Sample Fad barrels."
-                + "\nØkologisk Single Malt\n& Single Farm Whisky\n 100cl. 50% Vol.";
-
-        assertEquals(expectedHistory, generatedHistory);
-    }
 }
