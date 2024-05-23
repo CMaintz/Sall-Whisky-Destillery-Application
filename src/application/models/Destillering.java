@@ -74,17 +74,9 @@ public class Destillering implements Serializable {
     }
 
 
-    //toString
+    //toString with only a number per Destillering
     @Override
     public String toString() {
-        return "Destillering{" +
-                "maltBatch='" + maltBatch + '\'' +
-                ", korn=" + korn +
-                ", medarbejder='" + medarbejder + '\'' +
-                ", antalLiter=" + antalLiter +
-                ", alkoholProcent=" + alkoholProcent +
-                ", rygeMateriale='" + rygeMateriale + '\'' +
-                ", kommentar='" + kommentar + '\'' +
-                ", startDato=" + startDato;
+        return "Destillering " + startDato + " - " + kommentar;
     }
 }
