@@ -11,10 +11,10 @@ import java.time.LocalDate;
 public class App {
     public static void main(String[] args) {
         Storage storage = ListStorage.loadStorage();
-        if (storage == null) {
+//        if (storage == null) {
             storage = new ListStorage();
             System.out.println("Empty ListStorage created");
-        }
+//        }
         Controller.setStorage(storage);
 
         if (Controller.getFade().isEmpty()) {
@@ -47,7 +47,8 @@ public class App {
         Fad fad1 = Controller.createFad(40, "Sherry", "Spanien", LocalDate.of(2004, 1, 1), "Leverandørgutten");
         Fad fad2 = Controller.createFad(30, "Sherry", "Spanien", LocalDate.of(2001, 1, 1), "Leverandørgutten");
         Fad fad3 = Controller.createFad(20, "Rødvin", "Frankrig", LocalDate.of(2002, 1, 1), "Leverandørgutten");
-        Fad fad4 = Controller.createFad(20, "Bourbon", "USA", LocalDate.of(20012, 1, 1), "Leverandørgutten");
+        Fad fad4 = Controller.createFad(20, "Bourbon", "USA", LocalDate.of(2012, 1, 1), "Leverandørgutten");
+
 
         Korn korn1 = Controller.createKorn("Vårbyg", "Evergreen", "Highland og Stenhøj");
         Korn korn2 = Controller.createKorn("Vårbyg", "Laureate", "Stinna");
@@ -94,6 +95,4 @@ public class App {
         Controller.createWhiskyflasker(muld);
 
     }
-
-
 }
