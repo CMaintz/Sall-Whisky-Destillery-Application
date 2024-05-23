@@ -44,16 +44,16 @@ public class App {
         Reol contReol1 = Controller.createReol(container, 3);
         Reol contReol2 = Controller.createReol(container, 3);
 
-        Fad fad1 = Controller.createFad(40, "Sherry", "Spanien", LocalDate.of(2004, 1, 1), LocalDate.of(2014, 1, 1), "Fadpusheren");
-        Fad fad2 = Controller.createFad(30, "Sherry", "Spanien", LocalDate.of(2001, 1, 1), LocalDate.of(2008, 9, 30), "Fadpusheren");
-        Fad fad3 = Controller.createFad(20, "Rødvin", "Frankrig", LocalDate.of(2002, 1, 1), LocalDate.of(2014, 5, 5), "Le leverandeur");
-        Fad fad4 = Controller.createFad(20, "Bourbon", "USA", LocalDate.of(20012, 1, 1), LocalDate.of(2022, 8, 11), "Yeehaw leverandør");
-        Fad fad5 = Controller.createFad(20, "Bourbon", "USA", LocalDate.of(20012, 1, 1), LocalDate.of(2022, 8, 11), "Yeehaw leverandør");
-        Fad fad6 = Controller.createFad(20, "Rødvin", "Frankrig", LocalDate.of(2000, 1, 1), LocalDate.of(2011, 5, 5), "Le leverandeur");
-        Fad fad7 = Controller.createFad(50, "Rødvin", "Frankrig", LocalDate.of(2000, 1, 1), LocalDate.of(2011, 5, 5), "Le leverandeur");
-        Fad fad8 = Controller.createFad(50, "Rødvin", "Frankrig", LocalDate.of(1999, 1, 1), LocalDate.of(2011, 5, 5), "Le leverandeur");
-        Fad fad9 = Controller.createFad(50, "Rødvin", "Frankrig", LocalDate.of(1995, 1, 1), LocalDate.of(2011, 5, 5), "Le leverandeur");
-        Fad fad10 = Controller.createFad(50, "Sherry", "Spanien", LocalDate.of(2009, 1, 1), LocalDate.of(2011, 5, 5), "Fadpusheren");
+        Fad fad1 = Controller.createFad(40, "Sherry", "Spanien", LocalDate.of(2004, 1, 1), "Fadpusheren");
+        Fad fad2 = Controller.createFad(30, "Sherry", "Spanien", LocalDate.of(2001, 1, 1), "Fadpusheren");
+        Fad fad3 = Controller.createFad(20, "Rødvin", "Frankrig", LocalDate.of(2002, 1, 1), "Le leverandeur");
+        Fad fad4 = Controller.createFad(20, "Bourbon", "USA", LocalDate.of(20012, 1, 1), "Yeehaw leverandør");
+        Fad fad5 = Controller.createFad(20, "Bourbon", "USA", LocalDate.of(20012, 1, 1), "Yeehaw leverandør");
+        Fad fad6 = Controller.createFad(20, "Rødvin", "Frankrig", LocalDate.of(2000, 1, 1), "Le leverandeur");
+        Fad fad7 = Controller.createFad(50, "Rødvin", "Frankrig", LocalDate.of(2000, 1, 1), "Le leverandeur");
+        Fad fad8 = Controller.createFad(50, "Rødvin", "Frankrig", LocalDate.of(1999, 1, 1), "Le leverandeur");
+        Fad fad9 = Controller.createFad(50, "Rødvin", "Frankrig", LocalDate.of(1995, 1, 1), "Le leverandeur");
+        Fad fad10 = Controller.createFad(50, "Sherry", "Spanien", LocalDate.of(2009, 1, 1), "Fadpusheren");
 
         Korn korn1 = Controller.createKorn("Vårbyg", "Evergreen", "Highland og Stenhøj");
         Korn korn2 = Controller.createKorn("Vårbyg", "Laureate", "Mosevang og Stadsgaard");
