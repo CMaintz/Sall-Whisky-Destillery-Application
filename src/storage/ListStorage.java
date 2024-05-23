@@ -95,4 +95,11 @@ public class ListStorage implements Storage, Serializable {
     public void addDestillering(Destillering destillering) {
         destilleringer.add(destillering);
     }
+
+    @Override
+    public void removeFad(Fad fad) {
+        if (fade.contains(fad)) {
+            fade.remove(fad);
+        }
+    }
 }

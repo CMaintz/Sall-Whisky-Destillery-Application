@@ -16,6 +16,7 @@ public interface Storage {
     public void addLager(Lager lager);
     public void addWhiskyProdukt(WhiskyProdukt whiskyProdukt);
     public void addDestillering(Destillering destillering);
+    public void removeFad(Fad fad);
 
 
 }

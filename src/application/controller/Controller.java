@@ -190,4 +190,8 @@ public abstract class Controller {
         hyldeTil.placerFad(fad);
     }
 
+    public static void removeFad(Fad fad){
+        storage.removeFad(fad);
+    }
+
 }

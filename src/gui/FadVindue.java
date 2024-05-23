@@ -18,6 +18,7 @@ public class FadVindue extends GridPane {
     private Button btnVisHistorik = new Button();
     private Button btnPåfyldFad = new Button();
     private Button btnOmhæld = new Button();
+    private Button btnRemoveFad = new Button();
     private OpretFad opretFadWindow;
     private PåfyldFad påfyldFad;
 
@@ -56,8 +57,11 @@ public class FadVindue extends GridPane {
         btnRegistrerNytFad.setText("Registrer Nyt Fad");
         pane.add(btnRegistrerNytFad, 0, 1);
 
+        btnRemoveFad.setText("Slet Fad");
+        pane.add(btnRemoveFad, 0, 2);
+
         btnVisHistorik.setText("Vis Historik");
-        pane.add(btnVisHistorik, 0, 2);
+        pane.add(btnVisHistorik, 0, 3);
 
         btnPåfyldFad.setText("Påfyld Fad");
         pane.add(btnPåfyldFad, 1, 6);
@@ -66,6 +70,7 @@ public class FadVindue extends GridPane {
         pane.add(btnOmhæld, 3, 6);
 
         btnRegistrerNytFad.setOnAction(event -> registrerNytFadAction());
+        btnRemoveFad.setOnAction(event -> removeFadAction());
         btnVisHistorik.setOnAction(event -> visHistorikAction());
         btnPåfyldFad.setOnAction(event -> påfyldFadAction());
         btnOmhæld.setOnAction(event -> omhældAction());
@@ -75,6 +80,17 @@ public class FadVindue extends GridPane {
         opretFadWindow = new OpretFad("Opret Fad", new Stage());
         opretFadWindow.showAndWait();
         updateListViews();
+    }
+
+    private void removeFadAction() {
+        Fad fad = lvwTommeFade.getSelectionModel().getSelectedItem();
+
+        if (fad != null) {
+            Controller.removeFad(fad);
+            updateListViews();
+        } else {
+            lblError.setText("Vælg et tomt fad at slette");
+        }
     }
 
     private void visHistorikAction() {

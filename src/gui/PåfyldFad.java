@@ -136,6 +136,10 @@ public class PåfyldFad extends Stage {
             try {
                 double volume = Double.parseDouble(textField.getText());
                 if (volume > 0) {
+                    if (volume > selectedDestillering.getAntalLiter()) {
+                        showAlert("Volume Exceeds Available", "The volume entered exceeds the available volume in the selected destillering.");
+                        return;
+                    }
                     volumeIAlt += volume;
                 } else {
                     showAlert("Invalid Volume", "Volume must be greater than 0");
@@ -149,7 +153,7 @@ public class PåfyldFad extends Stage {
         }
 
         if (volumeIAlt > fad.getLiterKapacitet()) {
-            showAlert("Volume Exceeds Capacity", "The total volume of the destillat exceeds the fad's capacity.");
+            showAlert("Volume Exceeds Capacity", "The total volume of the distillate exceeds the barrel's capacity.");
             return;
         }
 
@@ -182,6 +186,7 @@ public class PåfyldFad extends Stage {
         hylde.placerFad(fad);
         this.close();
     }
+
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
