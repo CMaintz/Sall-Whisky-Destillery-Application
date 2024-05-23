@@ -33,7 +33,6 @@ public class OpretLager extends Stage {
         Scene scene = new Scene(pane, 300, 300);
         this.setScene(scene);
         this.setTitle("Opret Lager");
-        this.show();
 
         //Action til knappen
         opretLager.setOnAction(e -> {
@@ -41,6 +40,7 @@ public class OpretLager extends Stage {
             Controller.createLager(lagerNavn);
 
             txtLagerNavn.setText("");
+            this.close();
         });
 
 

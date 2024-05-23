@@ -75,7 +75,7 @@ public class OpretFad extends Stage {
             String land = txtLand.getText();;
             String leverandør = txtLeverandør.getText();
 
-//            Controller.createFad(literKapacitet, tidligereIndhold, land, fraÅr, tilÅr, leverandør);
+            Controller.createFad(literKapacitet, tidligereIndhold, land, fraÅr, leverandør);
 
             txtLiterKapacitet.setText("");
             txtFraÅr.setText("");

@@ -129,14 +129,14 @@ public class PåfyldFad extends Stage {
             return;
         }
 
-        Destillat destillat = new Destillat();
+        double volumeIAlt = 0;
         int index = 0;
         for (Destillering selectedDestillering : lvwDestilleringer.getSelectionModel().getSelectedItems()) {
             TextField textField = textFieldsList.get(index);
             try {
                 double volume = Double.parseDouble(textField.getText());
                 if (volume > 0) {
-                    Påfyldning påfyldning = destillat.createPåfyldning(medarbejderNavn, volume, selectedDestillering);
+                    volumeIAlt += volume;
                 } else {
                     showAlert("Invalid Volume", "Volume must be greater than 0");
                     return;
@@ -147,6 +147,21 @@ public class PåfyldFad extends Stage {
             }
             index++;
         }
+
+        if (volumeIAlt > fad.getLiterKapacitet()) {
+            showAlert("Volume Exceeds Capacity", "The total volume of the destillat exceeds the fad's capacity.");
+            return;
+        }
+
+        Destillat destillat = new Destillat();
+        index = 0;
+        for (Destillering selectedDestillering : lvwDestilleringer.getSelectionModel().getSelectedItems()) {
+            TextField textField = textFieldsList.get(index);
+            double volume = Double.parseDouble(textField.getText());
+            destillat.createPåfyldning(medarbejderNavn, volume, selectedDestillering);
+            index++;
+        }
+
         Lager lager = cbLagere.getSelectionModel().getSelectedItem();
         if (lager == null) {
             showAlert("Invalid Lager", "Vælg et Lager");
@@ -162,17 +177,18 @@ public class PåfyldFad extends Stage {
             showAlert("Invalid Hylde", "Vælg en hylde");
             return;
         }
+
         fad.addDestillat(destillat);
         hylde.placerFad(fad);
         this.close();
     }
 
-
     private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
+
 }

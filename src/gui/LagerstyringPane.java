@@ -63,6 +63,7 @@ public class LagerstyringPane extends GridPane {
 
         Button btnOpretLager = new Button();
         Button btnFlytFad = new Button();
+        Button btnOpretReol = new Button();
 
         btnOpretLager.setText("Opret Lager");
         pane.add(btnOpretLager, 0, 0);
@@ -70,19 +71,37 @@ public class LagerstyringPane extends GridPane {
         btnFlytFad.setText("Flyt fad");
         pane.add(btnFlytFad, 1, 0);
 
+        btnOpretReol.setText("Opret Reol");
+        pane.add(btnOpretReol, 2, 0);
+
         pane.add(taInfo, 3, 1, 4, 5);
         taInfo.setPrefWidth(250);
         taInfo.setPrefHeight(200);
         taInfo.setEditable(false);
 
+        updateListViews();
 
         btnOpretLager.setOnAction(event -> opretLagerAction());
         btnFlytFad.setOnAction(event -> flytFadAction());
+        btnOpretReol.setOnAction(event -> opretReolAction());
     }
 
     private void opretLagerAction() {
-        OpretFad opretFad = new OpretFad("Opret Fad", new Stage());
-        opretFad.showAndWait();
+        OpretLager opretLager = new OpretLager();
+        opretLager.showAndWait();
+        updateListViews();
+    }
+
+    private void opretReolAction() {
+        Lager lager = lvwLagre.getSelectionModel().getSelectedItem();
+
+        if (lager != null) {
+            OpretReol opretReol = new OpretReol("Opret Reol", new Stage(), lager);
+            opretReol.showAndWait();
+            updateListViews();
+        } else {
+            showAlert("Invalid Input", "Vælg et lager");
+        }
     }
 
     private void updateFadInfo(Hylde selectedHylde) {
@@ -134,6 +153,12 @@ public class LagerstyringPane extends GridPane {
             ObservableList<Hylde> hylder = FXCollections.observableArrayList(selectedReol.getHylder());
             lvwHylder.setItems(hylder);
         }
+    }
+
+    private void updateListViews() {
+        lvwLagre.getItems().setAll(Controller.getLagre());
+        updateReoler(lvwLagre.getSelectionModel().getSelectedItem());
+        updateHylder(lvwReoler.getSelectionModel().getSelectedItem());
     }
 
     private void showAlert(String title, String message) {

@@ -19,13 +19,18 @@ public class Destillat implements Serializable {
     }
 
     // Pre: literPåfyld > 0
-    public Påfyldning createPåfyldning(String medarbejderNavn, double literPåfyldt, Destillering destillering){
+    public Påfyldning createPåfyldning(String medarbejderNavn, double literPåfyldt, Destillering destillering) {
+        if (literPåfyldt <= 0 || literPåfyldt > destillering.getAntalLiter()) {
+            throw new IllegalArgumentException("Invalid volume for påfyldning.");
+        }
+
         Påfyldning pf = new Påfyldning(medarbejderNavn, literPåfyldt, destillering);
         påfyldninger.add(pf);
         antalLiter += pf.getLiterPåfyldt();
         udregnAlkoholprocent();
         return pf;
     }
+
     public ArrayList<Påfyldning> getPåfyldninger() {
         return new ArrayList<>(påfyldninger);
     }

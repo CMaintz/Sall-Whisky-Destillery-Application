@@ -11,9 +11,9 @@ public abstract class Controller {
     private static Storage storage;
     public static void setStorage(Storage storage) {Controller.storage = storage;}
 
-    public static Fad createFad(int størrelse, String tidligereIndhold, String land, LocalDate fraÅr, LocalDate tilÅr, String leverandør) {
+    public static Fad createFad(int størrelse, String tidligereIndhold, String land, LocalDate fraÅr, String leverandør) {
         Fad fad = new Fad(størrelse);
-        fad.createFadHistorik(tidligereIndhold, land, fraÅr, tilÅr,  leverandør);
+        fad.createFadHistorik(tidligereIndhold, land, fraÅr, leverandør);
         storage.addFad(fad);
         return fad;
     }

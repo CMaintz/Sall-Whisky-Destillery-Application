@@ -13,7 +13,7 @@ public class FadHistorik implements Serializable {
     private String leverandør;
     private List<Destillat> tidligereDestillater;
 
-    FadHistorik(String tidligereIndhold, String land, LocalDate fraÅr, LocalDate tilÅr, String leverandør) {
+    FadHistorik(String tidligereIndhold, String land, LocalDate fraÅr, String leverandør) {
         this.tidligereIndhold = tidligereIndhold;
         this.land = land;
         this.fraÅr = fraÅr;

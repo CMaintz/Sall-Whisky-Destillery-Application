@@ -43,11 +43,11 @@ public class App {
         Reol contReol1 = Controller.createReol(container, 3);
         Reol contReol2 = Controller.createReol(container, 3);
 
-        Controller.createFad(200, "Sherry", "Spanien", LocalDate.of(2010, 1, 1), LocalDate.of(2022, 10, 10), "Fadpusheren");
-        Fad fad1 = Controller.createFad(40, "Sherry", "Spanien", LocalDate.of(2004, 1, 1), LocalDate.of(2014, 1, 1), "Leverandørgutten");
-        Fad fad2 = Controller.createFad(30, "Sherry", "Spanien", LocalDate.of(2001, 1, 1), LocalDate.of(2008, 9, 30), "Leverandørgutten");
-        Fad fad3 = Controller.createFad(20, "Rødvin", "Frankrig", LocalDate.of(2002, 1, 1), LocalDate.of(2014, 5, 5), "Leverandørgutten");
-        Fad fad4 = Controller.createFad(20, "Bourbon", "USA", LocalDate.of(20012, 1, 1), LocalDate.of(2022, 8, 11), "Leverandørgutten");
+        Controller.createFad(200, "Sherry", "Spanien", LocalDate.of(2010, 1, 1), "Fadpusheren");
+        Fad fad1 = Controller.createFad(40, "Sherry", "Spanien", LocalDate.of(2004, 1, 1), "Leverandørgutten");
+        Fad fad2 = Controller.createFad(30, "Sherry", "Spanien", LocalDate.of(2001, 1, 1), "Leverandørgutten");
+        Fad fad3 = Controller.createFad(20, "Rødvin", "Frankrig", LocalDate.of(2002, 1, 1), "Leverandørgutten");
+        Fad fad4 = Controller.createFad(20, "Bourbon", "USA", LocalDate.of(20012, 1, 1), "Leverandørgutten");
 
         Korn korn1 = Controller.createKorn("Vårbyg", "Evergreen", "Highland og Stenhøj");
         Korn korn2 = Controller.createKorn("Vårbyg", "Laureate", "Stinna");

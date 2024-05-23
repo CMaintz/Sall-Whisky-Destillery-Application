@@ -3,6 +3,7 @@ package application.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Reol implements Serializable {
@@ -50,5 +51,10 @@ public class Reol implements Serializable {
         if (hylder[plads-1] == null) {
             hylder[plads-1].placerFad(fad);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Reol: " + reolNummer;
     }
 }

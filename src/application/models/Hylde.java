@@ -25,4 +25,9 @@ public class Hylde implements Serializable {
     public Fad getFad() {
         return fad;
     }
+
+    @Override
+    public String toString() {
+        return "Hylde: " + nummer;
+    }
 }
