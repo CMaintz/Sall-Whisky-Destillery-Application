@@ -2,7 +2,6 @@ package application.models;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
-import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +76,7 @@ public class WhiskyProdukt implements Serializable {
     }
 
     public String whiskyType() {
-        if (fadTapninger.size() == 1) {
+        if (fadTapninger.size() == 1 && fadTapninger.get(0).getDestillat().getModningsHistorik().size() == 1) {
             return literVandTilføjet == 0 ? "Cask Strength" : "Single Cask";
         } else {
             return "Single Malt";
@@ -109,8 +108,10 @@ public class WhiskyProdukt implements Serializable {
         sb.append("\nDobbeltdestilleret langtsomt i direct fired kobber pot stills.");
         sb.append("\nModnet i " + historieModningstid());
         sb.append(" år i omhyggeligt udvalgte ex-" + fadTapninger.get(0).getDestillat().getFad().getFadHistorik().getTidligereIndhold()
-                + " barrels.");
-        sb.append("\n\nØkologisk " + whiskyType() + "\n& Single Farm Whisky" + "\n 100cl. " + df.format(alkoholProcent) + "% Vol.");
+                + " barrels.\n\n");
+        String rygemateriale = fadTapninger.get(0).getDestillat().getPåfyldninger().get(0).getDestillering().getRygeMateriale();
+        sb.append(rygemateriale != null ? (rygemateriale + ", Økologisk ") : ("Økologisk "));
+        sb.append(whiskyType() + "\n& Single Farm Whisky" + "\n 100cl. " + df.format(alkoholProcent) + "% Vol.");
 
         return sb.toString();
     }
@@ -144,13 +145,9 @@ public class WhiskyProdukt implements Serializable {
 
     private String historieModningstid() {
         Period måneder = null;
-            Destillat destillat = fadTapninger.get(0).getDestillat();
-            if (destillat.getModningsHistorik().get(destillat.getModningsHistorik().size() - 1).getSlutDato() == null) {
-                måneder = Period.between(destillat.getPåfyldningsDato(), LocalDate.now().plusDays(1));
-            } else {
-                måneder = Period.between(destillat.getPåfyldningsDato(), destillat.getModningsHistorik().get(destillat.getPåfyldninger().size() - 1).getSlutDato().plusDays(1));
-            }
-        String[] tal = new String[] {"nul", "et", "to", "tre", "fire", "fem", "seks", "syv", "otte", "ni", "ti", "elleve", "tolv", "tretten", "fjorten", "femten", "seksten", "sytten", "atten", "nitten", "tyve"};
+        Destillat destillat = fadTapninger.get(0).getDestillat();
+        måneder = Period.between(destillat.getPåfyldningsDato(), destillat.getModningsHistorik().get(destillat.getModningsHistorik().size() - 1).getSlutDato().plusDays(1));
+        String[] tal = new String[]{"nul", "et", "to", "tre", "fire", "fem", "seks", "syv", "otte", "ni", "ti", "elleve", "tolv", "tretten", "fjorten", "femten", "seksten", "sytten", "atten", "nitten", "tyve"};
         return tal[måneder.getYears()];
     }
 

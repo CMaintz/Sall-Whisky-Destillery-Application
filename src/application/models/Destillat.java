@@ -7,6 +7,9 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Destillat.
+ */
 public class Destillat implements Serializable {
     private final List<Påfyldning> påfyldninger;
     private double antalLiter;
@@ -14,11 +17,22 @@ public class Destillat implements Serializable {
     private final List<ModningsHistorik> modningsHistorik;
     private Fad fad;
 
+    /**
+     * Instantiates a new Destillat.
+     */
     public Destillat() {
         påfyldninger = new ArrayList<>();
         modningsHistorik = new ArrayList<>();
     }
 
+    /**
+     * Create påfyldning påfyldning.
+     *
+     * @param medarbejderNavn the medarbejder navn
+     * @param literPåfyldt    the liter påfyldt
+     * @param destillering    the destillering
+     * @return the påfyldning
+     */
     public Påfyldning createPåfyldning(String medarbejderNavn, double literPåfyldt, Destillering destillering) {
         if (literPåfyldt <= 0 || literPåfyldt > destillering.getAntalLiter()) {
             throw new IllegalArgumentException("Invalid volume for påfyldning.");
@@ -31,41 +45,86 @@ public class Destillat implements Serializable {
         return pf;
     }
 
+    /**
+     * Sets start dato.
+     *
+     * @param startDato the start dato
+     */
     public void setStartDato(LocalDate startDato) {
         modningsHistorik.get(0).setStartDato(startDato);
     }
 
+    /**
+     * Get påfyldninger array list.
+     *
+     * @return the array list
+     */
     public ArrayList<Påfyldning> getPåfyldninger() {
         return new ArrayList<>(påfyldninger);
     }
 
+    /**
+     * Get påfyldnings dato local date.
+     *
+     * @return the local date
+     */
     public LocalDate getPåfyldningsDato() {
         return modningsHistorik.get(0).getStartDato();
     }
 
+    /**
+     * Gets alkoholprocent.
+     *
+     * @return the alkoholprocent
+     */
     public double getAlkoholprocent() {
         return alkoholprocent;
     }
 
+    /**
+     * Gets antal liter.
+     *
+     * @return the antal liter
+     */
     public double getAntalLiter() {
         return antalLiter;
     }
 
+    /**
+     * Fjern antal liter.
+     *
+     * @param antalLiter the antal liter
+     */
     public void fjernAntalLiter(double antalLiter) {
         this.antalLiter -= antalLiter;
     }
 
+    /**
+     * Gets fad.
+     *
+     * @return the fad
+     */
     public Fad getFad() {
         return fad;
     }
 
+    /**
+     * Gets modnings historik.
+     *
+     * @return the modnings historik
+     */
     public List<ModningsHistorik> getModningsHistorik() {
         return new ArrayList<>(modningsHistorik);
     }
 
+    /**
+     * Omhæld destillat.
+     *
+     * @param newFad the new fad
+     */
     public void omhældDestillat(Fad newFad) {
-            this.fad.removeDestillat();
-            newFad.addDestillat(this);
+        this.fad.removeDestillat();
+        newFad.addDestillat(this);
     }
 
     private int getLiterPåfyldt() {
@@ -76,6 +135,11 @@ public class Destillat implements Serializable {
         return toReturn;
     }
 
+    /**
+     * Sets fad.
+     *
+     * @param fad the fad
+     */
     public void setFad(Fad fad) {
         this.fad = fad;
         createModningsHistorik();
@@ -98,6 +162,11 @@ public class Destillat implements Serializable {
         alkoholprocent = (literEthanol / antalLiter) * 100;
     }
 
+    /**
+     * Destillat klar boolean.
+     *
+     * @return the boolean
+     */
     public boolean destillatKlar() {
         Period periodPD = Period.between(modningsHistorik.get(0).getStartDato(), LocalDate.now());
         if (periodPD.getYears() >= 3) {
@@ -109,15 +178,25 @@ public class Destillat implements Serializable {
     @Override
     public String toString() {
         DecimalFormat numberFormatter = new DecimalFormat("#.00");
-        return numberFormatter.format(alkoholprocent) + "% Vol. " +  antalLiter + "L";
+        return numberFormatter.format(alkoholprocent) + "% Vol. " + antalLiter + "L";
     }
 
+    /**
+     * Gets detaljer.
+     *
+     * @return the detaljer
+     */
     public String getDetaljer() {
         StringBuilder sb = new StringBuilder();
         sb.append("Påfyldninger: \n");
         for (Påfyldning påfyldning : påfyldninger) {
             sb.append(påfyldning.getDetaljer() + "\n");
             sb.append("\n");
+        }
+        sb.append("Modningshistorik: \n");
+        for (ModningsHistorik modningsHistorik : modningsHistorik) {
+            sb.append("Modnet i " + modningsHistorik.getStartDato().until(modningsHistorik.getSlutDato().plusDays(1)).getMonths() + " måneder i fad:\n");
+            sb.append(modningsHistorik.getFad().toString() + " \n" + modningsHistorik.getFad().getAlder() + "år gammelt");
         }
         return sb.toString();
     }
