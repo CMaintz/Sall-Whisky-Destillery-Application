@@ -51,19 +51,14 @@ public class WhiskyWindow extends Stage {
     }
 
     private void initContent(GridPane pane) {
-
-        pane.setGridLinesVisible(true);
         GridPane currentChoicesPane = new GridPane();
         currentChoicesPane.setPadding(new Insets(10));
         currentChoicesPane.setHgap(20);
         currentChoicesPane.setVgap(10);
-//        currentChoicesPane.setPrefWidth(240);
-//        currentChoicesPane.setAlignment(Pos.CENTER);
         pane.add(currentChoicesPane, 0, 0);
 
         VBox vb = new VBox();
         currentChoicesPane.add(vb, 0, 1);
-//        vb.setPrefWidth(150);
         vb.setAlignment(Pos.CENTER);
         vb.setSpacing(10);
         vb.setPadding(new Insets(5));
@@ -71,28 +66,16 @@ public class WhiskyWindow extends Stage {
         Label lblName = new Label("Produkt navn:");
         currentChoicesPane.add(lblName, 0, 0);
         GridPane.setHalignment(lblName, HPos.CENTER);
-//        vb.getChildren().add(lblName);
 
         txfProduktNavn = new TextField();
-//        currentChoicesPane.add(txfProduktNavn, 0, 1);
         txfProduktNavn.setPrefWidth(100);
         vb.getChildren().add(txfProduktNavn);
 
         lblLiter = new Label("Liter: 0");
-//        currentChoicesPane.add(lblLiter, 0, 2);
         vb.getChildren().add(lblLiter);
 
-//        txfLiter = new TextField();
-//        currentChoicesPane.add(txfLiter, 0, 3);
-//        txfLiter.setEditable(false);
-//
         lblAlk = new Label("0 % Vol.");
-//        currentChoicesPane.add(lblAlk, 0, 3);
         vb.getChildren().add(lblAlk);
-
-//        txfAlk = new TextField();
-//        currentChoicesPane.add(txfAlk, 0, 5);
-//        txfAlk.setEditable(false);
 
         lblVand = new Label("Vand: 0L");
         vb.getChildren().add(lblVand);
@@ -104,10 +87,8 @@ public class WhiskyWindow extends Stage {
         btnTilføjVand = new Button("Tilføj Vand");
         btnTilføjVand.setOnAction(event -> tilføjVand());
         hb.getChildren().add(btnTilføjVand);
-//        vb.getChildren().add(btnTilføjVand);7
 
         txfVand = new TextField();
-//        vb.getChildren().add(txfVand);
         txfVand.setPrefWidth(75);
         hb.getChildren().add(txfVand);
 
@@ -176,8 +157,6 @@ public class WhiskyWindow extends Stage {
         txaDestillatInfo.setEditable(false);
         txaDestillatInfo.setPrefWidth(300);
         txaDestillatInfo.setPrefHeight(240);
-//        Label lblEndDate = new Label("Conference end date");
-//        pane.add(lblEndDate, 0, 8);
 
         Button btnCancel = new Button("Fortryd");
         pane.add(btnCancel, 3, 1);

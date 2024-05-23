@@ -63,7 +63,7 @@ public class WhiskyPane extends GridPane {
         ChangeListener<WhiskyFlaske> flaskeListener = (ov, oldFlaske, newFlaske) -> this.selectedFlaskeChanged();
         lvwFlasker.getSelectionModel().selectedItemProperty().addListener(flaskeListener);
 
-        Label lblHistorie = new Label("Produkthistorie");
+        Label lblHistorie = new Label("Etiket (Produkthistorie)");
         pane.add(lblHistorie, 3, 0);
 
         txaProduktHistorie = new TextArea();

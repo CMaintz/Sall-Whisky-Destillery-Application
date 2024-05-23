@@ -2,7 +2,6 @@ package gui;
 
 import application.controller.Controller;
 import application.models.Destillering;
-import application.models.Fad;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -69,10 +68,10 @@ public class DestilleringPane extends GridPane {
                         "MaltBatch: %s\nKorn: %s\nMedarbejder: %s\nMængde Væske: %.2f\nAlkoholprocent: %.2f\nRyge Materiale: %s\nKommentar: %s",
                         selectedDestillering.getMaltBatch(),
                         selectedDestillering.getKornSort(),
-                        selectedDestillering.getMedarbejder(),
+                        selectedDestillering.getMedarbejderNavn(),
                         selectedDestillering.getAntalLiter(),
                         selectedDestillering.getAlkoholProcent(),
-                        selectedDestillering.getRygeMateriale(),
+                        selectedDestillering.getRygemateriale(),
                         selectedDestillering.getKommentar()
                 );
                 taDestilleringInfo.setText(destilleringInfo);

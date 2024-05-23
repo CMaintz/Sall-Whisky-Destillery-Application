@@ -9,28 +9,51 @@ import application.models.Fad;
 import application.models.Hylde;
 
 
-
+/**
+ * The type Lager.
+ */
 public class Lager implements Serializable {
     private final List<Reol> reoler;
     private String navn;
 
+    /**
+     * Instantiates a new Lager.
+     *
+     * @param navn the navn
+     */
     public Lager(String navn) {
         this.navn = navn;
         reoler = new ArrayList<>();
     }
 
+    /**
+     * Create reol reol.
+     *
+     * @param antalHylder the antal hylder
+     * @return the reol
+     */
     public Reol createReol(int antalHylder) {
         Reol toReturn = new Reol(antalHylder, reoler.size() + 1);
         reoler.add(toReturn);
         return toReturn;
     }
 
+    /**
+     * Gets reoler.
+     *
+     * @return the reoler
+     */
     public ArrayList<Reol> getReoler() {
         return new ArrayList<>(reoler);
     }
 
-    public ArrayList<Reol> getReolerMedLedigPlads() {
-        ArrayList<Reol> result = new ArrayList<>();
+    /**
+     * Gets reoler med ledig plads.
+     *
+     * @return the reoler med ledig plads
+     */
+    public List<Reol> getReolerMedLedigPlads() {
+        List<Reol> result = new ArrayList<>();
         for (Reol reol : reoler) {
             if (reol.getHylderUdenFad().length > 0) {
                 result.add(reol);
@@ -39,8 +62,13 @@ public class Lager implements Serializable {
         return result;
     }
 
-public ArrayList<Fad> getFadeMedDestillat() {
-        ArrayList<Fad> result = new ArrayList<>();
+    /**
+     * Gets fade med destillat.
+     *
+     * @return the fade med destillat
+     */
+    public List<Fad> getFadeMedDestillat() {
+        List<Fad> result = new ArrayList<>();
         for (Reol reol : reoler) {
             for (Hylde hylde : reol.getHylder()) {
                 if (hylde.getFad() != null && hylde.getFad().getDestillat() != null) {
@@ -52,8 +80,13 @@ public ArrayList<Fad> getFadeMedDestillat() {
     }
 
 
-    public ArrayList<Fad> getFadeKlar() {
-        ArrayList<Fad> result = new ArrayList<>();
+    /**
+     * Gets fade klar.
+     *
+     * @return the fade klar
+     */
+    public List<Fad> getFadeKlar() {
+        List<Fad> result = new ArrayList<>();
         for (Reol reol : reoler) {
             for (Hylde hylde : reol.getHylder()) {
                 if (hylde.getFad().getDestillat().destillatKlar()) {

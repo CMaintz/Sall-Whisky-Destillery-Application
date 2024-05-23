@@ -1,12 +1,10 @@
 import application.controller.Controller;
 import application.models.*;
-import javafx.beans.binding.When;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -80,7 +78,7 @@ public class ModelsTest {
     void destillatKlarTest() {
         assertFalse(destillat.destillatKlar());
         Destillat destillatTest = new Destillat();
-        destillat.getModningsHistorik().get(0).setStartDato(LocalDate.of(2020, 10, 10));
+        destillat.getModningsHistorik().get(0).setPåfyldningsDato(LocalDate.of(2020, 10, 10));
         assertTrue(destillat.destillatKlar());
     }
 

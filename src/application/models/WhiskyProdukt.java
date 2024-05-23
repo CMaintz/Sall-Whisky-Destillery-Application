@@ -7,14 +7,22 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Whisky produkt.
+ */
 public class WhiskyProdukt implements Serializable {
     private String navn;
-    private double alkoholProcent;
+    private double alkoholprocent;
     private final List<FadTapning> fadTapninger;
     private final List<WhiskyFlaske> fyldteFlasker;
     private double literVandTilføjet;
     private double antalLiter;
 
+    /**
+     * Instantiates a new Whisky produkt.
+     *
+     * @param navn the navn
+     */
     public WhiskyProdukt(String navn) {
         this.navn = navn;
         this.antalLiter = 0;
@@ -23,6 +31,14 @@ public class WhiskyProdukt implements Serializable {
         this.fyldteFlasker = new ArrayList<>();
     }
 
+    /**
+     * Create fad tapning fad tapning.
+     *
+     * @param medarbejderNavn the medarbejder navn
+     * @param literTappet     the liter tappet
+     * @param fad             the fad
+     * @return the fad tapning
+     */
     public FadTapning createFadTapning(String medarbejderNavn, double literTappet, Fad fad) {
         FadTapning ft = new FadTapning(medarbejderNavn, literTappet, fad);
         fadTapninger.add(ft);
@@ -31,6 +47,11 @@ public class WhiskyProdukt implements Serializable {
         return ft;
     }
 
+    /**
+     * Add fad tapning.
+     *
+     * @param fadTapning the fad tapning
+     */
     public void addFadTapning(FadTapning fadTapning) {
         if (!fadTapninger.contains(fadTapning)) {
             this.fadTapninger.add(fadTapning);
@@ -39,27 +60,53 @@ public class WhiskyProdukt implements Serializable {
     }
 
 
+    /**
+     * Sets antal liter.
+     *
+     * @param liter the liter
+     */
     public void setAntalLiter(int liter) {
         this.antalLiter = liter;
     }
 
+    /**
+     * Create whisky flaske whisky flaske.
+     *
+     * @param produktHistorie the produkt historie
+     * @return the whisky flaske
+     */
     public WhiskyFlaske createWhiskyFlaske(String produktHistorie) {
-        String hist = navn + "\n" + "Flaske #" + (fyldteFlasker.size() + 1) + " af " + ((int) antalLiter) + "\n" + produktHistorie;
+        String hist = navn + "\n" + "Flaske #" + (fyldteFlasker.size() + 1) + " af " + ((int) antalLiter) + "\n" + "Flaskningsdato: " + LocalDate.now() + "\n" + produktHistorie;
         WhiskyFlaske flaske = new WhiskyFlaske(fyldteFlasker.size() + 1, this, hist);
         fyldteFlasker.add(flaske);
         return flaske;
     }
 
+    /**
+     * Gets fyldte flasker.
+     *
+     * @return the fyldte flasker
+     */
     public List<WhiskyFlaske> getFyldteFlasker() {
         return new ArrayList<>(fyldteFlasker);
     }
 
+    /**
+     * Gets navn.
+     *
+     * @return the navn
+     */
     public String getNavn() {
         return navn;
     }
 
-    public double getAlkoholProcent() {
-        return alkoholProcent;
+    /**
+     * Gets alkoholprocent.
+     *
+     * @return the alkoholprocent
+     */
+    public double getAlkoholprocent() {
+        return alkoholprocent;
     }
 
     private void udregnAlkoholprocent() {
@@ -67,56 +114,83 @@ public class WhiskyProdukt implements Serializable {
         for (FadTapning fadTapning : fadTapninger) {
             literEthanol += (fadTapning.getDestillat().getAlkoholprocent() / 100) * fadTapning.getLiterTappet();
         }
-        alkoholProcent = ((literEthanol / antalLiter) * 100);
+        alkoholprocent = ((literEthanol / antalLiter) * 100);
     }
 
+    /**
+     * Tilføj vand.
+     *
+     * @param literVand the liter vand
+     */
     public void tilføjVand(int literVand) {
         this.literVandTilføjet += literVand;
         antalLiter += literVand;
         udregnAlkoholprocent();
     }
 
+    /**
+     * Whisky type string.
+     *
+     * @return the string
+     */
     public String whiskyType() {
-        if (fadTapninger.size() == 1) {
+        if (fadTapninger.size() == 1 && fadTapninger.get(0).getDestillat().getModningsHistorik().size() == 1) {
             return literVandTilføjet == 0 ? "Cask Strength" : "Single Cask";
         } else {
             return "Single Malt";
         }
     }
 
+    /**
+     * Gets antal liter.
+     *
+     * @return the antal liter
+     */
     public double getAntalLiter() {
         return antalLiter;
     }
 
+    /**
+     * Get liter vand tilføjet double.
+     *
+     * @return the double
+     */
     public double getLiterVandTilføjet() {
         return literVandTilføjet;
     }
 
+    /**
+     * Generer historie string.
+     *
+     * @return the string
+     */
     public String genererHistorie() {
         DecimalFormat df = new DecimalFormat("#.00");
         StringBuilder sb = new StringBuilder();
         sb.append("\nSkabt af egne hænder med Lars' økologiske ");
-        ArrayList<String> korn = new ArrayList<>(historieKorn());
-        for (String s : korn) {
-            sb.append(s + "\n");
-        }
+
+        sb.append(String.join("\n", historieKorn()) + "\n");
         sb.append("Sået og høstet fra den jyske muld på Lars' marker ");
-        ArrayList<String> marker = new ArrayList<>(historieMarker());
-        for (String s : marker) {
-            sb.append(s + "\n");
-        }
+        sb.append(String.join("\n", historieMarker()) + "\n");
         sb.append("Mæsket ved håndkraft og fermenteret i " + historieDestilleringstid());
         sb.append("\nDobbeltdestilleret langtsomt i direct fired kobber pot stills.");
         sb.append("\nModnet i " + historieModningstid());
         sb.append(" år i omhyggeligt udvalgte ex-" + fadTapninger.get(0).getDestillat().getFad().getFadHistorik().getTidligereIndhold()
-                + " barrels.");
-        sb.append("\n\nØkologisk " + whiskyType() + "\n& Single Farm Whisky" + "\n 100cl. " + df.format(alkoholProcent) + "% Vol.");
+                + " barrels.\n\n");
+        String rygemateriale = fadTapninger.get(0).getDestillat().getPåfyldninger().get(0).getDestillering().getRygemateriale();
+        sb.append(rygemateriale != null ? (rygemateriale + ", Økologisk ") : ("Økologisk "));
+        sb.append(whiskyType() + "\n& Single Farm Whisky" + "\n 100cl. " + df.format(alkoholprocent) + "% Vol.");
 
         return sb.toString();
     }
 
-    private ArrayList<String> historieMarker() {
-        ArrayList<String> toReturn = new ArrayList<>();
+    /**
+     * Retrieves a list of unique strings representing the names of the fields used in the whisky production process.
+     *
+     * @return  a list of strings containing the names of the fields used in the whisky production process
+     */
+    private List<String> historieMarker() {
+        List<String> toReturn = new ArrayList<>();
         for (FadTapning ft : fadTapninger) {
             for (Påfyldning pf : ft.getDestillat().getPåfyldninger()) {
                 String temp = pf.getDestillering().getKornSort().getMarkNavne();
@@ -128,8 +202,13 @@ public class WhiskyProdukt implements Serializable {
         return toReturn;
     }
 
-    private ArrayList<String> historieKorn() {
-        ArrayList<String> toReturn = new ArrayList<>();
+    /**
+     * Retrieves a list of unique strings representing the variant and sort of each corn used in the whisky production process.
+     *
+     * @return  a list of strings containing the variant and sort of each corn used in the whisky production process
+     */
+    private List<String> historieKorn() {
+        List<String> toReturn = new ArrayList<>();
 
         for (FadTapning ft : fadTapninger) {
             for (Påfyldning pf : ft.getDestillat().getPåfyldninger()) {
@@ -142,19 +221,26 @@ public class WhiskyProdukt implements Serializable {
         return toReturn;
     }
 
+    /**
+     * Calculates the number of months between the date of bottling and the last modification date of the first destillation in the whiskyProdukt.
+     *
+     * @return  a string representing the number of years. If the number of years is less than 12, returns the corresponding Danish word.
+     */
     private String historieModningstid() {
         Period måneder = null;
-            Destillat destillat = fadTapninger.get(0).getDestillat();
-            if (destillat.getModningsHistorik().get(destillat.getModningsHistorik().size() - 1).getSlutDato() == null) {
-                måneder = Period.between(destillat.getPåfyldningsDato(), LocalDate.now().plusDays(1));
-            } else {
-                måneder = Period.between(destillat.getPåfyldningsDato(), destillat.getModningsHistorik().get(destillat.getPåfyldninger().size() - 1).getSlutDato().plusDays(1));
-            }
-        String[] tal = new String[] {"nul", "et", "to", "tre", "fire", "fem", "seks", "syv", "otte", "ni", "ti", "elleve", "tolv", "tretten", "fjorten", "femten", "seksten", "sytten", "atten", "nitten", "tyve"};
+        Destillat destillat = fadTapninger.get(0).getDestillat();
+        måneder = Period.between(destillat.getPåfyldningsDato(), destillat.getModningsHistorik().get(destillat.getModningsHistorik().size() - 1).getSlutDato().plusDays(1));
+        String[] tal = new String[]{"nul", "et", "to", "tre", "fire", "fem", "seks", "syv", "otte", "ni", "ti", "elleve", "tolv", "tretten", "fjorten", "femten", "seksten", "sytten", "atten", "nitten", "tyve"};
         return tal[måneder.getYears()];
     }
 
-
+    /**
+     * Calculates the range of destilleringstid (destillation time) for all the fadTapninger in the whiskyProdukt.
+     *
+     * @return  a string representing the range of destilleringstid in hours. If the lowest and highest values are the same,
+     *          returns the value followed by "timer". Otherwise, returns the lowest value followed by "til" and the highest value,
+     *          both followed by "timer".
+     */
     private String historieDestilleringstid() {
         long lavestAntalTimer = fadTapninger.get(0).getDestillat().getPåfyldninger().get(0).getDestillering().getDestilleringsTid();
         long højesteAntalTimer = lavestAntalTimer;
@@ -171,6 +257,11 @@ public class WhiskyProdukt implements Serializable {
         return lavestAntalTimer == højesteAntalTimer ? lavestAntalTimer + " timer" : lavestAntalTimer + " til " + højesteAntalTimer + " timer";
     }
 
+    /**
+     * Gets detaljer.
+     *
+     * @return the detaljer
+     */
     public String getDetaljer() {
         StringBuilder sb = new StringBuilder();
         sb.append("Destillater: \n");
@@ -184,6 +275,6 @@ public class WhiskyProdukt implements Serializable {
     @Override
     public String toString() {
         DecimalFormat numberFormatter = new DecimalFormat("#.00");
-        return navn + " " + numberFormatter.format(alkoholProcent) + " % Vol.";
+        return navn + " " + numberFormatter.format(alkoholprocent) + " % Vol.";
     }
 }

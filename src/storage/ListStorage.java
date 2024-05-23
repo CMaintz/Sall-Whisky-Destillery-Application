@@ -13,6 +13,8 @@ public class ListStorage implements Storage, Serializable {
     private final ArrayList<Destillering> destilleringer = new ArrayList<>();
     private final ArrayList<Lager> lagre = new ArrayList<>();
     private final ArrayList<WhiskyProdukt> whiskyProdukter = new ArrayList<>();
+    private int antalFade;
+    private int antalDestilleringer;
 
     //-------------------------------------------------------------------
 
@@ -24,6 +26,8 @@ public class ListStorage implements Storage, Serializable {
             Object obj = objIn.readObject();
             ListStorage storage = (ListStorage) obj;
             System.out.println("Storage loaded from file " + fileName);
+            Destillering.setAntalDestilleringer(storage.getAntalDestilleringerOprettet());
+            Fad.setAntalFade(storage.getAntalFadeOprettet());
             return storage;
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error deserializing storage");
@@ -32,11 +36,14 @@ public class ListStorage implements Storage, Serializable {
         }
     }
 
+
     public static void saveStorage(Storage storage) {
         String fileName = "storage.srl";
         try (FileOutputStream fileOut = new FileOutputStream(fileName);
              ObjectOutputStream objOut = new ObjectOutputStream(fileOut)
         ) {
+            storage.setAntalFadeOprettet();
+            storage.setAntalDestilleringerOprettet();
             objOut.writeObject(storage);
             System.out.println("Storage saved in file " + fileName);
         } catch (IOException e) {
@@ -46,6 +53,21 @@ public class ListStorage implements Storage, Serializable {
         }
     }
 
+    @Override
+    public int getAntalFadeOprettet() {
+        return this.antalFade;
+    }
+    public void setAntalFadeOprettet() {
+        this.antalFade = Fad.getAntalFade();
+    }
+
+    public int getAntalDestilleringerOprettet() {
+        return antalDestilleringer;
+    }
+
+    public void setAntalDestilleringerOprettet() {
+        this.antalDestilleringer = Destillering.getAntalDestilleringer();
+    }
     @Override
     public List<Fad> getFade() {
         return new ArrayList<>(fade);

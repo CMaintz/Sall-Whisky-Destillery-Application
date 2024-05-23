@@ -1,96 +1,197 @@
 package application.models;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+/**
+ * The type Destillering.
+ */
 //Når en destillering af whisky foretages, skal det registreres i systemet.
 //adminstrator indtaster detaljer om destilleringen, såsom startdato, slutdato, maltbatch, kornsort, medarbejder, mængde væske og alkholprocent.
 //Systemet skal kunne vise en liste over alle destilleringer, og det skal være muligt at søge i listen.
 public class Destillering implements Serializable {
-    private static int antalDestilleringer;
+    private static int antalDestilleringer = 0;
     private int newSpiritbatchNr;
     private String maltBatch;
     private Korn korn;
-    private String medarbejder;
+    private String medarbejderNavn;
     private double antalLiter;
     private double alkoholProcent;
-    private String rygeMateriale;
+    private String rygemateriale;
     private String kommentar;
-    private LocalDateTime startDato;
-    private LocalDateTime slutDato;
+    private LocalDateTime startTidspunkt;
+    private LocalDateTime slutTidspunkt;
 
 
-    public Destillering(String maltBatch, Korn korn, String medarbejder, double antalLiter, double alkoholProcent, String rygeMateriale, String kommentar) {
+    /**
+     * Instantiates a new Destillering.
+     *
+     * @param maltBatch      the malt batch
+     * @param korn           the korn
+     * @param medarbejderNavn    the medarbejder
+     * @param antalLiter     the antal liter
+     * @param alkoholProcent the alkohol procent
+     * @param rygemateriale  the ryge materiale
+     * @param kommentar      the kommentar
+     */
+    public Destillering(String maltBatch, Korn korn, String medarbejderNavn, double antalLiter, double alkoholProcent, String rygemateriale, String kommentar) {
         antalDestilleringer++;
         this.newSpiritbatchNr = antalDestilleringer;
         this.maltBatch = maltBatch;
         this.korn = korn;
-        this.medarbejder = medarbejder;
+        this.medarbejderNavn = medarbejderNavn;
         this.antalLiter = antalLiter;
         this.alkoholProcent = alkoholProcent;
-        this.rygeMateriale = rygeMateriale;
+        this.rygemateriale = rygemateriale;
         this.kommentar = kommentar;
-        startDato = LocalDateTime.now();
+        startTidspunkt = LocalDateTime.now();
     }
 
+    /**
+     * Gets antal destilleringer.
+     *
+     * @return the antal destilleringer
+     */
+    public static int getAntalDestilleringer() {
+        return antalDestilleringer;
+    }
+
+    /**
+     * Sets antal destilleringer.
+     *
+     * @param antalDestilleringer the antal destilleringer
+     */
+    public static void setAntalDestilleringer(int antalDestilleringer) {
+        Destillering.antalDestilleringer = antalDestilleringer;
+    }
+
+    /**
+     * Gets malt batch.
+     *
+     * @return the malt batch
+     */
     public String getMaltBatch() {
         return maltBatch;
     }
 
+    /**
+     * Gets korn sort.
+     *
+     * @return the korn sort
+     */
     public Korn getKornSort() {
         return korn;
     }
 
-    public String getMedarbejder() {
-        return medarbejder;
+    /**
+     * Gets medarbejder.
+     *
+     * @return the medarbejder
+     */
+    public String getMedarbejderNavn() {
+        return medarbejderNavn;
     }
 
+    /**
+     * Gets antal liter.
+     *
+     * @return the antal liter
+     */
     public double getAntalLiter() {
         return antalLiter;
     }
 
+    /**
+     * Gets alkohol procent.
+     *
+     * @return the alkohol procent
+     */
     public double getAlkoholProcent() {
         return alkoholProcent;
     }
 
-    public String getRygeMateriale() {
-        return rygeMateriale;
+    /**
+     * Gets ryge materiale.
+     *
+     * @return the ryge materiale
+     */
+    public String getRygemateriale() {
+        return rygemateriale;
     }
 
+    /**
+     * Gets kommentar.
+     *
+     * @return the kommentar
+     */
     public String getKommentar() {
         return kommentar;
     }
 
+    /**
+     * Sets kommentar.
+     *
+     * @param kommentar the kommentar
+     */
     public void setKommentar(String kommentar) {
         this.kommentar = kommentar;
     }
 
+    /**
+     * Fjern antal liter.
+     *
+     * @param antalLiterTappet the antal liter tappet
+     */
     public void fjernAntalLiter(double antalLiterTappet) {
         this.antalLiter -= antalLiterTappet;
     }
 
-    public void setSlutDato(LocalDateTime slutDato) {
-        this.slutDato = slutDato;
+    /**
+     * Sets slut dato.
+     *
+     * @param slutTidspunkt the slut dato
+     */
+    public void setSlutTidspunkt(LocalDateTime slutTidspunkt) {
+        this.slutTidspunkt = slutTidspunkt;
     }
 
-    public void setStartDato(LocalDateTime startDato) {
-        this.startDato = startDato;
+    /**
+     * Sets start dato.
+     *
+     * @param startTidspunkt the start dato
+     */
+    public void setStartTidspunkt(LocalDateTime startTidspunkt) {
+        this.startTidspunkt = startTidspunkt;
     }
 
-    public LocalDateTime getSlutDato() {
-        return slutDato;
+    /**
+     * Gets slut dato.
+     *
+     * @return the slut dato
+     */
+    public LocalDateTime getSlutTidspunkt() {
+        return slutTidspunkt;
     }
 
+    /**
+     * Gets destillerings tid.
+     *
+     * @return the destillerings tid
+     */
     public long getDestilleringsTid() {
-        return startDato.until(slutDato, ChronoUnit.HOURS) + 1;
+        return startTidspunkt.until(slutTidspunkt, ChronoUnit.HOURS) + 1;
     }
 
+    /**
+     * Gets detaljer.
+     *
+     * @return the detaljer
+     */
     public String getDetaljer() {
-        String toReturn = "Maltbatch: " + maltBatch + "\nKorn: " + korn + "\nmedarbejder: " + medarbejder + "\n" + antalLiter + "L, " + alkoholProcent + "% Vol.";
-        if (rygeMateriale != null) {
-            toReturn += ", rygemateriale: " + rygeMateriale;
+        String toReturn = "New spiritbatch nr: " + newSpiritbatchNr + "\nMaltbatch: " + maltBatch + "\nKorn: " + korn + "\nmedarbejder: " + medarbejderNavn + "\n" + antalLiter + "L, " + alkoholProcent + "% Vol.";
+        if (rygemateriale != null) {
+            toReturn += ", rygemateriale: " + rygemateriale;
         }
         if (kommentar != null) {
             toReturn += "\nkommentar:" + kommentar;
@@ -100,6 +201,6 @@ public class Destillering implements Serializable {
 
     @Override
     public String toString() {
-        return maltBatch + ", " + korn + ", " + medarbejder + ", " + antalLiter + ", " + alkoholProcent + ", " + rygeMateriale + ", " + kommentar;
+        return newSpiritbatchNr + ", " + maltBatch + ", " + korn + ", " + medarbejderNavn + ", " + antalLiter + ", " + alkoholProcent + ", " + rygemateriale + ", " + kommentar;
     }
 }

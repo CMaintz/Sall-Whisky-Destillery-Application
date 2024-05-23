@@ -3,26 +3,47 @@ package application.models;
 
 import java.io.Serializable;
 
+/**
+ * The type Hylde.
+ */
 public class Hylde implements Serializable {
     private Fad fad;
     private int nummer;
 
+    /**
+     * Instantiates a new Hylde.
+     *
+     * @param nummer hyldenummeret
+     */
     public Hylde(int nummer) {
         this.nummer = nummer;
     }
 
-//    PRE: der er ikke et fad på hylden allerede, dvs. pre: fad == null
-//    Eller måske er det ikke nødvendigt..? Man kan kun se hylder der er tomme..?
 
+    /**
+     * Placer fad på hylde
+     * Pre: hylde indeholder ikke et fad
+     *
+     * @param fad faddet
+     */
     public void placerFad(Fad fad) {
         this.fad = fad;
     }
 
-    public boolean fjernFad() {
+    /**
+     * Fjern fad boolean.
+     *
+     * @return the boolean
+     */
+    public void fjernFad() {
         this.fad = null;
-        return true;
     }
 
+    /**
+     * Gets fad.
+     *
+     * @return the fad
+     */
     public Fad getFad() {
         return fad;
     }
