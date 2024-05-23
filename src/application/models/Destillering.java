@@ -7,9 +7,6 @@ import java.time.temporal.ChronoUnit;
 /**
  * The type Destillering.
  */
-//Når en destillering af whisky foretages, skal det registreres i systemet.
-//adminstrator indtaster detaljer om destilleringen, såsom startdato, slutdato, maltbatch, kornsort, medarbejder, mængde væske og alkholprocent.
-//Systemet skal kunne vise en liste over alle destilleringer, og det skal være muligt at søge i listen.
 public class Destillering implements Serializable {
     private static int antalDestilleringer = 0;
     private int newSpiritbatchNr;
