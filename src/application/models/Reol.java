@@ -48,7 +48,7 @@ public class Reol implements Serializable {
     }
 
     public void addFad(Fad fad, int plads) {
-        if (hylder[plads-1] == null) {
+        if (hylder[plads-1].getFad() == null) {
             hylder[plads-1].placerFad(fad);
         }
     }

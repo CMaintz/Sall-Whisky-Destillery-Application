@@ -12,11 +12,11 @@ import java.time.LocalDateTime;
 public class App {
     public static void main(String[] args) {
         Storage storage = ListStorage.loadStorage();
-//        if (storage == null) {
+        if (storage == null) {
             storage = new ListStorage();
             System.out.println("Empty ListStorage created");
-//        }
-        Controller.setStorage(storage);;
+        }
+        Controller.setStorage(storage);
 
         if (Controller.getFade().isEmpty()) {
             initStorage();

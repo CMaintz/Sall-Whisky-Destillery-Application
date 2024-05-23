@@ -59,23 +59,16 @@ public abstract class Controller {
 
     public static FadTapning createFadTapning(String medarbejdernavn, Fad fad, WhiskyProdukt whiskyProdukt) {
         FadTapning ft = whiskyProdukt.createFadTapning(medarbejdernavn, fad.getDestillat().getAntalLiter(), fad);
-        ArrayList<Lager> lagre = new ArrayList<>(storage.getLagre());
-        // TODO fadet skal fjernes fra lageret (hylden) når createFadTapning kaldes, og destillatet skal fjernes fra fadet.
-//        boolean fadFundet = false;
-//            for (int i = 0; i < lagre.size(); i++) {
-//                Lager lager = lagre.get(i);
-//                for (int j = 0; j < lager.getReoler().size(); j++) {
-//                    Reol reol = lager.getReoler().get(i);
-//                    for (int k = 0; k < reol.getHylder().length; k++) {
-//                        fadFundet = reol.getHylder()[k].getFad() == fad;
-//                        if (fadFundet) {
-//                            reol.getHylder()[k].fjernFad();
-//                            fad.removeDestillat();
-//                        }
-//                    }
-//                }
-//
-//            }
+        for (Lager lager : storage.getLagre()) {
+            for (Reol reol : lager.getReoler()) {
+                for (Hylde hylde : reol.getHylder()) {
+                    if (hylde.getFad() != null && hylde.getFad().equals(fad)) {
+                        hylde.fjernFad();
+                        fad.removeDestillat();
+                    }
+                }
+            }
+        }
         return ft;
     }
 
