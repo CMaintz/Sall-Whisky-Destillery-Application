@@ -13,12 +13,6 @@ public class StartVindue extends Application {
     private Controller controller;
 
     @Override
-    public void init() {
-//        controller = Controller.getController();
-//        controller.createSomeObjects();
-    }
-
-    @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Sall Whisky Distillery");
         BorderPane pane = new BorderPane();
@@ -52,7 +46,6 @@ public class StartVindue extends Application {
         Tab tabFade = new Tab("Fade");
         Tab tabDestillation = new Tab("Destillering");
         Tab tabLager = new Tab("Lagerstyring");
-        Tab tabData = new Tab("Hent Faddata");
         Tab tabWhisky = new Tab("Whisky");
 
         FadVindue fadVindue = new FadVindue();
@@ -61,15 +54,12 @@ public class StartVindue extends Application {
         tabDestillation.setContent(destilleringPane);
         LagerstyringPane lagerstyringPane = new LagerstyringPane();
         tabLager.setContent(lagerstyringPane);
-        DataPane dataPane = new DataPane();
-        tabData.setContent(dataPane);
         WhiskyPane whiskyPane = new WhiskyPane();
         tabWhisky.setContent(whiskyPane);
 
         tabPane.getTabs().add(tabFade);
         tabPane.getTabs().add(tabDestillation);
         tabPane.getTabs().add(tabLager);
-        tabPane.getTabs().add(tabData);
         tabPane.getTabs().add(tabWhisky);
 
         tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
@@ -86,13 +76,5 @@ public class StartVindue extends Application {
             }
         });
     }
-
-
-
-//        tabForside.setOnSelectionChanged(event -> forsidePane.updateControls());
-//        tabDestillation.setOnSelectionChanged(event -> destillationPane.updateControls());
-//        tabLager.setOnSelectionChanged(event -> lagerstyringPane.updateControls());
-//        tabData.setOnSelectionChanged(event -> dataPane.updateControls());
-//
     }
 
