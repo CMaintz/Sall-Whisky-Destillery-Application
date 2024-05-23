@@ -2,8 +2,6 @@ package application.controller;
 
 import application.models.*;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
@@ -14,11 +12,14 @@ import java.util.List;
 public abstract class Controller {
 
     private static Storage storage;
-    public static void setStorage(Storage storage) {Controller.storage = storage;}
+
+    public static void setStorage(Storage storage) {
+        Controller.storage = storage;
+    }
 
     public static Fad createFad(int størrelse, String tidligereIndhold, String land, LocalDate fraÅr, LocalDate tilÅr, String leverandør) {
         Fad fad = new Fad(størrelse);
-        fad.createFadHistorik(tidligereIndhold, land, fraÅr, tilÅr,  leverandør);
+        fad.createFadHistorik(tidligereIndhold, land, fraÅr, tilÅr, leverandør);
         storage.addFad(fad);
         return fad;
     }
@@ -49,6 +50,7 @@ public abstract class Controller {
         Reol reol = lager.createReol(antalHylder);
         return reol;
     }
+
     public static Lager createLager(String navn) {
         Lager lager = new Lager(navn);
         storage.addLager(lager);
@@ -57,10 +59,27 @@ public abstract class Controller {
 
     public static FadTapning createFadTapning(String medarbejdernavn, Fad fad, WhiskyProdukt whiskyProdukt) {
         FadTapning ft = whiskyProdukt.createFadTapning(medarbejdernavn, fad.getDestillat().getAntalLiter(), fad);
+        ArrayList<Lager> lagre = new ArrayList<>(storage.getLagre());
+        // TODO fadet skal fjernes fra lageret (hylden) når createFadTapning kaldes, og destillatet skal fjernes fra fadet.
+//        boolean fadFundet = false;
+//            for (int i = 0; i < lagre.size(); i++) {
+//                Lager lager = lagre.get(i);
+//                for (int j = 0; j < lager.getReoler().size(); j++) {
+//                    Reol reol = lager.getReoler().get(i);
+//                    for (int k = 0; k < reol.getHylder().length; k++) {
+//                        fadFundet = reol.getHylder()[k].getFad() == fad;
+//                        if (fadFundet) {
+//                            reol.getHylder()[k].fjernFad();
+//                            fad.removeDestillat();
+//                        }
+//                    }
+//                }
+//
+//            }
         return ft;
     }
 
-    public static int udregnTotalLiter (List<Destillat> destillater, int vand) {
+    public static int udregnTotalLiter(List<Destillat> destillater, int vand) {
         int toReturn = 0;
         if (!destillater.isEmpty()) {
             for (Destillat destillat : destillater) {
@@ -69,6 +88,7 @@ public abstract class Controller {
         }
         return toReturn + vand;
     }
+
     public static double udregnAlkoholprocent(List<Destillat> destillater, int vand) {
         double literEthanol = 0;
         double antalLiter = vand;
@@ -125,6 +145,7 @@ public abstract class Controller {
     public static void setDestilleringsStarttid(Destillering destillering, LocalDateTime startTid) {
         destillering.setStartDato(startTid);
     }
+
     public static void omhældningAfDestillat(Fad fadFra, Fad fadTil) {
         fadFra.getDestillat().omhældDestillat(fadTil);
     }

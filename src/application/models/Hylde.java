@@ -18,8 +18,9 @@ public class Hylde implements Serializable {
         this.fad = fad;
     }
 
-    public void fjernFad() {
+    public boolean fjernFad() {
         this.fad = null;
+        return true;
     }
 
     public Fad getFad() {
