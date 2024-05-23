@@ -11,9 +11,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class OpretDestillation extends Stage {
+public class OpretDestillering extends Stage {
     private ListView<Destillering> destilleringListView;
-    public OpretDestillation() {
+    public OpretDestillering() {
         destilleringListView = new ListView<>();
         GridPane pane = new GridPane();
         pane.setPadding(new Insets(20));
@@ -99,7 +99,6 @@ public class OpretDestillation extends Stage {
             alert.setHeaderText(null);
             alert.setContentText("Destilleringen er oprettet");
             alert.showAndWait();
-
         });
 
 

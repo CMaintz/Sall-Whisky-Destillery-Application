@@ -6,11 +6,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-
-import java.awt.*;
 
 public class StartVindue extends Application {
     private Controller controller;
@@ -53,15 +50,15 @@ public class StartVindue extends Application {
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
         Tab tabFade = new Tab("Fade");
-        Tab tabDestillation = new Tab("Destillation");
+        Tab tabDestillation = new Tab("Destillering");
         Tab tabLager = new Tab("Lagerstyring");
         Tab tabData = new Tab("Hent Faddata");
         Tab tabWhisky = new Tab("Whisky");
 
         FadVindue fadVindue = new FadVindue();
         tabFade.setContent(fadVindue);
-        DestillationPane destillationPane = new DestillationPane();
-        tabDestillation.setContent(destillationPane);
+        DestilleringPane destilleringPane = new DestilleringPane();
+        tabDestillation.setContent(destilleringPane);
         LagerstyringPane lagerstyringPane = new LagerstyringPane();
         tabLager.setContent(lagerstyringPane);
         DataPane dataPane = new DataPane();
@@ -77,8 +74,8 @@ public class StartVindue extends Application {
 
         tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
             if (newTab == tabDestillation) {
-                DestillationPane newDestillationPane = new DestillationPane();
-                tabDestillation.setContent(newDestillationPane);
+                DestilleringPane newDestilleringPane = new DestilleringPane();
+                tabDestillation.setContent(newDestilleringPane);
             }
         });
 

@@ -51,9 +51,6 @@ public class VisHistorik extends Stage {
         Label lblFraÅr = new Label("FraÅr");
         pane.add(lblFraÅr, 0, 2);
 
-        Label lblTilÅr = new Label("TilÅr");
-        pane.add(lblTilÅr, 0, 3);
-
         Label lblLeverandør = new Label("Leverandør");
         pane.add(lblLeverandør, 0, 4);
 
@@ -92,7 +89,7 @@ public class VisHistorik extends Stage {
         lvwDestillater.getItems().setAll(fad.getFadHistorik().getTidligereDestillater());
 
 
-        btnOk.setText("Cancel");
+        btnOk.setText("Luk vindue");
         pane.add(btnOk, 0, 8);
 
         btnOk.setOnAction(event -> okAction());
