@@ -253,7 +253,7 @@ public abstract class Controller {
      * @param startTid     destilleringens starttid
      */
     public static void setDestilleringsStarttid(Destillering destillering, LocalDateTime startTid) {
-        destillering.setStartDato(startTid);
+        destillering.setStartTidspunkt(startTid);
     }
 
     /**

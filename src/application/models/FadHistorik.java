@@ -28,6 +28,7 @@ public class FadHistorik implements Serializable {
         this.tidligereIndhold = tidligereIndhold;
         this.land = land;
         this.fraÅr = fraÅr;
+        this.tilÅr = LocalDate.now();
         this.leverandør = leverandør;
         this.tidligereDestillater = new ArrayList<>();
     }

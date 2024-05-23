@@ -30,15 +30,15 @@ public class Destillat implements Serializable {
      *
      * @param medarbejderNavn the medarbejder navn
      * @param literPåfyldt    the liter påfyldt
-     * @param destillering    the destillering
+     * @param dest    the destillering
      * @return the påfyldning
      */
-    public Påfyldning createPåfyldning(String medarbejderNavn, double literPåfyldt, Destillering destillering) {
-        if (literPåfyldt <= 0 || literPåfyldt > destillering.getAntalLiter()) {
+    public Påfyldning createPåfyldning(String medarbejderNavn, double literPåfyldt, Destillering dest) {
+        if (literPåfyldt <= 0 || literPåfyldt > dest.getAntalLiter()) {
             throw new IllegalArgumentException("Invalid volume for påfyldning.");
         }
 
-        Påfyldning pf = new Påfyldning(medarbejderNavn, literPåfyldt, destillering);
+        Påfyldning pf = new Påfyldning(medarbejderNavn, literPåfyldt, dest);
         påfyldninger.add(pf);
         antalLiter += pf.getLiterPåfyldt();
         udregnAlkoholprocent();
@@ -51,7 +51,7 @@ public class Destillat implements Serializable {
      * @param startDato the start dato
      */
     public void setStartDato(LocalDate startDato) {
-        modningsHistorik.get(0).setStartDato(startDato);
+        modningsHistorik.get(0).setPåfyldningsDato(startDato);
     }
 
     /**
@@ -69,7 +69,7 @@ public class Destillat implements Serializable {
      * @return the local date
      */
     public LocalDate getPåfyldningsDato() {
-        return modningsHistorik.get(0).getStartDato();
+        return modningsHistorik.get(0).getPåfyldningsDato();
     }
 
     /**
@@ -168,7 +168,7 @@ public class Destillat implements Serializable {
      * @return the boolean
      */
     public boolean destillatKlar() {
-        Period periodPD = Period.between(modningsHistorik.get(0).getStartDato(), LocalDate.now());
+        Period periodPD = Period.between(modningsHistorik.get(0).getPåfyldningsDato(), LocalDate.now());
         if (periodPD.getYears() >= 3) {
             return true;
         }
@@ -195,7 +195,7 @@ public class Destillat implements Serializable {
         }
         sb.append("Modningshistorik: \n");
         for (ModningsHistorik modningsHistorik : modningsHistorik) {
-            sb.append("Modnet i " + modningsHistorik.getStartDato().until(modningsHistorik.getSlutDato().plusDays(1)).getMonths() + " måneder i fad:\n");
+            sb.append("Modnet i " + modningsHistorik.getPåfyldningsDato().until(modningsHistorik.getSlutDato().plusDays(1)).getMonths() + " måneder i fad:\n");
             sb.append(modningsHistorik.getFad().toString() + " \n" + modningsHistorik.getFad().getAlder() + "år gammelt");
         }
         return sb.toString();

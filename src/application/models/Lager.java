@@ -52,8 +52,8 @@ public class Lager implements Serializable {
      *
      * @return the reoler med ledig plads
      */
-    public ArrayList<Reol> getReolerMedLedigPlads() {
-        ArrayList<Reol> result = new ArrayList<>();
+    public List<Reol> getReolerMedLedigPlads() {
+        List<Reol> result = new ArrayList<>();
         for (Reol reol : reoler) {
             if (reol.getHylderUdenFad().length > 0) {
                 result.add(reol);
@@ -67,8 +67,8 @@ public class Lager implements Serializable {
      *
      * @return the fade med destillat
      */
-    public ArrayList<Fad> getFadeMedDestillat() {
-        ArrayList<Fad> result = new ArrayList<>();
+    public List<Fad> getFadeMedDestillat() {
+        List<Fad> result = new ArrayList<>();
         for (Reol reol : reoler) {
             for (Hylde hylde : reol.getHylder()) {
                 if (hylde.getFad() != null && hylde.getFad().getDestillat() != null) {
@@ -85,8 +85,8 @@ public class Lager implements Serializable {
      *
      * @return the fade klar
      */
-    public ArrayList<Fad> getFadeKlar() {
-        ArrayList<Fad> result = new ArrayList<>();
+    public List<Fad> getFadeKlar() {
+        List<Fad> result = new ArrayList<>();
         for (Reol reol : reoler) {
             for (Hylde hylde : reol.getHylder()) {
                 if (hylde.getFad().getDestillat().destillatKlar()) {

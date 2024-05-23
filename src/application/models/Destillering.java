@@ -1,7 +1,6 @@
 package application.models;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -16,13 +15,13 @@ public class Destillering implements Serializable {
     private int newSpiritbatchNr;
     private String maltBatch;
     private Korn korn;
-    private String medarbejder;
+    private String medarbejderNavn;
     private double antalLiter;
     private double alkoholProcent;
-    private String rygeMateriale;
+    private String rygemateriale;
     private String kommentar;
-    private LocalDateTime startDato;
-    private LocalDateTime slutDato;
+    private LocalDateTime startTidspunkt;
+    private LocalDateTime slutTidspunkt;
 
 
     /**
@@ -30,23 +29,23 @@ public class Destillering implements Serializable {
      *
      * @param maltBatch      the malt batch
      * @param korn           the korn
-     * @param medarbejder    the medarbejder
+     * @param medarbejderNavn    the medarbejder
      * @param antalLiter     the antal liter
      * @param alkoholProcent the alkohol procent
-     * @param rygeMateriale  the ryge materiale
+     * @param rygemateriale  the ryge materiale
      * @param kommentar      the kommentar
      */
-    public Destillering(String maltBatch, Korn korn, String medarbejder, double antalLiter, double alkoholProcent, String rygeMateriale, String kommentar) {
+    public Destillering(String maltBatch, Korn korn, String medarbejderNavn, double antalLiter, double alkoholProcent, String rygemateriale, String kommentar) {
         antalDestilleringer++;
         this.newSpiritbatchNr = antalDestilleringer;
         this.maltBatch = maltBatch;
         this.korn = korn;
-        this.medarbejder = medarbejder;
+        this.medarbejderNavn = medarbejderNavn;
         this.antalLiter = antalLiter;
         this.alkoholProcent = alkoholProcent;
-        this.rygeMateriale = rygeMateriale;
+        this.rygemateriale = rygemateriale;
         this.kommentar = kommentar;
-        startDato = LocalDateTime.now();
+        startTidspunkt = LocalDateTime.now();
     }
 
     /**
@@ -90,8 +89,8 @@ public class Destillering implements Serializable {
      *
      * @return the medarbejder
      */
-    public String getMedarbejder() {
-        return medarbejder;
+    public String getMedarbejderNavn() {
+        return medarbejderNavn;
     }
 
     /**
@@ -117,8 +116,8 @@ public class Destillering implements Serializable {
      *
      * @return the ryge materiale
      */
-    public String getRygeMateriale() {
-        return rygeMateriale;
+    public String getRygemateriale() {
+        return rygemateriale;
     }
 
     /**
@@ -151,19 +150,19 @@ public class Destillering implements Serializable {
     /**
      * Sets slut dato.
      *
-     * @param slutDato the slut dato
+     * @param slutTidspunkt the slut dato
      */
-    public void setSlutDato(LocalDateTime slutDato) {
-        this.slutDato = slutDato;
+    public void setSlutTidspunkt(LocalDateTime slutTidspunkt) {
+        this.slutTidspunkt = slutTidspunkt;
     }
 
     /**
      * Sets start dato.
      *
-     * @param startDato the start dato
+     * @param startTidspunkt the start dato
      */
-    public void setStartDato(LocalDateTime startDato) {
-        this.startDato = startDato;
+    public void setStartTidspunkt(LocalDateTime startTidspunkt) {
+        this.startTidspunkt = startTidspunkt;
     }
 
     /**
@@ -171,8 +170,8 @@ public class Destillering implements Serializable {
      *
      * @return the slut dato
      */
-    public LocalDateTime getSlutDato() {
-        return slutDato;
+    public LocalDateTime getSlutTidspunkt() {
+        return slutTidspunkt;
     }
 
     /**
@@ -181,7 +180,7 @@ public class Destillering implements Serializable {
      * @return the destillerings tid
      */
     public long getDestilleringsTid() {
-        return startDato.until(slutDato, ChronoUnit.HOURS) + 1;
+        return startTidspunkt.until(slutTidspunkt, ChronoUnit.HOURS) + 1;
     }
 
     /**
@@ -190,9 +189,9 @@ public class Destillering implements Serializable {
      * @return the detaljer
      */
     public String getDetaljer() {
-        String toReturn = "New spiritbatch nr: " + newSpiritbatchNr + "\nMaltbatch: " + maltBatch + "\nKorn: " + korn + "\nmedarbejder: " + medarbejder + "\n" + antalLiter + "L, " + alkoholProcent + "% Vol.";
-        if (rygeMateriale != null) {
-            toReturn += ", rygemateriale: " + rygeMateriale;
+        String toReturn = "New spiritbatch nr: " + newSpiritbatchNr + "\nMaltbatch: " + maltBatch + "\nKorn: " + korn + "\nmedarbejder: " + medarbejderNavn + "\n" + antalLiter + "L, " + alkoholProcent + "% Vol.";
+        if (rygemateriale != null) {
+            toReturn += ", rygemateriale: " + rygemateriale;
         }
         if (kommentar != null) {
             toReturn += "\nkommentar:" + kommentar;
@@ -202,6 +201,6 @@ public class Destillering implements Serializable {
 
     @Override
     public String toString() {
-        return newSpiritbatchNr + ", " + maltBatch + ", " + korn + ", " + medarbejder + ", " + antalLiter + ", " + alkoholProcent + ", " + rygeMateriale + ", " + kommentar;
+        return newSpiritbatchNr + ", " + maltBatch + ", " + korn + ", " + medarbejderNavn + ", " + antalLiter + ", " + alkoholProcent + ", " + rygemateriale + ", " + kommentar;
     }
 }

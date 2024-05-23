@@ -68,16 +68,6 @@ public class Reol implements Serializable {
     }
 
     /**
-     * Get fad på hylde fad.
-     *
-     * @param plads the plads
-     * @return the fad
-     */
-    public Fad getFadPåHylde(int plads) {
-        return hylder[plads-1].getFad();
-    }
-
-    /**
      * Add fad.
      *
      * @param fad   the fad

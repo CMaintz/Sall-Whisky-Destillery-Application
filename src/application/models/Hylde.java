@@ -35,9 +35,8 @@ public class Hylde implements Serializable {
      *
      * @return the boolean
      */
-    public boolean fjernFad() {
+    public void fjernFad() {
         this.fad = null;
-        return true;
     }
 
     /**

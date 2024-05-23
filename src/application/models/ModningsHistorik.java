@@ -8,28 +8,28 @@ import java.time.LocalDate;
  */
 public class ModningsHistorik implements Serializable {
     private Fad fad;
-    private LocalDate startDato;
+    private LocalDate påfyldningsDato;
     private LocalDate slutDato;
 
     /**
      * Instantiates a new Modnings historik.
      *
      * @param fad       the fad
-     * @param startDato the start dato
+     * @param påfyldningsDato the start dato
      */
-    ModningsHistorik(Fad fad, LocalDate startDato) {
+    ModningsHistorik(Fad fad, LocalDate påfyldningsDato) {
         this.fad = fad;
-        this.startDato = startDato;
+        this.påfyldningsDato = påfyldningsDato;
         this.slutDato = null;
     }
 
     /**
      * Sets start dato.
      *
-     * @param startDato the start dato
+     * @param påfyldningsDato the start dato
      */
-    public void setStartDato(LocalDate startDato) {
-        this.startDato = startDato;
+    public void setPåfyldningsDato(LocalDate påfyldningsDato) {
+        this.påfyldningsDato = påfyldningsDato;
     }
 
     /**
@@ -55,8 +55,8 @@ public class ModningsHistorik implements Serializable {
      *
      * @return the start dato
      */
-    public LocalDate getStartDato() {
-        return startDato;
+    public LocalDate getPåfyldningsDato() {
+        return påfyldningsDato;
     }
 
     /**

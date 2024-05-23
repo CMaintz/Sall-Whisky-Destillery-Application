@@ -24,8 +24,8 @@ public class Påfyldning implements Serializable {
         this.literPåfyldt = literPåfyldt;
         this.destillering = destillering;
         destillering.fjernAntalLiter(literPåfyldt);
-        if (destillering.getSlutDato() == null) {
-            destillering.setSlutDato(LocalDateTime.now());
+        if (destillering.getSlutTidspunkt() == null) {
+            destillering.setSlutTidspunkt(LocalDateTime.now());
         }
     }
 
