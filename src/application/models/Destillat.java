@@ -30,7 +30,7 @@ public class Destillat implements Serializable {
      *
      * @param medarbejderNavn the medarbejder navn
      * @param literPåfyldt    the liter påfyldt
-     * @param dest    the destillering
+     * @param dest            the destillering
      * @return the påfyldning
      */
     public Påfyldning createPåfyldning(String medarbejderNavn, double literPåfyldt, Destillering dest) {

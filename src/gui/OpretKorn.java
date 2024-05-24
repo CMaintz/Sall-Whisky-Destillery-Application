@@ -62,8 +62,6 @@ public class OpretKorn extends Stage {
             alert.setContentText("Kornet er oprettet");
 
             alert.showAndWait();
-
-
         });
     }
 }

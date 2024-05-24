@@ -15,6 +15,7 @@ public class Påfyldning implements Serializable {
     /**
      * Instantiates a new Påfyldning.
      * pre: literPåfyldt <= currentAntalLiter i valgte destillering
+     *
      * @param medarbejderNavn the medarbejder navn
      * @param literPåfyldt    the liter påfyldt
      * @param destillering    the destillering

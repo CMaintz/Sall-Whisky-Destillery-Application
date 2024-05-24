@@ -42,7 +42,5 @@ public class OpretLager extends Stage {
             txtLagerNavn.setText("");
             this.close();
         });
-
     }
-
 }

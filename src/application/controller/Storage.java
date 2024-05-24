@@ -42,6 +42,7 @@ public interface Storage {
      *
      * @return the korntyper
      */
+
     public List<Korn> getKorntyper();
 
     /**
@@ -49,6 +50,7 @@ public interface Storage {
      *
      * @param fad the fad
      */
+
     public void addFad(Fad fad);
 
     /**
@@ -56,6 +58,7 @@ public interface Storage {
      *
      * @param korn the korn
      */
+
     public void addKorntype(Korn korn);
 
     /**
@@ -63,6 +66,7 @@ public interface Storage {
      *
      * @param lager the lager
      */
+
     public void addLager(Lager lager);
 
     /**
@@ -70,6 +74,7 @@ public interface Storage {
      *
      * @param whiskyProdukt the whisky produkt
      */
+
     public void addWhiskyProdukt(WhiskyProdukt whiskyProdukt);
 
     /**
@@ -77,12 +82,14 @@ public interface Storage {
      *
      * @param destillering the destillering
      */
+
     public void addDestillering(Destillering destillering);
     public void removeFad(Fad fad);
 
     /**
      * Sets antal fade oprettet.
      */
+
     public void setAntalFadeOprettet();
 
     /**
@@ -90,11 +97,13 @@ public interface Storage {
      *
      * @return the antal fade oprettet
      */
+
     public int getAntalFadeOprettet();
 
     /**
      * Sets antal destilleringer oprettet.
      */
+
     public void setAntalDestilleringerOprettet();
 
     /**
@@ -102,5 +111,6 @@ public interface Storage {
      *
      * @return the antal destilleringer oprettet
      */
+
     public int getAntalDestilleringerOprettet();
 }

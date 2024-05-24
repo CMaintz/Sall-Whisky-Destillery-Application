@@ -195,5 +195,4 @@ public class PåfyldFad extends Stage {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
 }

@@ -21,6 +21,7 @@ public class FlytFadWindow extends Stage {
     private ComboBox<Hylde> cbHylder = new ComboBox<>();
     Fad fad;
     Hylde hyldefra;
+
     public FlytFadWindow(Fad fad, Hylde hyldeFra) {
         this.fad = fad;
         this.hyldefra = hyldeFra;

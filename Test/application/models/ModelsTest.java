@@ -20,7 +20,7 @@ public class ModelsTest {
         korn = new Korn("TestSort", "TestVariant", "Mark1");
         destillering = new Destillering("TestMaltBatch", korn, "Medarbejder1", 40, 50, "Røg1", "Smager godt");
         fad = new Fad(100);
-        fad.createFadHistorik("Sherry", "Spanien", LocalDate.of(2020,10,10), "TestLeverandør");
+        fad.createFadHistorik("Sherry", "Spanien", LocalDate.of(2020, 10, 10), "TestLeverandør");
         destillat = new Destillat();
         destillat.createPåfyldning("Jens", 20, destillering);
         fad.addDestillat(destillat);
@@ -50,12 +50,12 @@ public class ModelsTest {
     void destillatAddModningTest() {
         assertTrue(destillat.getModningsHistorik().get(0).getFad().equals(fad));
         Fad testFad = new Fad(80);
-        testFad.createFadHistorik("Test", "Spanien", LocalDate.of(2010,10,10), "LeverandørTest");
+        testFad.createFadHistorik("Test", "Spanien", LocalDate.of(2010, 10, 10), "LeverandørTest");
         destillat.omhældDestillat(testFad);
         assertTrue(destillat.getModningsHistorik().get(1).getFad().equals(testFad));
         assertTrue(destillat.getFad().equals(testFad));
         Fad testFad2 = new Fad(60);
-        testFad2.createFadHistorik("Test2", "Danmark", LocalDate.of(2008,10,10), "LeverandørTest2");
+        testFad2.createFadHistorik("Test2", "Danmark", LocalDate.of(2008, 10, 10), "LeverandørTest2");
         destillat.omhældDestillat(testFad2);
         assertTrue(destillat.getFad().equals(testFad2));
 

@@ -15,38 +15,38 @@ public class DestilleringPane extends GridPane {
     private Button opretDestillering = new Button();
 
     public DestilleringPane() {
-       GridPane pane = new GridPane();
-       this.add(pane, 0, 0);
-       pane.setGridLinesVisible(false);
-         pane.setPadding(new Insets(10));
-            pane.setHgap(10);
-            pane.setVgap(10);
-            pane.setStyle("-fx-border-color: black");
+        GridPane pane = new GridPane();
+        this.add(pane, 0, 0);
+        pane.setGridLinesVisible(false);
+        pane.setPadding(new Insets(10));
+        pane.setHgap(10);
+        pane.setVgap(10);
+        pane.setStyle("-fx-border-color: black");
 
-            Label lblDestilleringer = new Label("Destilleringer");
-            pane.add(lblDestilleringer, 1, 0);
+        Label lblDestilleringer = new Label("Destilleringer");
+        pane.add(lblDestilleringer, 1, 0);
 
-            destilleringListView = new ListView<>();
-            pane.add(destilleringListView, 1, 1, 2, 5);
-            destilleringListView.setPrefWidth(250);
-            destilleringListView.setPrefHeight(200);
-            ObservableList<Destillering> destilleringer = FXCollections.observableArrayList(Controller.getDestilleringer());
-            destilleringListView.setItems(destilleringer);
+        destilleringListView = new ListView<>();
+        pane.add(destilleringListView, 1, 1, 2, 5);
+        destilleringListView.setPrefWidth(250);
+        destilleringListView.setPrefHeight(200);
+        ObservableList<Destillering> destilleringer = FXCollections.observableArrayList(Controller.getDestilleringer());
+        destilleringListView.setItems(destilleringer);
 
-            Label lblDestilleringInfo = new Label("Destillering info");
-            pane.add(lblDestilleringInfo, 3, 0);
+        Label lblDestilleringInfo = new Label("Destillering info");
+        pane.add(lblDestilleringInfo, 3, 0);
 
-            TextArea taDestilleringInfo = new TextArea();
-            pane.add(taDestilleringInfo, 3, 1, 3, 5);
-            taDestilleringInfo.setEditable(false);
-            taDestilleringInfo.setPrefWidth(250);
-            taDestilleringInfo.setPrefHeight(200);
+        TextArea taDestilleringInfo = new TextArea();
+        pane.add(taDestilleringInfo, 3, 1, 3, 5);
+        taDestilleringInfo.setEditable(false);
+        taDestilleringInfo.setPrefWidth(250);
+        taDestilleringInfo.setPrefHeight(200);
 
-            opretDestillering.setText("Opret destillering");
-            pane.add(opretDestillering, 0, 0);
+        opretDestillering.setText("Opret destillering");
+        pane.add(opretDestillering, 0, 0);
 
-            tilføjKorn.setText("Tilføj korn");
-            pane.add(tilføjKorn, 0, 1);
+        tilføjKorn.setText("Tilføj korn");
+        pane.add(tilføjKorn, 0, 1);
 
         //Action til knapper -----------------------------------------------------------------------------------------------------------
         opretDestillering.setOnAction(e -> {

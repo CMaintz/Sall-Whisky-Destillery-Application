@@ -34,7 +34,6 @@ public class OpretFad extends Stage {
         pane.add(leverandør1, 0, 10);
 
 
-
         //Textfields
         TextField txtLiterKapacitet = new TextField();
         pane.add(txtLiterKapacitet, 0, 3);
@@ -62,7 +61,6 @@ public class OpretFad extends Stage {
         this.setTitle("Opret Fad");
 
 
-
         //---------------------------------------------------------------------------------
 
         //Action til knappen
@@ -70,7 +68,7 @@ public class OpretFad extends Stage {
             int literKapacitet = Integer.parseInt(txtLiterKapacitet.getText());
             LocalDate fraÅr = LocalDate.parse(txtFraÅr.getText());
             String tidligereIndhold = txtTidligereIndhold.getText();
-            String land = txtLand.getText();;
+            String land = txtLand.getText();
             String leverandør = txtLeverandør.getText();
 
             Controller.createFad(literKapacitet, tidligereIndhold, land, fraÅr, leverandør);
@@ -82,9 +80,7 @@ public class OpretFad extends Stage {
             txtLeverandør.setText("");
 
             this.close();
-
         });
-
-       }
     }
+}
 

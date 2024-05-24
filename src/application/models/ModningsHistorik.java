@@ -14,7 +14,7 @@ public class ModningsHistorik implements Serializable {
     /**
      * Instantiates a new Modnings historik.
      *
-     * @param fad       the fad
+     * @param fad             the fad
      * @param påfyldningsDato the start dato
      */
     ModningsHistorik(Fad fad, LocalDate påfyldningsDato) {

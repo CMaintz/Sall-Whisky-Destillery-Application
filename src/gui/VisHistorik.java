@@ -33,10 +33,12 @@ public class VisHistorik extends Stage {
         Scene scene = new Scene(pane);
         this.setScene(scene);
     }
+
     private TextField txfTidligereIndhold, txfLand, txfFraÅr, txfTilÅr, txfLeverandør;
     private ListView<Destillat> lvwDestillater;
     private Button btnOk = new Button();
     private Fad fad;
+
     private void initContent(GridPane pane) {
         pane.setPadding(new Insets(20));
         pane.setHgap(10);

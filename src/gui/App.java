@@ -59,9 +59,9 @@ public class App {
         Korn korn2 = Controller.createKorn("Vårbyg", "Laureate", "Mosevang og Stadsgaard");
         Korn korn3 = Controller.createKorn("Vårbyg", "Focus", "Dagmarlund og Skovsø");
 
-        Destillering destillering1 = Controller.createDestillering("Malthuset", korn1, "Chris", 1500, 81, "Bøgeflisrøget", null);
-        Destillering destillering2 = Controller.createDestillering("Malthuset", korn2, "Chris", 800, 50, null, null);
-        Destillering destillering3 = Controller.createDestillering("Malthuset", korn3, "Chris", 5000, 55, "Tørverøget", null);
+        Destillering destillering1 = Controller.createDestillering("Malthuset", korn1, "Chris", 1500, 81, "Bøgeflisrøget", "");
+        Destillering destillering2 = Controller.createDestillering("Malthuset", korn2, "Chris", 800, 50, "", "");
+        Destillering destillering3 = Controller.createDestillering("Malthuset", korn3, "Chris", 5000, 55, "Tørverøget", "");
 
         Controller.setDestilleringsStarttid(destillering1, LocalDateTime.now().minusHours(127));
         Controller.setDestilleringsStarttid(destillering2, LocalDateTime.now().minusHours(152));

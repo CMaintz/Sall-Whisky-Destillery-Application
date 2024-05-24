@@ -26,21 +26,7 @@ public class LoginPane extends Application {
         Label lblHint = new Label("Hint: \nUsername: admin\nPassword: admin");
 
         Button btnLogin = new Button("Login");
-        btnLogin.setOnAction(e -> {
-            String username = nameInput.getText();
-            String password = passwordInput.getText();
-            if (username.equals("admin") && password.equals("admin")) {
-                primaryStage.close();
 
-                    try {
-                        StartVindue startVindue = new StartVindue();
-                        Stage newStage = new Stage();
-                        startVindue.start(newStage);
-                    } catch (Exception exception) {
-                        exception.printStackTrace();
-                    }
-            }
-        });
 
         gridPane.add(lblUsername, 0, 0);
         gridPane.add(nameInput, 1, 0);
@@ -53,6 +39,23 @@ public class LoginPane extends Application {
         primaryStage.setTitle("Login");
         primaryStage.setScene(scene);
         primaryStage.show();
+
+//Action til knap
+        btnLogin.setOnAction(e -> {
+            String username = nameInput.getText();
+            String password = passwordInput.getText();
+            if (username.equals("admin") && password.equals("admin")) {
+                primaryStage.close();
+
+                try {
+                    StartVindue startVindue = new StartVindue();
+                    Stage newStage = new Stage();
+                    startVindue.start(newStage);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        });
     }
 
     public static void main(String[] args) {

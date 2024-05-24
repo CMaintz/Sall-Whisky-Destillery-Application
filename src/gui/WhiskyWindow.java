@@ -25,7 +25,7 @@ public class WhiskyWindow extends Stage {
 
     private int literVand;
     private ListView<Fad> lvwFærdigeDestillater;
-    private ListView <Destillat> lvwValgteDestillater;
+    private ListView<Destillat> lvwValgteDestillater;
     private TextField txfProduktNavn, txfMedarbejder, txfVand, txfAlk;
     private TextArea txaDestillatInfo;
     private Button btnAddDestillat, btnFjernDestillat, btnTilføjVand, btnOpret;

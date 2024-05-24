@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 
 public class OpretDestillering extends Stage {
     private ListView<Destillering> destilleringListView;
+
     public OpretDestillering() {
         destilleringListView = new ListView<>();
         GridPane pane = new GridPane();

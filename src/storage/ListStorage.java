@@ -57,6 +57,7 @@ public class ListStorage implements Storage, Serializable {
     public int getAntalFadeOprettet() {
         return this.antalFade;
     }
+
     public void setAntalFadeOprettet() {
         this.antalFade = Fad.getAntalFade();
     }
@@ -68,6 +69,7 @@ public class ListStorage implements Storage, Serializable {
     public void setAntalDestilleringerOprettet() {
         this.antalDestilleringer = Destillering.getAntalDestilleringer();
     }
+
     @Override
     public List<Fad> getFade() {
         return new ArrayList<>(fade);

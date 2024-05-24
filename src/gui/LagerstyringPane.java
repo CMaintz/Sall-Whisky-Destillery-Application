@@ -122,7 +122,6 @@ public class LagerstyringPane extends GridPane {
     }
 
 
-
     private void flytFadAction() {
         Hylde hylde = lvwHylder.getSelectionModel().getSelectedItem();
         if (hylde != null) {

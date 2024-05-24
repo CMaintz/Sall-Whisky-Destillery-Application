@@ -10,15 +10,13 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 public class StartVindue extends Application {
-    private Controller controller;
-
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Sall Whisky Distillery");
         BorderPane pane = new BorderPane();
         this.initContent(pane);
 
-        Image image = new Image("https://sallwhisky.com/wp-content/uploads/2021/01/Fad-tegnet.png"); // replace with your image path
+        Image image = new Image("https://sallwhisky.com/wp-content/uploads/2021/01/Fad-tegnet.png");
 
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, false);
 
@@ -76,5 +74,5 @@ public class StartVindue extends Application {
             }
         });
     }
-    }
+}
 

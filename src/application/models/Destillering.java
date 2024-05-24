@@ -24,13 +24,13 @@ public class Destillering implements Serializable {
     /**
      * Instantiates a new Destillering.
      *
-     * @param maltBatch      the malt batch
-     * @param korn           the korn
-     * @param medarbejderNavn    the medarbejder
-     * @param antalLiter     the antal liter
-     * @param alkoholProcent the alkohol procent
-     * @param rygemateriale  the ryge materiale
-     * @param kommentar      the kommentar
+     * @param maltBatch       the malt batch
+     * @param korn            the korn
+     * @param medarbejderNavn the medarbejder
+     * @param antalLiter      the antal liter
+     * @param alkoholProcent  the alkohol procent
+     * @param rygemateriale   the ryge materiale
+     * @param kommentar       the kommentar
      */
     public Destillering(String maltBatch, Korn korn, String medarbejderNavn, double antalLiter, double alkoholProcent, String rygemateriale, String kommentar) {
         antalDestilleringer++;
@@ -193,7 +193,7 @@ public class Destillering implements Serializable {
         if (kommentar != null) {
             toReturn += "\nkommentar:" + kommentar;
         }
-    return toReturn;
+        return toReturn;
     }
 
     @Override
