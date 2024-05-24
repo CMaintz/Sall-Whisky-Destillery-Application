@@ -19,10 +19,10 @@ public class FadHistorik implements Serializable {
     /**
      * Instantiates a new Fad historik.
      *
-     * @param tidligereIndhold the tidligere indhold
-     * @param land             the land
-     * @param fraÅr            the fra år
-     * @param leverandør       the leverandør
+     * @param tidligereIndhold tidligere indhold
+     * @param land             land
+     * @param fraÅr            fra år
+     * @param leverandør       leverandør
      */
     FadHistorik(String tidligereIndhold, String land, LocalDate fraÅr, String leverandør) {
         this.tidligereIndhold = tidligereIndhold;
@@ -36,7 +36,7 @@ public class FadHistorik implements Serializable {
     /**
      * Gets tidligere indhold.
      *
-     * @return the tidligere indhold
+     * @return tidligere indhold
      */
     public String getTidligereIndhold() {
         return tidligereIndhold;
@@ -45,7 +45,7 @@ public class FadHistorik implements Serializable {
     /**
      * Sets tidligere indhold.
      *
-     * @param tidligereIndhold the tidligere indhold
+     * @param tidligereIndhold tidligere indhold
      */
     public void setTidligereIndhold(String tidligereIndhold) {
         this.tidligereIndhold = tidligereIndhold;
@@ -54,7 +54,7 @@ public class FadHistorik implements Serializable {
     /**
      * Gets land.
      *
-     * @return the land
+     * @return land
      */
     public String getLand() {
         return land;
@@ -63,7 +63,7 @@ public class FadHistorik implements Serializable {
     /**
      * Sets land.
      *
-     * @param land the land
+     * @param land land
      */
     public void setLand(String land) {
         this.land = land;
@@ -72,7 +72,7 @@ public class FadHistorik implements Serializable {
     /**
      * Get fra år local date.
      *
-     * @return the local date
+     * @return local date
      */
     public LocalDate getFraÅr() {
         return fraÅr;
@@ -81,7 +81,7 @@ public class FadHistorik implements Serializable {
     /**
      * Get til år local date.
      *
-     * @return the local date
+     * @return local date
      */
     public LocalDate getTilÅr() {
         return tilÅr;
@@ -90,7 +90,7 @@ public class FadHistorik implements Serializable {
     /**
      * Get leverandør string.
      *
-     * @return the string
+     * @return string
      */
     public String getLeverandør() {
         return leverandør;
@@ -99,7 +99,7 @@ public class FadHistorik implements Serializable {
     /**
      * Set leverandør.
      *
-     * @param leverandør the leverandør
+     * @param leverandør leverandør
      */
     public void setLeverandør(String leverandør) {
         this.leverandør = leverandør;
@@ -108,7 +108,7 @@ public class FadHistorik implements Serializable {
     /**
      * Gets tidligere destillater.
      *
-     * @return the tidligere destillater
+     * @return tidligere destillater
      */
     public List<Destillat> getTidligereDestillater() {
         return tidligereDestillater;
@@ -117,7 +117,7 @@ public class FadHistorik implements Serializable {
     /**
      * Add destillat.
      *
-     * @param destillat the destillat
+     * @param destillat destillat
      */
     public void addDestillat(Destillat destillat) {
         if (!tidligereDestillater.contains(destillat)) {

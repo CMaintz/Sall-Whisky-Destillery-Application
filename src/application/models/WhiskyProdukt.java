@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The type Whisky produkt.
+ * Type Whisky produkt.
  */
 public class WhiskyProdukt implements Serializable {
     private String navn;
@@ -21,7 +21,7 @@ public class WhiskyProdukt implements Serializable {
     /**
      * Instantiates a new Whisky produkt.
      *
-     * @param navn the navn
+     * @param navn navn
      */
     public WhiskyProdukt(String navn) {
         this.navn = navn;
@@ -32,12 +32,12 @@ public class WhiskyProdukt implements Serializable {
     }
 
     /**
-     * Create fad tapning fad tapning.
+     * Create fad tapning.
      *
-     * @param medarbejderNavn the medarbejder navn
-     * @param literTappet     the liter tappet
-     * @param fad             the fad
-     * @return the fad tapning
+     * @param medarbejderNavn medarbejder navn
+     * @param literTappet     liter tappet
+     * @param fad             fad
+     * @return fad tapning
      */
     public FadTapning createFadTapning(String medarbejderNavn, double literTappet, Fad fad) {
         FadTapning ft = new FadTapning(medarbejderNavn, literTappet, fad);
@@ -50,7 +50,7 @@ public class WhiskyProdukt implements Serializable {
     /**
      * Add fad tapning.
      *
-     * @param fadTapning the fad tapning
+     * @param fadTapning fad tapning
      */
     public void addFadTapning(FadTapning fadTapning) {
         if (!fadTapninger.contains(fadTapning)) {
@@ -63,7 +63,7 @@ public class WhiskyProdukt implements Serializable {
     /**
      * Sets antal liter.
      *
-     * @param liter the liter
+     * @param liter liter
      */
     public void setAntalLiter(int liter) {
         this.antalLiter = liter;
@@ -72,8 +72,8 @@ public class WhiskyProdukt implements Serializable {
     /**
      * Create whisky flaske whisky flaske.
      *
-     * @param produktHistorie the produkt historie
-     * @return the whisky flaske
+     * @param produktHistorie produkt historie
+     * @return whisky flaske
      */
     public WhiskyFlaske createWhiskyFlaske(String produktHistorie) {
         String hist = navn + "\n" + "Flaske #" + (fyldteFlasker.size() + 1) + " af " + ((int) antalLiter) + "\n" + "Flaskningsdato: " + LocalDate.now() + "\n" + produktHistorie;
@@ -85,7 +85,7 @@ public class WhiskyProdukt implements Serializable {
     /**
      * Gets fyldte flasker.
      *
-     * @return the fyldte flasker
+     * @return fyldte flasker
      */
     public List<WhiskyFlaske> getFyldteFlasker() {
         return new ArrayList<>(fyldteFlasker);
@@ -94,7 +94,7 @@ public class WhiskyProdukt implements Serializable {
     /**
      * Gets navn.
      *
-     * @return the navn
+     * @return navn
      */
     public String getNavn() {
         return navn;
@@ -103,7 +103,7 @@ public class WhiskyProdukt implements Serializable {
     /**
      * Gets alkoholprocent.
      *
-     * @return the alkoholprocent
+     * @return alkoholprocent
      */
     public double getAlkoholprocent() {
         return alkoholprocent;
@@ -120,7 +120,7 @@ public class WhiskyProdukt implements Serializable {
     /**
      * Tilføj vand.
      *
-     * @param literVand the liter vand
+     * @param literVand liter vand
      */
     public void tilføjVand(int literVand) {
         this.literVandTilføjet += literVand;
@@ -131,7 +131,7 @@ public class WhiskyProdukt implements Serializable {
     /**
      * Gets antal liter.
      *
-     * @return the antal liter
+     * @return antal liter
      */
     public double getAntalLiter() {
         return antalLiter;
@@ -140,7 +140,7 @@ public class WhiskyProdukt implements Serializable {
     /**
      * Whisky type string.
      *
-     * @return the string
+     * @return string
      */
     public String whiskyType() {
         if (fadTapninger.size() == 1 && fadTapninger.get(0).getDestillat().getModningsHistorik().size() == 1) {
@@ -152,7 +152,7 @@ public class WhiskyProdukt implements Serializable {
     /**
      * Get liter vand tilføjet double.
      *
-     * @return the double
+     * @return double
      */
     public double getLiterVandTilføjet() {
         return literVandTilføjet;
@@ -161,7 +161,7 @@ public class WhiskyProdukt implements Serializable {
     /**
      * Generer historie string.
      *
-     * @return the string
+     * @return string
      */
     public String genererHistorie() {
         DecimalFormat df = new DecimalFormat("#.00");
@@ -259,7 +259,7 @@ public class WhiskyProdukt implements Serializable {
     /**
      * Gets detaljer.
      *
-     * @return the detaljer
+     * @return detaljer
      */
     public String getDetaljer() {
         StringBuilder sb = new StringBuilder();

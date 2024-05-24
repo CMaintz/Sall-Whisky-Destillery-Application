@@ -14,9 +14,9 @@ public class WhiskyFlaske implements Serializable {
     /**
      * Instantiates a new Whisky flaske.
      *
-     * @param flaskeNr        the flaske nr
-     * @param whisky          the whisky
-     * @param produktHistorie the produkt historie
+     * @param flaskeNr        flaske nr
+     * @param whisky          whisky
+     * @param produktHistorie produkt historie
      */
     public WhiskyFlaske(int flaskeNr, WhiskyProdukt whisky, String produktHistorie) {
         this.flaskeNr = flaskeNr;
@@ -27,7 +27,7 @@ public class WhiskyFlaske implements Serializable {
     /**
      * Gets produkt historie.
      *
-     * @return the produkt historie
+     * @return produkt historie
      */
     public String getProduktHistorie() {
         return produktHistorie;
@@ -36,7 +36,7 @@ public class WhiskyFlaske implements Serializable {
     /**
      * Gets whisky.
      *
-     * @return the whisky
+     * @return whisky
      */
     public WhiskyProdukt getWhisky() {
         return whisky;

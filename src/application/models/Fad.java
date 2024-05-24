@@ -105,7 +105,7 @@ public class Fad implements Serializable {
     /**
      * Add destillat.
      *
-     * @param destillat the destillat
+     * @param destillat destillat
      */
     public void addDestillat(Destillat destillat) {
         if (destillat != null) {
@@ -118,7 +118,7 @@ public class Fad implements Serializable {
     /**
      * Gets type.
      *
-     * @return the type
+     * @return type
      */
     public String getType() {
         return fadHistorik.getTidligereIndhold();
@@ -127,7 +127,7 @@ public class Fad implements Serializable {
     /**
      * Gets alder.
      *
-     * @return the alder
+     * @return alder
      */
     public Period getAlder() {
         return this.fadHistorik.getFraÅr().until(LocalDate.now());
@@ -136,7 +136,7 @@ public class Fad implements Serializable {
     /**
      * Gets fad historik.
      *
-     * @return the fad historik
+     * @return fad historik
      */
     public FadHistorik getFadHistorik() {
         return fadHistorik;

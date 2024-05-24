@@ -4,7 +4,7 @@ package application.models;
 import java.io.Serializable;
 
 /**
- * The type Hylde.
+ * Type Hylde.
  */
 public class Hylde implements Serializable {
     private Fad fad;
@@ -33,7 +33,7 @@ public class Hylde implements Serializable {
     /**
      * Fjern fad boolean.
      *
-     * @return the boolean
+     * @return boolean
      */
     public void fjernFad() {
         this.fad = null;
@@ -42,7 +42,7 @@ public class Hylde implements Serializable {
     /**
      * Gets fad.
      *
-     * @return the fad
+     * @return fad
      */
     public Fad getFad() {
         return fad;

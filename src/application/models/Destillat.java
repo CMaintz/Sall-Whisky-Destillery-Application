@@ -26,7 +26,7 @@ public class Destillat implements Serializable {
     }
 
     /**
-     * Create påfyldning påfyldning.
+     * Create destilat påfyldning.
      *
      * @param medarbejderNavn the medarbejder navn
      * @param literPåfyldt    the liter påfyldt
@@ -48,7 +48,7 @@ public class Destillat implements Serializable {
     /**
      * Sets start dato.
      *
-     * @param startDato the start dato
+     * @param startDato the start date
      */
     public void setStartDato(LocalDate startDato) {
         modningsHistorik.get(0).setPåfyldningsDato(startDato);

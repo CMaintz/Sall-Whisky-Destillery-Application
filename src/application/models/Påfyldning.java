@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 
 /**
- * The type Påfyldning.
+ * Type Påfyldning.
  */
 public class Påfyldning implements Serializable {
     private String medarbejderNavn;
@@ -16,9 +16,9 @@ public class Påfyldning implements Serializable {
      * Instantiates a new Påfyldning.
      * pre: literPåfyldt <= currentAntalLiter i valgte destillering
      *
-     * @param medarbejderNavn the medarbejder navn
-     * @param literPåfyldt    the liter påfyldt
-     * @param destillering    the destillering
+     * @param medarbejderNavn medarbejder navn
+     * @param literPåfyldt    liter påfyldt
+     * @param destillering    destillering
      */
     Påfyldning(String medarbejderNavn, double literPåfyldt, Destillering destillering) {
         this.medarbejderNavn = medarbejderNavn;
@@ -33,7 +33,7 @@ public class Påfyldning implements Serializable {
     /**
      * Gets medarbejder navn.
      *
-     * @return the medarbejder navn
+     * @return medarbejder navn
      */
     public String getMedarbejderNavn() {
         return medarbejderNavn;
@@ -42,7 +42,7 @@ public class Påfyldning implements Serializable {
     /**
      * Get liter påfyldt double.
      *
-     * @return the double
+     * @return double
      */
     public double getLiterPåfyldt() {
         return literPåfyldt;
@@ -51,7 +51,7 @@ public class Påfyldning implements Serializable {
     /**
      * Gets destillering.
      *
-     * @return the destillering
+     * @return destillering
      */
     public Destillering getDestillering() {
         return destillering;
@@ -60,7 +60,7 @@ public class Påfyldning implements Serializable {
     /**
      * Gets detaljer.
      *
-     * @return the detaljer
+     * @return detaljer
      */
     public String getDetaljer() {
         return literPåfyldt + "L, " + "påfyldt af: " + medarbejderNavn + "\ndestillering: " + destillering.getDetaljer();

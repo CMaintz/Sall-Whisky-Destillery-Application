@@ -14,8 +14,8 @@ public class ModningsHistorik implements Serializable {
     /**
      * Instantiates a new Modnings historik.
      *
-     * @param fad             the fad
-     * @param påfyldningsDato the start dato
+     * @param fad             fad
+     * @param påfyldningsDato start dato
      */
     ModningsHistorik(Fad fad, LocalDate påfyldningsDato) {
         this.fad = fad;
@@ -26,7 +26,7 @@ public class ModningsHistorik implements Serializable {
     /**
      * Sets start dato.
      *
-     * @param påfyldningsDato the start dato
+     * @param påfyldningsDato start dato
      */
     public void setPåfyldningsDato(LocalDate påfyldningsDato) {
         this.påfyldningsDato = påfyldningsDato;
@@ -35,7 +35,7 @@ public class ModningsHistorik implements Serializable {
     /**
      * Gets fad.
      *
-     * @return the fad
+     * @return fad
      */
     public Fad getFad() {
         return fad;
@@ -44,7 +44,7 @@ public class ModningsHistorik implements Serializable {
     /**
      * Sets slut dato.
      *
-     * @param slutDato the slut dato
+     * @param slutDato slut dato
      */
     public void setSlutDato(LocalDate slutDato) {
         this.slutDato = slutDato;
@@ -53,7 +53,7 @@ public class ModningsHistorik implements Serializable {
     /**
      * Gets start dato.
      *
-     * @return the start dato
+     * @return start dato
      */
     public LocalDate getPåfyldningsDato() {
         return påfyldningsDato;
@@ -62,7 +62,7 @@ public class ModningsHistorik implements Serializable {
     /**
      * Gets slut dato.
      *
-     * @return the slut dato
+     * @return slut dato
      */
     public LocalDate getSlutDato() {
         if (slutDato == null) {

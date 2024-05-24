@@ -24,13 +24,13 @@ public class Destillering implements Serializable {
     /**
      * Instantiates a new Destillering.
      *
-     * @param maltBatch       the malt batch
-     * @param korn            the korn
-     * @param medarbejderNavn the medarbejder
-     * @param antalLiter      the antal liter
-     * @param alkoholProcent  the alkohol procent
-     * @param rygemateriale   the ryge materiale
-     * @param kommentar       the kommentar
+     * @param maltBatch       malt batch
+     * @param korn            korn
+     * @param medarbejderNavn medarbejder
+     * @param antalLiter      antal liter
+     * @param alkoholProcent  alkohol procent
+     * @param rygemateriale   ryge materiale
+     * @param kommentar       kommentar
      */
     public Destillering(String maltBatch, Korn korn, String medarbejderNavn, double antalLiter, double alkoholProcent, String rygemateriale, String kommentar) {
         antalDestilleringer++;
@@ -48,7 +48,7 @@ public class Destillering implements Serializable {
     /**
      * Gets antal destilleringer.
      *
-     * @return the antal destilleringer
+     * @return antal destilleringer
      */
     public static int getAntalDestilleringer() {
         return antalDestilleringer;
@@ -57,7 +57,7 @@ public class Destillering implements Serializable {
     /**
      * Sets antal destilleringer.
      *
-     * @param antalDestilleringer the antal destilleringer
+     * @param antalDestilleringer antal destilleringer
      */
     public static void setAntalDestilleringer(int antalDestilleringer) {
         Destillering.antalDestilleringer = antalDestilleringer;
@@ -66,7 +66,7 @@ public class Destillering implements Serializable {
     /**
      * Gets malt batch.
      *
-     * @return the malt batch
+     * @return malt batch
      */
     public String getMaltBatch() {
         return maltBatch;
@@ -75,7 +75,7 @@ public class Destillering implements Serializable {
     /**
      * Gets korn sort.
      *
-     * @return the korn sort
+     * @return korn sort
      */
     public Korn getKornSort() {
         return korn;
@@ -84,7 +84,7 @@ public class Destillering implements Serializable {
     /**
      * Gets medarbejder.
      *
-     * @return the medarbejder
+     * @return medarbejder
      */
     public String getMedarbejderNavn() {
         return medarbejderNavn;
@@ -93,7 +93,7 @@ public class Destillering implements Serializable {
     /**
      * Gets antal liter.
      *
-     * @return the antal liter
+     * @return antal liter
      */
     public double getAntalLiter() {
         return antalLiter;
@@ -102,7 +102,7 @@ public class Destillering implements Serializable {
     /**
      * Gets alkohol procent.
      *
-     * @return the alkohol procent
+     * @return alkohol procent
      */
     public double getAlkoholProcent() {
         return alkoholProcent;
@@ -111,7 +111,7 @@ public class Destillering implements Serializable {
     /**
      * Gets ryge materiale.
      *
-     * @return the ryge materiale
+     * @return ryge materiale
      */
     public String getRygemateriale() {
         return rygemateriale;
@@ -120,7 +120,7 @@ public class Destillering implements Serializable {
     /**
      * Gets kommentar.
      *
-     * @return the kommentar
+     * @return kommentar
      */
     public String getKommentar() {
         return kommentar;
@@ -129,7 +129,7 @@ public class Destillering implements Serializable {
     /**
      * Sets kommentar.
      *
-     * @param kommentar the kommentar
+     * @param kommentar kommentar
      */
     public void setKommentar(String kommentar) {
         this.kommentar = kommentar;
@@ -138,7 +138,7 @@ public class Destillering implements Serializable {
     /**
      * Fjern antal liter.
      *
-     * @param antalLiterTappet the antal liter tappet
+     * @param antalLiterTappet antal liter tappet
      */
     public void fjernAntalLiter(double antalLiterTappet) {
         this.antalLiter -= antalLiterTappet;
@@ -147,7 +147,7 @@ public class Destillering implements Serializable {
     /**
      * Sets slut dato.
      *
-     * @param slutTidspunkt the slut dato
+     * @param slutTidspunkt slut dato
      */
     public void setSlutTidspunkt(LocalDateTime slutTidspunkt) {
         this.slutTidspunkt = slutTidspunkt;
@@ -156,7 +156,7 @@ public class Destillering implements Serializable {
     /**
      * Sets start dato.
      *
-     * @param startTidspunkt the start dato
+     * @param startTidspunkt start dato
      */
     public void setStartTidspunkt(LocalDateTime startTidspunkt) {
         this.startTidspunkt = startTidspunkt;
@@ -165,7 +165,7 @@ public class Destillering implements Serializable {
     /**
      * Gets slut dato.
      *
-     * @return the slut dato
+     * @return slut dato
      */
     public LocalDateTime getSlutTidspunkt() {
         return slutTidspunkt;
@@ -174,7 +174,7 @@ public class Destillering implements Serializable {
     /**
      * Gets destillerings tid.
      *
-     * @return the destillerings tid
+     * @return destillerings tid
      */
     public long getDestilleringsTid() {
         return startTidspunkt.until(slutTidspunkt, ChronoUnit.HOURS) + 1;
@@ -183,7 +183,7 @@ public class Destillering implements Serializable {
     /**
      * Gets detaljer.
      *
-     * @return the detaljer
+     * @return detaljer
      */
     public String getDetaljer() {
         String toReturn = "New spiritbatch nr: " + newSpiritbatchNr + "\nMaltbatch: " + maltBatch + "\nKorn: " + korn + "\nmedarbejder: " + medarbejderNavn + "\n" + antalLiter + "L, " + alkoholProcent + "% Vol.";

@@ -29,8 +29,8 @@ public class Lager implements Serializable {
     /**
      * Create reol reol.
      *
-     * @param antalHylder the antal hylder
-     * @return the reol
+     * @param antalHylder antal hylder
+     * @return reol
      */
     public Reol createReol(int antalHylder) {
         Reol toReturn = new Reol(antalHylder, reoler.size() + 1);
@@ -41,7 +41,7 @@ public class Lager implements Serializable {
     /**
      * Gets reoler.
      *
-     * @return the reoler
+     * @return reoler
      */
     public ArrayList<Reol> getReoler() {
         return new ArrayList<>(reoler);
@@ -83,7 +83,7 @@ public class Lager implements Serializable {
     /**
      * Gets fade klar.
      *
-     * @return the fade klar
+     * @return fade klar
      */
     public List<Fad> getFadeKlar() {
         List<Fad> result = new ArrayList<>();

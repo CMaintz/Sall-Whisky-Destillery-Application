@@ -13,9 +13,9 @@ public class Korn implements Serializable {
     /**
      * Instantiates a new Korn.
      *
-     * @param sort     the sort
-     * @param variant  the variant
-     * @param markNavn the mark navn
+     * @param sort     sort
+     * @param variant  variant
+     * @param markNavn mark navn
      */
     public Korn(String sort, String variant, String markNavn) {
         this.sort = sort;
@@ -26,7 +26,7 @@ public class Korn implements Serializable {
     /**
      * Gets sort.
      *
-     * @return the sort
+     * @return sort
      */
     public String getSort() {
         return sort;
@@ -35,7 +35,7 @@ public class Korn implements Serializable {
     /**
      * Gets variant.
      *
-     * @return the variant
+     * @return variant
      */
     public String getVariant() {
         return variant;
@@ -44,7 +44,7 @@ public class Korn implements Serializable {
     /**
      * Gets mark navne.
      *
-     * @return the mark navne
+     * @return mark navne
      */
     public String getMarkNavne() {
         return markNavn;

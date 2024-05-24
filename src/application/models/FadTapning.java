@@ -14,9 +14,9 @@ public class FadTapning implements Serializable {
     /**
      * Instantiates a new Fad tapning.
      *
-     * @param medarbejderNavn the medarbejder navn
-     * @param literTappet     the liter tappet
-     * @param fad             the fad
+     * @param medarbejderNavn medarbejder navn
+     * @param literTappet     liter tappet
+     * @param fad             fad
      */
     FadTapning(String medarbejderNavn, double literTappet, Fad fad) {
         this.medarbejderNavn = medarbejderNavn;
@@ -35,7 +35,7 @@ public class FadTapning implements Serializable {
     /**
      * Gets destillat.
      *
-     * @return the destillat
+     * @return destillat
      */
     public Destillat getDestillat() {
         return destillat;
@@ -44,7 +44,7 @@ public class FadTapning implements Serializable {
     /**
      * Gets liter tappet.
      *
-     * @return the liter tappet
+     * @return liter tappet
      */
     public double getLiterTappet() {
         return literTappet;

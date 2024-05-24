@@ -46,7 +46,7 @@ public class Reol implements Serializable {
     /**
      * Get hylder hylde [ ].
      *
-     * @return the hylde [ ]
+     * @return hylde [ ]
      */
     public Hylde[] getHylder() {
         return hylder;
@@ -55,7 +55,7 @@ public class Reol implements Serializable {
     /**
      * Get alle fade hylde [ ].
      *
-     * @return the hylde [ ]
+     * @return hylde [ ]
      */
     public Hylde[] getAlleFade() {
         Hylde[] result = new Hylde[hylder.length];
@@ -70,8 +70,8 @@ public class Reol implements Serializable {
     /**
      * Add fad.
      *
-     * @param fad   the fad
-     * @param plads the plads
+     * @param fad   fad
+     * @param plads plads
      */
     public void addFad(Fad fad, int plads) {
         if (hylder[plads - 1].getFad() == null) {
