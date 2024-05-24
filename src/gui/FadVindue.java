@@ -116,7 +116,7 @@ public class FadVindue extends GridPane {
         if (selectedFad == null) {
             lblError.setText("Vælg tomt fad");
         } else {
-            påfyldFad = new PåfyldFad("Opret Fad", new Stage(), selectedFad);
+            påfyldFad = new PåfyldFad("Påfyld Fad", new Stage(), selectedFad);
             påfyldFad.showAndWait();
             updateListViews();
         }
