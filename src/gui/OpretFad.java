@@ -24,7 +24,7 @@ public class OpretFad extends Stage {
         //Labels og textfields
         Label lblLiterKapacitet = new Label("Liter kapacitet");
         pane.add(lblLiterKapacitet, 0, 2);
-        Label lblFraÅr = new Label("Fra år");
+        Label lblFraÅr = new Label("Fra dato");
         pane.add(lblFraÅr, 0, 4);
         Label lblTidligereIndhold = new Label("Tidligere indhold");
         pane.add(lblTidligereIndhold, 0, 6);

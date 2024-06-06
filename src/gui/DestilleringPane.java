@@ -17,7 +17,6 @@ public class DestilleringPane extends GridPane {
     public DestilleringPane() {
         GridPane pane = new GridPane();
         this.add(pane, 0, 0);
-        pane.setGridLinesVisible(false);
         pane.setPadding(new Insets(10));
         pane.setHgap(10);
         pane.setVgap(10);

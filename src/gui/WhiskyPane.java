@@ -25,7 +25,7 @@ public class WhiskyPane extends GridPane {
         GridPane pane = new GridPane();
         this.add(pane, 0, 0);
         pane.setPadding(new Insets(5));
-        pane.setHgap(20);
+        pane.setHgap(15);
         pane.setVgap(10);
 
         Label lblWhisky = new Label("Whisky");
@@ -33,7 +33,7 @@ public class WhiskyPane extends GridPane {
 
         lvwWhiskyProdukter = new ListView<>();
         pane.add(lvwWhiskyProdukter, 0, 1);
-        lvwWhiskyProdukter.setPrefWidth(PREF_WIDTH + 10);
+        lvwWhiskyProdukter.setPrefWidth(PREF_WIDTH + 12);
         lvwWhiskyProdukter.setPrefHeight(PREF_HEIGHT);
         lvwWhiskyProdukter.getItems().setAll(Controller.getWhiskyProdukter());
 
@@ -54,7 +54,7 @@ public class WhiskyPane extends GridPane {
         pane.add(lblFlasker, 2, 0);
 
         lvwFlasker = new ListView<>();
-        lvwFlasker.setPrefWidth(PREF_WIDTH - 10);
+        lvwFlasker.setPrefWidth(PREF_WIDTH + 15);
         lvwFlasker.setPrefHeight(PREF_HEIGHT);
         pane.add(lvwFlasker, 2, 1);
         lvwFlasker.getItems().setAll(lvwWhiskyProdukter.getItems().get(0).getFyldteFlasker());

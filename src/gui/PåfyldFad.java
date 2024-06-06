@@ -32,7 +32,7 @@ public class PåfyldFad extends Stage {
         this.initStyle(StageStyle.UTILITY);
         this.initModality(Modality.APPLICATION_MODAL);
         this.setMinHeight(200);
-        this.setMinWidth(400);
+        this.setMinWidth(500);
         this.setResizable(false);
 
         this.setTitle(title);
@@ -47,6 +47,7 @@ public class PåfyldFad extends Stage {
         pane.setPadding(new Insets(20));
         pane.setHgap(10);
         pane.setVgap(10);
+        pane.setPrefWidth(500);
 
         Label lblDestilleringer = new Label("Destilleringer");
         pane.add(lblDestilleringer, 0, 0);

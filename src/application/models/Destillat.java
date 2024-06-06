@@ -196,7 +196,8 @@ public class Destillat implements Serializable {
         sb.append("Modningshistorik: \n");
         for (ModningsHistorik modningsHistorik : modningsHistorik) {
             sb.append("Modnet i " + modningsHistorik.getPåfyldningsDato().until(modningsHistorik.getSlutDato().plusDays(1)).getMonths() + " måneder i fad:\n");
-            sb.append(modningsHistorik.getFad().toString() + " \n" + modningsHistorik.getFad().getAlder() + "år gammelt");
+            sb.append(modningsHistorik.getFad().toString() + " \n" + modningsHistorik.getFad().getAlder() + " år gammelt");
+            sb.append("Leverandør: " + modningsHistorik.getFad().getFadHistorik().getLeverandør());
         }
         return sb.toString();
     }

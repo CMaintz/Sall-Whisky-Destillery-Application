@@ -2,7 +2,6 @@ package application.models;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
 
 /**
@@ -129,8 +128,8 @@ public class Fad implements Serializable {
      *
      * @return alder
      */
-    public Period getAlder() {
-        return this.fadHistorik.getFraÅr().until(LocalDate.now());
+    public int getAlder() {
+        return this.fadHistorik.getFraÅr().until(LocalDate.now()).getYears();
     }
 
     /**

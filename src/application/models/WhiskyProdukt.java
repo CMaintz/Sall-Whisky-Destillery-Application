@@ -274,6 +274,6 @@ public class WhiskyProdukt implements Serializable {
     @Override
     public String toString() {
         DecimalFormat numberFormatter = new DecimalFormat("#.00");
-        return navn + " " + numberFormatter.format(alkoholprocent) + " % Vol.";
+        return navn + " " + numberFormatter.format(alkoholprocent) + "% Vol.";
     }
 }

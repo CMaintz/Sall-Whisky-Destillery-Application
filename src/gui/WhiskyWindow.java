@@ -102,7 +102,7 @@ public class WhiskyWindow extends Stage {
         lvwPane1.setPadding(new Insets(10));
         lvwPane1.setHgap(20);
         lvwPane1.setVgap(10);
-        lvwPane1.setPrefWidth(240);
+        lvwPane1.setPrefWidth(220);
         pane.add(lvwPane1, 1, 0);
 
         Label lblValgte = new Label("Valgte destillater");
@@ -122,7 +122,7 @@ public class WhiskyWindow extends Stage {
         lvwPane2.setPadding(new Insets(10));
         lvwPane2.setHgap(20);
         lvwPane2.setVgap(10);
-        lvwPane2.setPrefWidth(240);
+        lvwPane2.setPrefWidth(220);
         pane.add(lvwPane2, 2, 0);
 
         Label lblFærdigeDestillater = new Label("Fade klar til tapning");
@@ -146,7 +146,7 @@ public class WhiskyWindow extends Stage {
         infoPane.setPadding(new Insets(10));
         infoPane.setHgap(20);
         infoPane.setVgap(10);
-        infoPane.setPrefWidth(300);
+        infoPane.setPrefWidth(320);
         pane.add(infoPane, 3, 0);
 
         Label lblDestillatInfo = new Label("Destillat info");
@@ -155,20 +155,23 @@ public class WhiskyWindow extends Stage {
         txaDestillatInfo = new TextArea();
         infoPane.add(txaDestillatInfo, 0, 1);
         txaDestillatInfo.setEditable(false);
-        txaDestillatInfo.setPrefWidth(300);
+        txaDestillatInfo.setPrefWidth(320);
         txaDestillatInfo.setPrefHeight(240);
 
+        HBox hBox = new HBox();
+        pane.add(hBox, 3, 1);
+
         Button btnCancel = new Button("Fortryd");
-        pane.add(btnCancel, 3, 1);
-        GridPane.setHalignment(btnCancel, HPos.RIGHT);
         btnCancel.setCancelButton(true);
         btnCancel.setOnAction(event -> this.cancelAction());
 
         btnOpret = new Button("Opret");
-        pane.add(btnOpret, 3, 1);
-        GridPane.setHalignment(btnOpret, HPos.LEFT);
         btnOpret.setOnAction(event -> this.opretAction());
 
+        hBox.getChildren().add(btnOpret);
+        hBox.getChildren().add(btnCancel);
+        hBox.setSpacing(50);
+        hBox.setAlignment(Pos.CENTER);
     }
 
     private void tilføjVand() {
