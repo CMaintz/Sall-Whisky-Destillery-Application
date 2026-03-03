@@ -1,0 +1,158 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h4 class="mb-0">Whisky produkter</h4>
+  <button class="btn btn-primary btn-sm" (click)="opretWhiskyModal.open()">+ Opret whisky</button>
+</div>
+
+@if (loading()) {
+  <div class="text-center py-4">Indlæser...</div>
+} @else {
+  <div class="row g-3">
+
+    <!-- Product list column -->
+    <div [class]="valgtProdukt() ? 'col-md-4' : 'col-12'">
+      <div class="row g-3">
+        @for (wp of produkter(); track wp.id) {
+          <div [class]="valgtProdukt() ? 'col-12' : 'col-md-6'">
+            <div class="card h-100" [class.border-primary]="valgtProdukt()?.id === wp.id"
+                 style="cursor: pointer;" (click)="vaelgProdukt(wp)">
+              <div class="card-header d-flex justify-content-between align-items-start">
+                <div>
+                  <strong>{{ wp.navn }}</strong>
+                  <div><span class="badge bg-dark mt-1">{{ wp.whiskyType }}</span></div>
+                </div>
+                <div class="d-flex gap-1" (click)="$event.stopPropagation()">
+                  <button class="btn btn-sm btn-outline-secondary" title="Tilføj vand"
+                          (click)="tilfoejVandModal.open(wp)"
+                          [disabled]="wp.antalLiter === 0">
+                    💧
+                  </button>
+                  <button class="btn btn-sm btn-outline-primary"
+                          title="Opret flasker"
+                          (click)="opretFlasker(wp)"
+                          [disabled]="wp.antalLiter === 0 || flaskningBusy() === wp.id">
+                    @if (flaskningBusy() === wp.id) { ⏳ } @else { 🍾 }
+                  </button>
+                  <button class="btn btn-sm btn-outline-secondary" title="Eksporter produktetiket"
+                          (click)="exportLabel(wp)">
+                    📄
+                  </button>
+                </div>
+              </div>
+              <div class="card-body py-2">
+                <dl class="row mb-0 small">
+                  <dt class="col-6">ABV</dt>
+                  <dd class="col-6">{{ wp.alkoholProcent | number:'1.1-1' }}%</dd>
+                  <dt class="col-6">Liter tilbage</dt>
+                  <dd class="col-6">{{ wp.antalLiter | number:'1.1-1' }}L</dd>
+                  <dt class="col-6">Vand tilsat</dt>
+                  <dd class="col-6">{{ wp.literVandTilfojet | number:'1.1-1' }}L</dd>
+                  <dt class="col-6">Flasker</dt>
+                  <dd class="col-6">{{ wp.antalFlasker }}</dd>
+                </dl>
+                @if (wp.fadTapninger.length > 0) {
+                  <hr class="my-2">
+                  <small class="text-muted">Tappet fra: </small>
+                  <small>{{ fadNumre(wp) }}</small>
+                }
+              </div>
+            </div>
+          </div>
+        } @empty {
+          <div class="col-12 text-center text-muted py-4">Ingen whisky produkter endnu</div>
+        }
+      </div>
+    </div>
+
+    <!-- Detail panel — shown when a product is selected -->
+    @if (valgtProdukt(); as wp) {
+      <div class="col-md-8">
+        <div class="row g-3">
+
+          <!-- Bottle list -->
+          <div class="col-md-5">
+            <div class="card h-100">
+              <div class="card-header">
+                <span class="fw-semibold">{{ wp.navn }} — flasker</span>
+              </div>
+              <div class="list-group list-group-flush" style="overflow-y: auto; max-height: 60vh;">
+                @for (f of wp.flasker; track f.id) {
+                  <button type="button"
+                          class="list-group-item list-group-item-action"
+                          [class.active]="valgtFlaske()?.id === f.id"
+                          (click)="vaelgFlaske(f)">
+                    <div class="d-flex justify-content-between">
+                      <span>Flaske #{{ f.flaskeNummer }}</span>
+                      <small class="text-muted">{{ f.flaskningsDato | date:'dd/MM/yy' }}</small>
+                    </div>
+                  </button>
+                } @empty {
+                  <div class="list-group-item text-muted text-center py-3">
+                    <small>Ingen flasker — klik 🍾 for at fylde</small>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+
+          <!-- Label / history display -->
+          <div class="col-md-7">
+            <div class="card h-100">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="fw-semibold">
+                  @if (valgtFlaske()) { Etiket — flaske #{{ valgtFlaske()!.flaskeNummer }} }
+                  @else { Produktdetaljer }
+                </span>
+                @if (valgtFlaske()) {
+                  <button class="btn btn-sm btn-outline-light"
+                          (click)="exportFlaskeLabel(valgtFlaske()!, wp.navn)">
+                    📄 Gem
+                  </button>
+                }
+              </div>
+              <div class="card-body">
+                @if (valgtFlaske(); as f) {
+                  <pre class="small mb-0" style="white-space: pre-wrap; font-family: Georgia, serif;">{{ f.produktHistorie }}</pre>
+                } @else {
+                  <dl class="row mb-2">
+                    <dt class="col-5">Type</dt>
+                    <dd class="col-7">{{ wp.whiskyType }}</dd>
+
+                    <dt class="col-5">ABV</dt>
+                    <dd class="col-7">{{ wp.alkoholProcent | number:'1.1-1' }}%</dd>
+
+                    <dt class="col-5">Liter tilbage</dt>
+                    <dd class="col-7">{{ wp.antalLiter | number:'1.1-1' }}L</dd>
+
+                    <dt class="col-5">Vand tilsat</dt>
+                    <dd class="col-7">{{ wp.literVandTilfojet | number:'1.1-1' }}L</dd>
+
+                    <dt class="col-5">Flasker</dt>
+                    <dd class="col-7">{{ wp.antalFlasker }}</dd>
+                  </dl>
+                  @if (wp.fadTapninger.length > 0) {
+                    <hr>
+                    <small class="text-muted fw-semibold">Tappet fra fade:</small>
+                    <ul class="list-unstyled mt-1 mb-0">
+                      @for (ft of wp.fadTapninger; track ft.fadId) {
+                        <li class="small">
+                          <strong>{{ ft.fadNummer }}</strong> ({{ ft.tidligereIndhold }}) —
+                          {{ ft.literTappet | number:'1.1-1' }}L,
+                          {{ ft.tapningsDato | date:'dd/MM/yyyy' }}
+                        </li>
+                      }
+                    </ul>
+                  }
+                }
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    }
+
+  </div>
+}
+
+<app-opret-whisky-modal #opretWhiskyModal (oprettet)="onWhiskyOprettet($event)" />
+<app-tilfoej-vand-modal #tilfoejVandModal (tilfoejt)="onVandTilfoejt($event)" />

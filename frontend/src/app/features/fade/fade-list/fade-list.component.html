@@ -1,0 +1,116 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">Fade</h5>
+    <div class="d-flex gap-2 align-items-center">
+      @if (omhaeldKilde) {
+        <span class="badge bg-warning text-dark">
+          Omhæld fra: {{ omhaeldKilde.fadNummer }} — vælg tomt fad
+        </span>
+        <button class="btn btn-sm btn-outline-secondary" (click)="omhaeldKilde = null; setFilter('alle')">Annuller</button>
+      }
+      <div class="btn-group btn-group-sm">
+        <button class="btn" [class.btn-dark]="filter() === 'alle'" [class.btn-outline-dark]="filter() !== 'alle'"
+                (click)="setFilter('alle')">Alle</button>
+        <button class="btn" [class.btn-dark]="filter() === 'tomme'" [class.btn-outline-dark]="filter() !== 'tomme'"
+                (click)="setFilter('tomme')">Tomme</button>
+        <button class="btn" [class.btn-dark]="filter() === 'fyldte'" [class.btn-outline-dark]="filter() !== 'fyldte'"
+                (click)="setFilter('fyldte')">Fyldte</button>
+        <button class="btn" [class.btn-dark]="filter() === 'klar'" [class.btn-outline-dark]="filter() !== 'klar'"
+                (click)="setFilter('klar')">Klar</button>
+      </div>
+      <button class="btn btn-sm btn-primary" (click)="opretFadModal.open()">+ Opret fad</button>
+    </div>
+  </div>
+  <div class="card-body p-0">
+    @if (loading()) {
+      <div class="text-center py-4">Indlæser...</div>
+    } @else {
+      <table class="table table-hover mb-0">
+        <thead>
+          <tr>
+            <th>Fad nr.</th>
+            <th>Kapacitet</th>
+            <th>Tidl. indhold</th>
+            <th>Land</th>
+            <th>Alder</th>
+            <th>Destillat</th>
+            <th>ABV</th>
+            <th>Placering</th>
+            <th>Status</th>
+            <th>Handlinger</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (fad of fade(); track fad.id) {
+            <tr [class.table-warning]="omhaeldKilde?.id === fad.id">
+              <td><strong>{{ fad.fadNummer }}</strong></td>
+              <td>{{ fad.literKapacitet }}L</td>
+              <td>{{ fad.tidligereIndhold }}</td>
+              <td>{{ fad.land }}</td>
+              <td>{{ fad.alderAar }}år</td>
+              <td>
+                @if (fad.destillat) {
+                  {{ fad.destillat.antalLiter }}L ({{ fad.destillat.startDato | date:'yyyy' }})
+                } @else {
+                  <span class="text-muted">Tom</span>
+                }
+              </td>
+              <td>
+                @if (fad.destillat) {
+                  {{ fad.destillat.alkoholProcent | number:'1.1-1' }}%
+                }
+              </td>
+              <td>
+                @if (fad.hylde) {
+                  <small>{{ fad.hylde.lagerNavn }}, R{{ fad.hylde.reolNummer }}, H{{ fad.hylde.position }}</small>
+                } @else {
+                  <span class="text-muted">—</span>
+                }
+              </td>
+              <td>
+                @if (fad.erKlar) {
+                  <span class="badge badge-klar">Klar</span>
+                } @else if (fad.destillat) {
+                  <span class="badge badge-ikke-klar">Modner</span>
+                } @else {
+                  <span class="badge bg-secondary">Tom</span>
+                }
+              </td>
+              <td>
+                <div class="btn-group btn-group-sm">
+                  <button class="btn btn-outline-secondary" title="Vis historik"
+                          (click)="historikModal.open(fad)">📋</button>
+                  @if (!fad.destillat) {
+                    <button class="btn btn-outline-primary" title="Påfyld fad"
+                            (click)="paafyldModal.open(fad)">🪣</button>
+                    @if (!omhaeldKilde) {
+                      <button class="btn btn-outline-danger" title="Slet fad"
+                              (click)="sletFad(fad)">🗑</button>
+                    } @else {
+                      <button class="btn btn-outline-success" title="Omhæld til dette fad"
+                              (click)="omhaeldTil(fad)">↩ Omhæld hit</button>
+                    }
+                  } @else {
+                    <button class="btn btn-outline-secondary" title="Flyt fad"
+                            (click)="flytModal.open(fad)">📦</button>
+                    @if (fad.destillat && !omhaeldKilde) {
+                      <button class="btn btn-outline-warning" title="Omhæld destillat til andet fad"
+                              (click)="startOmhaeld(fad)">↪ Omhæld</button>
+                    }
+                  }
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr><td colspan="10" class="text-center text-muted py-3">Ingen fade fundet</td></tr>
+          }
+        </tbody>
+      </table>
+    }
+  </div>
+</div>
+
+<app-opret-fad-modal #opretFadModal (oprettet)="onFadOprettet($event)" />
+<app-paafyld-fad-modal #paafyldModal (paafyldt)="onFadPaafyldt($event)" />
+<app-flyt-fad-modal #flytModal (flyttet)="onFadFlyttet($event)" />
+<app-vis-historik-modal #historikModal />

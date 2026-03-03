@@ -1,0 +1,114 @@
+<div class="row g-3">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Destilleringer</h5>
+        <div class="d-flex gap-2">
+          <button class="btn btn-sm btn-outline-secondary" (click)="opretKornModal.open()">+ Korntype</button>
+          <button class="btn btn-sm btn-primary" (click)="opretDestilleringModal.open()">+ Destillering</button>
+        </div>
+      </div>
+      <div class="card-body p-0">
+        @if (loading()) {
+          <div class="text-center py-4">Indlæser...</div>
+        } @else {
+          <table class="table table-hover mb-0" style="cursor: pointer;">
+            <thead>
+              <tr>
+                <th>Batch nr.</th>
+                <th>Maltbatch</th>
+                <th>Korn</th>
+                <th>Mark</th>
+                <th>Medarbejder</th>
+                <th>Liter</th>
+                <th>ABV</th>
+                <th>Røgm.</th>
+                <th>Tid</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (d of destilleringer(); track d.id) {
+                <tr (click)="vaelg(d)"
+                    [class.table-active]="valgtDestillering()?.id === d.id">
+                  <td><strong>#{{ d.batchNummer }}</strong></td>
+                  <td>{{ d.maltBatch }}</td>
+                  <td>{{ d.korn.variant }} {{ d.korn.sort }}</td>
+                  <td>{{ d.korn.markNavne }}</td>
+                  <td>{{ d.medarbejder }}</td>
+                  <td>{{ d.antalLiter }}L</td>
+                  <td>{{ d.alkoholProcent }}%</td>
+                  <td>{{ d.rygemateriale || '—' }}</td>
+                  <td>{{ destilleringstid(d) }}</td>
+                </tr>
+              } @empty {
+                <tr><td colspan="9" class="text-center text-muted py-3">Ingen destilleringer fundet</td></tr>
+              }
+            </tbody>
+          </table>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    @if (valgtDestillering(); as d) {
+      <div class="card">
+        <div class="card-header">
+          <h6 class="mb-0">Batch #{{ d.batchNummer }} — detaljer</h6>
+        </div>
+        <div class="card-body">
+          <dl class="row mb-0">
+            <dt class="col-6">Maltbatch</dt>
+            <dd class="col-6">{{ d.maltBatch }}</dd>
+
+            <dt class="col-6">Korn</dt>
+            <dd class="col-6">{{ d.korn.variant }} {{ d.korn.sort }}</dd>
+
+            <dt class="col-6">Mark</dt>
+            <dd class="col-6">{{ d.korn.markNavne }}</dd>
+
+            <dt class="col-6">Medarbejder</dt>
+            <dd class="col-6">{{ d.medarbejder }}</dd>
+
+            <dt class="col-6">Antal liter</dt>
+            <dd class="col-6">{{ d.antalLiter }}L</dd>
+
+            <dt class="col-6">Alkohol</dt>
+            <dd class="col-6">{{ d.alkoholProcent }}%</dd>
+
+            <dt class="col-6">Røgmateriale</dt>
+            <dd class="col-6">{{ d.rygemateriale || '—' }}</dd>
+
+            <dt class="col-6">Destilleringstid</dt>
+            <dd class="col-6">{{ destilleringstid(d) }}</dd>
+
+            @if (d.startTidspunkt) {
+              <dt class="col-6">Start</dt>
+              <dd class="col-6">{{ d.startTidspunkt | date:'dd/MM/yyyy HH:mm' }}</dd>
+            }
+            @if (d.slutTidspunkt) {
+              <dt class="col-6">Slut</dt>
+              <dd class="col-6">{{ d.slutTidspunkt | date:'dd/MM/yyyy HH:mm' }}</dd>
+            }
+
+            @if (d.kommentar) {
+              <dt class="col-12 mt-2">Kommentar</dt>
+              <dd class="col-12">
+                <small class="text-muted">{{ d.kommentar }}</small>
+              </dd>
+            }
+          </dl>
+        </div>
+      </div>
+    } @else {
+      <div class="card border-dashed">
+        <div class="card-body text-center text-muted py-4">
+          <small>Klik på en destillering for at se detaljer</small>
+        </div>
+      </div>
+    }
+  </div>
+</div>
+
+<app-opret-destillering-modal #opretDestilleringModal (oprettet)="onDestilleringOprettet($event)" />
+<app-opret-korn-modal #opretKornModal (oprettet)="onKornOprettet($event)" />

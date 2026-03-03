@@ -1,0 +1,36 @@
+<div class="modal fade" #modalEl tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Registrer korntype</h5>
+        <button type="button" class="btn-close" (click)="close()"></button>
+      </div>
+      <div class="modal-body">
+        @if (error) {
+          <div class="alert alert-danger py-2">{{ error }}</div>
+        }
+        <div class="mb-3">
+          <label class="form-label">Sort</label>
+          <input type="text" class="form-control" [(ngModel)]="sort"
+                 placeholder="f.eks. Barley, Rye, Wheat">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Variant</label>
+          <input type="text" class="form-control" [(ngModel)]="variant"
+                 placeholder="f.eks. Salling Maltbyg 2024">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Marknavne</label>
+          <input type="text" class="form-control" [(ngModel)]="markNavne"
+                 placeholder="f.eks. Salling Mark 1, Mark 2">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="close()">Annuller</button>
+        <button class="btn btn-primary" (click)="submit()" [disabled]="saving">
+          {{ saving ? 'Gemmer...' : 'Opret korn' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

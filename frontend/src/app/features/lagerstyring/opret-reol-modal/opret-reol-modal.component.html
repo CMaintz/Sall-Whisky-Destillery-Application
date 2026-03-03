@@ -1,0 +1,29 @@
+<div class="modal fade" #modalEl tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Tilføj reoler — {{ lagerNavn }}</h5>
+        <button type="button" class="btn-close" (click)="close()"></button>
+      </div>
+      <div class="modal-body">
+        @if (error) {
+          <div class="alert alert-danger py-2">{{ error }}</div>
+        }
+        <div class="mb-3">
+          <label class="form-label">Antal reoler der tilføjes</label>
+          <input type="number" class="form-control" [(ngModel)]="antalReoler" min="1">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Hylder per reol</label>
+          <input type="number" class="form-control" [(ngModel)]="hylderPerReol" min="1">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="close()">Annuller</button>
+        <button class="btn btn-primary" (click)="submit()" [disabled]="saving">
+          {{ saving ? 'Gemmer...' : 'Tilføj reoler' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

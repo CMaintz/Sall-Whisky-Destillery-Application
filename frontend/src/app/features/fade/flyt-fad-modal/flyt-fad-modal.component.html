@@ -1,0 +1,49 @@
+<div class="modal fade" #modalEl tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Flyt fad {{ fad?.fadNummer }}</h5>
+        <button type="button" class="btn-close" (click)="close()"></button>
+      </div>
+      <div class="modal-body">
+        @if (error) {
+          <div class="alert alert-danger py-2">{{ error }}</div>
+        }
+        <div class="mb-3">
+          <label class="form-label">Lager</label>
+          <select class="form-select" [(ngModel)]="valgtLagerId" (ngModelChange)="onLagerChange()">
+            <option value="">— Vælg lager —</option>
+            @for (l of lagre; track l.id) {
+              <option [value]="l.id">{{ l.navn }}</option>
+            }
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Reol</label>
+          <select class="form-select" [(ngModel)]="valgtReolId"
+                  (ngModelChange)="onReolChange()" [disabled]="!valgtLagerId">
+            <option value="">— Vælg reol —</option>
+            @for (r of valgtLager?.reoler ?? []; track r.id) {
+              <option [value]="r.id">Reol {{ r.reolNummer }}</option>
+            }
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Hylde (kun ledige)</label>
+          <select class="form-select" [(ngModel)]="valgtHyldeId" [disabled]="!valgtReolId">
+            <option value="">— Vælg hylde —</option>
+            @for (h of ledigeHylder; track h.id) {
+              <option [value]="h.id">Hylde {{ h.position }}</option>
+            }
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="close()">Annuller</button>
+        <button class="btn btn-primary" (click)="submit()" [disabled]="saving">
+          {{ saving ? 'Gemmer...' : 'Flyt fad' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

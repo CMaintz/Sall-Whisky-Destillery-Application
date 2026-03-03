@@ -1,0 +1,69 @@
+<div class="modal fade" #modalEl tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Ny destillering</h5>
+        <button type="button" class="btn-close" (click)="close()"></button>
+      </div>
+      <div class="modal-body">
+        @if (error) {
+          <div class="alert alert-danger py-2">{{ error }}</div>
+        }
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Maltbatch <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" [(ngModel)]="maltBatch"
+                   placeholder="f.eks. MB-2024-01">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Medarbejder <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" [(ngModel)]="medarbejder">
+          </div>
+          <div class="col-md-12">
+            <label class="form-label">Korntype <span class="text-danger">*</span></label>
+            @if (loading) {
+              <div class="text-muted small">Indlæser korn...</div>
+            } @else {
+              <select class="form-select" [(ngModel)]="kornId">
+                <option value="">— Vælg korntype —</option>
+                @for (k of kornListe; track k.id) {
+                  <option [value]="k.id">{{ k.variant }} {{ k.sort }} ({{ k.markNavne }})</option>
+                }
+              </select>
+            }
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Antal liter</label>
+            <div class="input-group">
+              <input type="number" class="form-control" [(ngModel)]="antalLiter" min="0" step="0.5">
+              <span class="input-group-text">L</span>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Alkohol %</label>
+            <div class="input-group">
+              <input type="number" class="form-control" [(ngModel)]="alkoholProcent"
+                     min="0" max="100" step="0.1">
+              <span class="input-group-text">%</span>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Røgmateriale</label>
+            <input type="text" class="form-control" [(ngModel)]="rygemateriale"
+                   placeholder="f.eks. Tørv (valgfrit)">
+          </div>
+          <div class="col-12">
+            <label class="form-label">Kommentar</label>
+            <textarea class="form-control" [(ngModel)]="kommentar" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="close()">Annuller</button>
+        <button class="btn btn-primary" (click)="submit()" [disabled]="saving">
+          {{ saving ? 'Gemmer...' : 'Opret destillering' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
