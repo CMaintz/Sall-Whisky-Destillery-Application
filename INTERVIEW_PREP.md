@@ -117,30 +117,13 @@ Destillering ←─── maltbatch, korn, medarbejder, ABV   │
 
 **Talepunkter:**
 
-*Original — ingen DTOs:*
-> "Modellen afspejler det faktiske domæne. Et Destillat er det umodne whisky — det kan være sammensat af påfyldninger fra flere destilleringer og vandrer gennem fade med fuld sporbarhed via ModningsHistorik. GUI'en arbejdede direkte med domæneobjekterne — ingen adskillelse."
+*Original — ingen DTOs (det ER svaret):*
+> "Vi brugte ingen DTOs — GUI'en arbejdede direkte med domæneobjekterne. `PåfyldFad` hentede `List<Destillering>` fra Controller og viste dem direkte. Det er enkelt, men det betyder at GUI-koden er tæt koblet til domænet: ændrer man et felt på `Destillering`, skal man også rette i GUI'en."
 
-*Spring Boot — DTOs adskiller API-kontrakten:*
-> "I Spring Boot-versionen adskiller vi API-kontrakten fra domænet med Java records som DTOs. Det giver fleksibilitet til at ændre domænet internt uden at bryde frontend."
+> "Serialization til `.srl` fungerede som vores 'ORM' — ingen mappers, ingen konvertering. Det er en af grundene til at vi ikke behøvede DTOs: alt var Java-objekter hele vejen."
 
-```java
-// Request (hvad klienten sender)
-public record PaafyldFadRequest(
-    List<PaafyldningEntry> paafyldninger
-) {
-    public record PaafyldningEntry(
-        UUID destilleringId, double liter, String medarbejder
-    ) {}
-}
-
-// Response (hvad API'et returnerer — kun relevant data)
-public record FadResponse(
-    UUID fadId, String fadNummer, int literKapacitet,
-    boolean erKlar,
-    DestillatSummary destillat,
-    HyldePlacering hylde
-) {}
-```
+*(Supplement — Spring Boot som kontrast, hvis det er relevant i samtalen):*
+> "Da jeg lavede Spring Boot-versionen tvang HTTP-laget mig til at tænke i DTOs — hvad sender klienten, og hvad returnerer API'et? Det er en sund adskillelse der beskytter domænemodellen mod at blive dikteret af API-kontrakten."
 
 ---
 
@@ -296,14 +279,22 @@ public class FadService {
 
 **Titel:** Hvad ville jeg gøre anderledes?
 
-### Det der virker godt:
+### Det der virker godt (læsbarhed og genbrug):
 
 | Valg | Effekt |
 |---|---|
-| `Storage` som interface | Kan mockes i tests — og det bruger vi |
-| Package-private konstruktører (`Påfyldning`, `FadTapning`) | Invarianter håndhæves af compileren, ikke dokumentation |
-| Defensive copies i getters: `return new ArrayList<>(påfyldninger)` | Ekstern kode kan ikke mutere intern tilstand |
-| `ModningsHistorik` auto-oprettet i `setFad()` | Umuligt at glemme at starte sporbarhed |
+| `Storage` som interface | Abstraktion der muliggør genbrug — samme Controller-kode virker med enhver implementation |
+| Package-private konstruktører (`Påfyldning`, `FadTapning`) | Invarianter håndhæves af compileren — læsbarheden ligger i *hvad der ikke kan lade sig gøre* |
+| Defensive copies i getters: `return new ArrayList<>(påfyldninger)` | Ekstern kode kan ikke mutere intern tilstand — en lille ting der øger tilliden til klassen |
+| `ModningsHistorik` auto-oprettet i `setFad()` | Sporbarhed er umulig at glemme — reglen er indkodet, ikke dokumenteret |
+| Metodenavne følger domænet: `createPåfyldning`, `omhældDestillat`, `destillatKlar` | Koden læses som domænet — lav kognitiv afstand |
+
+### Manglende genbrug (selvkritik):
+
+| Problem | Konsekvens |
+|---|---|
+| ABV-formlen er duplikeret i `Destillat` og `WhiskyProdukt` | To steder at rette hvis formlen ændrer sig — og de er allerede gået ud af sync (`int` vs `double`) |
+| GUI-validering duplikerer model-validering | `PåfyldFad` tjekker `volume > dest.getAntalLiter()` — det gør `Destillat.createPåfyldning()` også |
 
 ### Det der ikke virker:
 
