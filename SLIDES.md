@@ -115,7 +115,7 @@ style: |
 
 <!-- _class: title-slide -->
 
-# Sall Whisky Destilleri
+# Case: Sall Whisky Destilleri
 
 ### Digital sporbarhed fra korn til flaske
 
