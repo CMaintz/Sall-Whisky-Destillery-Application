@@ -286,14 +286,14 @@ public void setFad(Fad fad) {
 </div>
 
 <!--
-Factory method: "Påfyldning kan kun oprettes via createPåfyldning — konstruktøren er package-private,
+Factory method: "Påfyldning kan kun oprettes via createPåfyldning - konstruktøren er package-private,
 så det er compileren der håndhæver invarianten, ikke kommentarer eller dokumentation."
 
 destillatKlar(): "3-årsreglen sidder direkte i entiteten. Den kigger altid på den rigtige dato
-fra første ModningsHistorik-entry — man kan ikke kalde den forkert."
+fra første ModningsHistorik-entry - man kan ikke kalde den forkert."
 
 setFad(): "Hver gang et fad skiftes, oprettes en ny ModningsHistorik-post automatisk.
-Man kan simpelthen ikke glemme at registrere det — det sker altid."
+Man kan simpelthen ikke glemme at registrere det - det sker altid."
 -->
 
 ---
@@ -330,10 +330,10 @@ Man kan simpelthen ikke glemme at registrere det — det sker altid."
 > I produktion: validering samlet i service-laget, `@Slf4j` på forretningshændelser, struktureret fejl-respons.
 
 <!--
-"Valideringen er inkonsistent — noget sidder i GUI, noget i modellen, intet i Controller.
+"Valideringen er inkonsistent - noget sidder i GUI, noget i modellen, intet i Controller.
 Kalder man Controller direkte fra en anden kontekst, er der ingen garanti for at data er gyldigt."
 
-"admin/admin hardcoded i LoginPane — indlysende problematisk, men acceptabelt for et lukket
+"admin/admin hardcoded i LoginPane - indlysende problematisk, men acceptabelt for et lukket
 skoleprojekt uden netværksforbindelse. I produktion: credentials udenfor kildekoden, hashed passwords."
 -->
 
@@ -383,10 +383,10 @@ Test · Læsbarhed · Genbrug · Videreudvikling
 > Det er en direkte konsekvens af det statiske design.
 
 <!--
-"ModelsTest.java tester domæne-laget direkte — vi sætter Storage op med ListStorage i testen,
+"ModelsTest.java tester domæne-laget direkte - vi sætter Storage op med ListStorage i testen,
 og kører forretningslogikken igennem. Det virker fordi Storage er et interface."
 
-"Controller kunne ikke testes på samme måde — static betyder at man ikke kan injecte en mock.
+"Controller kunne ikke testes på samme måde - static betyder at man ikke kan injecte en mock.
 Det er den direkte konsekvens af designvalget, og det opdagede vi undervejs."
 -->
 
@@ -422,10 +422,10 @@ Det er den direkte konsekvens af designvalget, og det opdagede vi undervejs."
 </div>
 
 <!--
-"Den stille bug: int literEthanol i WhiskyProdukt truncerer decimaler — Destillat.java bruger double.
+"Den stille bug: int literEthanol i WhiskyProdukt truncerer decimaler - Destillat.java bruger double.
 De to metoder startede ens, men er driftet fra hinanden. Det er konsekvensen af at duplikere forretningslogik."
 
-"PåfyldFad kalder modellerne direkte uden om Controller — det er en arkitektonisk inkonsistens.
+"PåfyldFad kalder modellerne direkte uden om Controller - det er en arkitektonisk inkonsistens.
 Sekvensdiagrammet viser præcis hvor det går galt."
 -->
 
@@ -461,13 +461,13 @@ Alternativer · Overdragelse
 | Passer til | Serialization | JPA / Spring |
 | Skalering | Begrænset | Naturlig |
 
-> Med JPA ville lazy-loading gøre det svært at traversere objektgrafen fra entiteterne — `whiskyType()` og `udregnAlkoholprocent()` rammer `@OneToMany`-samlinger.
+> Med JPA ville lazy-loading gøre det svært at traversere objektgrafen fra entiteterne - `whiskyType()` og `udregnAlkoholprocent()` rammer `@OneToMany`-samlinger.
 
 <!--
 "Vi valgte serialization fordi det var det eneste vi kendte til persistens på det tidspunkt.
 En .srl fil er binær, usynlig for en editor, og bryder hvis man omdøber en klasse."
 
-"Rig vs. anæmisk model er ikke et rigtigt-eller-forkert spørgsmål — det afhænger af konteksten.
+"Rig vs. anæmisk model er ikke et rigtigt-eller-forkert spørgsmål - det afhænger af konteksten.
 Til serialization og desktop er rig model naturlig. Til JPA og API er anæmisk mere håndterbar."
 -->
 
@@ -495,14 +495,14 @@ public abstract class Controller {
 
 ❌ Global tilstand
 ❌ Ikke testbar med DI
-❌ `abstract` signalerer arv — det sker aldrig
+❌ `abstract` signalerer arv - det sker aldrig
 
 **Alternativ:** instans-baseret service med interface
 
 </div>
 <div class="box good">
 
-**`ModningsHistorik` som eksplicit klasse — et bevidst valg**
+**`ModningsHistorik` som eksplicit klasse - et bevidst valg**
 
 Alternativet: bare `startDato` + `slutDato` direkte på `Destillat`
 
@@ -518,7 +518,7 @@ Alternativet: bare `startDato` + `slutDato` direkte på `Destillat`
 </div>
 
 <!--
-"Controller er abstract — det signalerer normalt at klassen er beregnet til arv.
+"Controller er abstract - det signalerer normalt at klassen er beregnet til arv.
 Men det sker aldrig. Det er selvmodsigende og forvirrende for en ny udvikler."
 
 "ModningsHistorik-beslutningen: alternativet ville have været startDato + slutDato direkte
@@ -552,7 +552,7 @@ kom fra. Det var ikke acceptabelt for en sporbarhedsapplikation."
 
 <!--
 "Den mest overraskende detalje: de statiske counters i Fad og Destillering deserialiseres IKKE
-automatisk fra .srl filen — de skal gendannes manuelt i ListStorage.loadStorage().
+automatisk fra .srl filen - de skal gendannes manuelt i ListStorage.loadStorage().
 Det er en fælde der ikke er dokumenteret nogen steder andet end i koden selv."
 -->
 
@@ -568,10 +568,10 @@ Det er en fælde der ikke er dokumenteret nogen steder andet end i koden selv."
 ![](diagrams/seq-paafyldning.png)
 
 <!--
-"Bemærk at GUI opretter Destillat direkte — det burde gå via Controller som alt andet.
+"Bemærk at GUI opretter Destillat direkte - det burde gå via Controller som alt andet.
 Det er den arkitektoniske inkonsistens der er nævnt tidligere."
 
-"Påfyldning kalder fjernAntalLiter() på Destillering i sin package-private constructor —
+"Påfyldning kalder fjernAntalLiter() på Destillering i sin package-private constructor -
 liter trækkes fra kilden automatisk, man kan ikke fylde mere på end der er."
 -->
 
@@ -587,10 +587,10 @@ liter trækkes fra kilden automatisk, man kan ikke fylde mere på end der er."
 ![](diagrams/seq-omhaeldning.png)
 
 <!--
-"Her går det korrekt via Controller.omhældningAfDestillat() — det er modsætningen til påfyldningsflowet."
+"Her går det korrekt via Controller.omhældningAfDestillat() - det er modsætningen til påfyldningsflowet."
 
 "setFad() lukker den gamle ModningsHistorik med en slutDato og åbner en ny entry automatisk.
-Det er det der sikrer fuld sporbarhed på tværs af fade — whiskyType() kan efterfølgende
+Det er det der sikrer fuld sporbarhed på tværs af fade - whiskyType() kan efterfølgende
 se hele historikken og klassificere produktet korrekt."
 -->
 
