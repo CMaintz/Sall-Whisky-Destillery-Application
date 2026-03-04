@@ -106,11 +106,23 @@ public class DataInitializer implements CommandLineRunner {
         backdateDestillat(fad5.id(), LocalDate.now().minusYears(5));
         backdateDestillat(fad6.id(), LocalDate.of(2019, 1, 1));
 
+        // Backdate fad6 så det er klar
+        backdateDestillat(fad6.id(), LocalDate.of(2019, 6, 1));
+
         // --- Create a finished whisky product from the ready barrels ---
         var toerv = whiskyService.opretWhiskyProdukt(new OpretWhiskyProduktRequest("TØRV"));
         whiskyService.tapFad(toerv.id(), new TapFadRequest(fad4.id(), "Chris"));
         whiskyService.tapFad(toerv.id(), new TapFadRequest(fad5.id(), "Chris"));
         whiskyService.opretFlasker(toerv.id());
+
+        // --- Whisky under modning — ikke flasket endnu, knapper aktive ---
+        var muld = whiskyService.opretWhiskyProdukt(new OpretWhiskyProduktRequest("MULD"));
+        whiskyService.tapFad(muld.id(), new TapFadRequest(fad1.id(), "Chris"));
+
+        var singleMalt = whiskyService.opretWhiskyProdukt(new OpretWhiskyProduktRequest("MOSEDAL SINGLE MALT"));
+        whiskyService.tapFad(singleMalt.id(), new TapFadRequest(fad2.id(), "Chris"));
+        whiskyService.tapFad(singleMalt.id(), new TapFadRequest(fad6.id(), "Chris"));
+        whiskyService.tilfoejVand(singleMalt.id(), 5.0);
 
         log.info("Demo data seeded successfully.");
     }

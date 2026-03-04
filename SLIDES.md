@@ -285,6 +285,17 @@ public void setFad(Fad fad) {
 </div>
 </div>
 
+<!--
+Factory method: "Påfyldning kan kun oprettes via createPåfyldning — konstruktøren er package-private,
+så det er compileren der håndhæver invarianten, ikke kommentarer eller dokumentation."
+
+destillatKlar(): "3-årsreglen sidder direkte i entiteten. Den kigger altid på den rigtige dato
+fra første ModningsHistorik-entry — man kan ikke kalde den forkert."
+
+setFad(): "Hver gang et fad skiftes, oprettes en ny ModningsHistorik-post automatisk.
+Man kan simpelthen ikke glemme at registrere det — det sker altid."
+-->
+
 ---
 
 <!-- Slide 6 - Tekniske valg / Validering, fejl, logging, sikkerhed -->
@@ -317,6 +328,14 @@ public void setFad(Fad fad) {
 </div>
 
 > I produktion: validering samlet i service-laget, `@Slf4j` på forretningshændelser, struktureret fejl-respons.
+
+<!--
+"Valideringen er inkonsistent — noget sidder i GUI, noget i modellen, intet i Controller.
+Kalder man Controller direkte fra en anden kontekst, er der ingen garanti for at data er gyldigt."
+
+"admin/admin hardcoded i LoginPane — indlysende problematisk, men acceptabelt for et lukket
+skoleprojekt uden netværksforbindelse. I produktion: credentials udenfor kildekoden, hashed passwords."
+-->
 
 ---
 
@@ -363,6 +382,14 @@ Test · Læsbarhed · Genbrug · Videreudvikling
 > `Storage` er interface → kan mockes. Men vi brugte det aldrig til at teste Controller.
 > Det er en direkte konsekvens af det statiske design.
 
+<!--
+"ModelsTest.java tester domæne-laget direkte — vi sætter Storage op med ListStorage i testen,
+og kører forretningslogikken igennem. Det virker fordi Storage er et interface."
+
+"Controller kunne ikke testes på samme måde — static betyder at man ikke kan injecte en mock.
+Det er den direkte konsekvens af designvalget, og det opdagede vi undervejs."
+-->
+
 ---
 
 <!-- Slide 8 - Kvalitet / Læsbarhed, genbrug, videreudvikling -->
@@ -393,6 +420,14 @@ Test · Læsbarhed · Genbrug · Videreudvikling
 
 </div>
 </div>
+
+<!--
+"Den stille bug: int literEthanol i WhiskyProdukt truncerer decimaler — Destillat.java bruger double.
+De to metoder startede ens, men er driftet fra hinanden. Det er konsekvensen af at duplikere forretningslogik."
+
+"PåfyldFad kalder modellerne direkte uden om Controller — det er en arkitektonisk inkonsistens.
+Sekvensdiagrammet viser præcis hvor det går galt."
+-->
 
 ---
 
@@ -427,6 +462,14 @@ Alternativer · Overdragelse
 | Skalering | Begrænset | Naturlig |
 
 > Med JPA ville lazy-loading gøre det svært at traversere objektgrafen fra entiteterne — `whiskyType()` og `udregnAlkoholprocent()` rammer `@OneToMany`-samlinger.
+
+<!--
+"Vi valgte serialization fordi det var det eneste vi kendte til persistens på det tidspunkt.
+En .srl fil er binær, usynlig for en editor, og bryder hvis man omdøber en klasse."
+
+"Rig vs. anæmisk model er ikke et rigtigt-eller-forkert spørgsmål — det afhænger af konteksten.
+Til serialization og desktop er rig model naturlig. Til JPA og API er anæmisk mere håndterbar."
+-->
 
 ---
 
@@ -474,6 +517,15 @@ Alternativet: bare `startDato` + `slutDato` direkte på `Destillat`
 </div>
 </div>
 
+<!--
+"Controller er abstract — det signalerer normalt at klassen er beregnet til arv.
+Men det sker aldrig. Det er selvmodsigende og forvirrende for en ny udvikler."
+
+"ModningsHistorik-beslutningen: alternativet ville have været startDato + slutDato direkte
+på Destillat. Men ved første omhældning ville man miste al historik om hvilket fad destillatet
+kom fra. Det var ikke acceptabelt for en sporbarhedsapplikation."
+-->
+
 ---
 
 <!-- Slide 11 - Refleksion / Overdragelse -->
@@ -498,6 +550,12 @@ Alternativet: bare `startDato` + `slutDato` direkte på `Destillat`
 > Diagrammerne viser ikke bare *hvad* der sker - men *hvem* der har ansvar.
 > En ny udvikler kan se at omhældning går via Controller (korrekt), men påfyldning ikke (fejl).
 
+<!--
+"Den mest overraskende detalje: de statiske counters i Fad og Destillering deserialiseres IKKE
+automatisk fra .srl filen — de skal gendannes manuelt i ListStorage.loadStorage().
+Det er en fælde der ikke er dokumenteret nogen steder andet end i koden selv."
+-->
+
 ---
 
 <!-- UML Sekvensdiagram 1 - Påfyldning -->
@@ -509,6 +567,14 @@ Alternativet: bare `startDato` + `slutDato` direkte på `Destillat`
 
 ![](diagrams/seq-paafyldning.png)
 
+<!--
+"Bemærk at GUI opretter Destillat direkte — det burde gå via Controller som alt andet.
+Det er den arkitektoniske inkonsistens der er nævnt tidligere."
+
+"Påfyldning kalder fjernAntalLiter() på Destillering i sin package-private constructor —
+liter trækkes fra kilden automatisk, man kan ikke fylde mere på end der er."
+-->
+
 ---
 
 <!-- UML Sekvensdiagram 2 - Omhældning -->
@@ -519,6 +585,14 @@ Alternativet: bare `startDato` + `slutDato` direkte på `Destillat`
 <div class="case-label">UML Sekvensdiagram · Tekniske valg og overvejelser</div>
 
 ![](diagrams/seq-omhaeldning.png)
+
+<!--
+"Her går det korrekt via Controller.omhældningAfDestillat() — det er modsætningen til påfyldningsflowet."
+
+"setFad() lukker den gamle ModningsHistorik med en slutDato og åbner en ny entry automatisk.
+Det er det der sikrer fuld sporbarhed på tværs af fade — whiskyType() kan efterfølgende
+se hele historikken og klassificere produktet korrekt."
+-->
 
 ---
 

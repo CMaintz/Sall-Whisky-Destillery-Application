@@ -21,20 +21,20 @@
                   <div><span class="badge bg-dark mt-1">{{ wp.whiskyType }}</span></div>
                 </div>
                 <div class="d-flex gap-1" (click)="$event.stopPropagation()">
-                  <button class="btn btn-sm btn-outline-secondary" title="Tilføj vand"
+                  <button class="btn btn-sm btn-outline-secondary" title="Tilføj vand for at justere ABV"
                           (click)="tilfoejVandModal.open(wp)"
                           [disabled]="wp.antalLiter === 0">
-                    💧
+                    💧 Tilføj vand
                   </button>
                   <button class="btn btn-sm btn-outline-primary"
-                          title="Opret flasker"
+                          title="Opret flasker af produktet"
                           (click)="opretFlasker(wp)"
                           [disabled]="wp.antalLiter === 0 || flaskningBusy() === wp.id">
-                    @if (flaskningBusy() === wp.id) { ⏳ } @else { 🍾 }
+                    @if (flaskningBusy() === wp.id) { ⏳ Flasker... } @else { 🍾 Opret flasker }
                   </button>
-                  <button class="btn btn-sm btn-outline-secondary" title="Eksporter produktetiket"
+                  <button class="btn btn-sm btn-outline-secondary" title="Eksporter produktetiket som tekstfil"
                           (click)="exportLabel(wp)">
-                    📄
+                    📄 Eksporter
                   </button>
                 </div>
               </div>

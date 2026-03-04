@@ -9,13 +9,13 @@
         <button class="btn btn-sm btn-outline-secondary" (click)="omhaeldKilde = null; setFilter('alle')">Annuller</button>
       }
       <div class="btn-group btn-group-sm">
-        <button class="btn" [class.btn-dark]="filter() === 'alle'" [class.btn-outline-dark]="filter() !== 'alle'"
+        <button class="btn" [class.btn-light]="filter() === 'alle'" [class.btn-outline-light]="filter() !== 'alle'"
                 (click)="setFilter('alle')">Alle</button>
-        <button class="btn" [class.btn-dark]="filter() === 'tomme'" [class.btn-outline-dark]="filter() !== 'tomme'"
+        <button class="btn" [class.btn-light]="filter() === 'tomme'" [class.btn-outline-light]="filter() !== 'tomme'"
                 (click)="setFilter('tomme')">Tomme</button>
-        <button class="btn" [class.btn-dark]="filter() === 'fyldte'" [class.btn-outline-dark]="filter() !== 'fyldte'"
+        <button class="btn" [class.btn-light]="filter() === 'fyldte'" [class.btn-outline-light]="filter() !== 'fyldte'"
                 (click)="setFilter('fyldte')">Fyldte</button>
-        <button class="btn" [class.btn-dark]="filter() === 'klar'" [class.btn-outline-dark]="filter() !== 'klar'"
+        <button class="btn" [class.btn-light]="filter() === 'klar'" [class.btn-outline-light]="filter() !== 'klar'"
                 (click)="setFilter('klar')">Klar</button>
       </div>
       <button class="btn btn-sm btn-primary" (click)="opretFadModal.open()">+ Opret fad</button>
