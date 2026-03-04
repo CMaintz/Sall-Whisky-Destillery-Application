@@ -53,7 +53,7 @@ public class FadService {
     }
 
     /**
-     * Returns barrels whose destillat has been maturing for 3+ years — ready for tapping.
+     * Returns barrels whose destillat has been maturing for 3+ years - ready for tapping.
      * The 3-year cutoff is the legal minimum for Scotch-style whisky.
      */
     @Transactional(readOnly = true)
@@ -89,7 +89,6 @@ public class FadService {
         destillatRepository.save(destillat);
         fad.setDestillat(destillat);
 
-        // Record the start of maturation history
         ModningsHistorik historik = new ModningsHistorik(destillat, fad, destillat.getStartDato());
         destillat.getModningsHistorik().add(historik);
 
@@ -111,7 +110,6 @@ public class FadService {
             throw new IllegalStateException("Shelf is already occupied");
         }
 
-        // Clear old shelf
         if (fad.getHylde() != null) {
             fad.getHylde().setFad(null);
             hyldeRepository.save(fad.getHylde());
@@ -151,24 +149,19 @@ public class FadService {
 
         Destillat destillat = fadFra.getDestillat();
 
-        // Close current maturation period
         destillat.getModningsHistorik().stream()
                 .filter(h -> h.getSlutDato() == null)
                 .forEach(h -> h.setSlutDato(LocalDate.now()));
 
-        // Move destillat
         fadFra.setDestillat(null);
         fadTil.setDestillat(destillat);
 
-        // Open new maturation period in the new barrel
         ModningsHistorik nyHistorik = new ModningsHistorik(destillat, fadTil, LocalDate.now());
         destillat.getModningsHistorik().add(nyHistorik);
 
         fadRepository.save(fadFra);
         fadRepository.save(fadTil);
     }
-
-    // --- Mapping ---
 
     public FadResponse toResponse(Fad fad) {
         FadResponse.DestillatSummary destillatSummary = null;

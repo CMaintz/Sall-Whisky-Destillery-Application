@@ -1,6 +1,3 @@
-// Mirror the Spring Boot response DTOs.
-// Keeping these as interfaces (not classes) since they're pure data shapes.
-
 export interface Fad {
   id: string;
   fadNummer: string;

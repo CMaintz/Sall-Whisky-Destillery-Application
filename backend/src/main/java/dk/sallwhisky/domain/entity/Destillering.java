@@ -23,7 +23,6 @@ public class Destillering {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    // Auto-incrementing batch number for human-readable identification
     @Column(unique = true)
     private int batchNummer;
 

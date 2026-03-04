@@ -46,7 +46,6 @@ public class WhiskyService {
         }
 
         Destillat destillat = fad.getDestillat();
-
         if (!destillat.erKlar()) {
             throw new IllegalStateException(
                 "Destillat in barrel " + fad.getFadNummer() + " has not matured for 3 years yet " +
@@ -54,12 +53,10 @@ public class WhiskyService {
             );
         }
 
-        // Close maturation history
         destillat.getModningsHistorik().stream()
                 .filter(h -> h.getSlutDato() == null)
                 .forEach(h -> h.setSlutDato(LocalDate.now()));
 
-        // Create tapning record
         FadTapning tapning = new FadTapning(
                 req.medarbejder(),
                 destillat.getAntalLiter(),
@@ -71,7 +68,6 @@ public class WhiskyService {
         whiskyProdukt.setAntalLiter(whiskyProdukt.getAntalLiter() + destillat.getAntalLiter());
         whiskyProdukt.udregnAlkoholProcent();
 
-        // Empty the barrel and remove from warehouse shelf
         fad.setDestillat(null);
         if (fad.getHylde() != null) {
             fad.getHylde().setFad(null);
@@ -94,7 +90,7 @@ public class WhiskyService {
     }
 
     /**
-     * Bottles the product — creates one WhiskyFlaske per litre.
+     * Bottles the product - creates one WhiskyFlaske per litre.
      * Resets antalLiter to 0 after bottling (the liquid is now in bottles).
      */
     public WhiskyProduktResponse opretFlasker(UUID whiskyId) {

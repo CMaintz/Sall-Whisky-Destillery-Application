@@ -25,13 +25,13 @@ public class FadTapning {
     private double literTappet;
     private LocalDate tapningsDato;
 
-    // We keep a reference to the Fad for provenance tracking even after the barrel is emptied
+    // Kept for provenance tracking even after the barrel is emptied.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fad_id")
     private Fad fad;
 
-    // Snapshot of the destillat at tap time — needed for ABV calculation and product history
-    // even after fad.destillat has been set to null
+    // Snapshot of the destillat at tap time - needed for ABV calculation and product history
+    // even after fad.destillat has been set to null.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "destillat_id")
     private Destillat destillat;

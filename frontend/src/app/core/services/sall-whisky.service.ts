@@ -9,7 +9,6 @@ const API = 'http://localhost:8080/api';
 export class SallWhiskyService {
   private readonly http = inject(HttpClient);
 
-  // --- Fade ---
   getFade(): Observable<Fad[]> {
     return this.http.get<Fad[]>(`${API}/fade`);
   }
@@ -54,7 +53,6 @@ export class SallWhiskyService {
     return this.http.post<void>(`${API}/fade/${fadFraId}/omhaeld/${fadTilId}`, {});
   }
 
-  // --- Destilleringer ---
   getDestilleringer(): Observable<Destillering[]> {
     return this.http.get<Destillering[]>(`${API}/destilleringer`);
   }
@@ -71,7 +69,6 @@ export class SallWhiskyService {
     return this.http.post<Destillering>(`${API}/destilleringer`, data);
   }
 
-  // --- Korn ---
   getKorn(): Observable<Korn[]> {
     return this.http.get<Korn[]>(`${API}/korn`);
   }
@@ -80,7 +77,6 @@ export class SallWhiskyService {
     return this.http.post<Korn>(`${API}/korn`, data);
   }
 
-  // --- Lagre ---
   getLagre(): Observable<Lager[]> {
     return this.http.get<Lager[]>(`${API}/lagre`);
   }
@@ -93,7 +89,6 @@ export class SallWhiskyService {
     return this.http.post<Lager>(`${API}/lagre/${lagerId}/reoler`, data);
   }
 
-  // --- Whisky ---
   getWhiskyProdukter(): Observable<WhiskyProdukt[]> {
     return this.http.get<WhiskyProdukt[]>(`${API}/whisky`);
   }

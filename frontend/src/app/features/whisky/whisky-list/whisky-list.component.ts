@@ -21,7 +21,7 @@ export class WhiskyListComponent implements OnInit {
   valgtProdukt = signal<WhiskyProdukt | null>(null);
   valgtFlaske = signal<WhiskyFlaskeSummary | null>(null);
   loading = signal(true);
-  flaskningBusy = signal<string | null>(null);  // whisky id currently being bottled
+  flaskningBusy = signal<string | null>(null);
 
   ngOnInit(): void {
     this.service.getWhiskyProdukter().subscribe({

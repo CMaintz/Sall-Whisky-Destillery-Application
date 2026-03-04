@@ -28,8 +28,8 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            // Stateless — credentials sent with every request via Basic Auth
-            // In production this would be JWT or session-based auth
+            // Stateless: credentials sent with every request via Basic Auth.
+            // In production this would be JWT or session-based auth.
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/h2-console/**").permitAll()

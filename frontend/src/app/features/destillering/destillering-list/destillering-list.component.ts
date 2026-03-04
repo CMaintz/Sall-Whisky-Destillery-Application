@@ -33,9 +33,7 @@ export class DestilleringListComponent implements OnInit {
     this.valgtDestillering.set(d);
   }
 
-  onKornOprettet(k: Korn): void {
-    // After adding korn, the destillering modal will pick it up on next open
-  }
+  onKornOprettet(_k: Korn): void {}
 
   vaelg(d: Destillering): void {
     this.valgtDestillering.set(this.valgtDestillering()?.id === d.id ? null : d);

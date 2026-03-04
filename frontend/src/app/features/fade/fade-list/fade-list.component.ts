@@ -62,7 +62,6 @@ export class FadeListComponent implements OnInit {
 
   onFadPaafyldt(fad: Fad): void {
     this.fade.update(list => list.map(f => f.id === fad.id ? fad : f));
-    // refresh to respect current filter
     this.load();
   }
 

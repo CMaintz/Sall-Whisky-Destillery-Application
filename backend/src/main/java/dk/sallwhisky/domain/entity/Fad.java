@@ -27,7 +27,6 @@ public class Fad {
     @Positive
     private int literKapacitet;
 
-    // Previous contents — Sherry, Bourbon, red wine, etc.
     @NotBlank
     private String tidligereIndhold;
 
@@ -39,12 +38,10 @@ public class Fad {
     @NotBlank
     private String leverandoer;
 
-    // The barrel currently holds this destillat (null = empty barrel)
     @OneToOne
     @JoinColumn(name = "destillat_id")
     private Destillat destillat;
 
-    // Back-reference: Hylde owns this relationship (FK is in hylde table)
     @OneToOne(mappedBy = "fad")
     @JsonIgnore
     private Hylde hylde;

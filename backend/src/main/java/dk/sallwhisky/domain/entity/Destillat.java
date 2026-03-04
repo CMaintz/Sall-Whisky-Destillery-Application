@@ -31,14 +31,13 @@ public class Destillat {
     @OneToMany(mappedBy = "destillat", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ModningsHistorik> modningsHistorik = new ArrayList<>();
 
-    // Back-reference: Fad owns this relationship (FK is in fad table)
     @OneToOne(mappedBy = "destillat")
     @JsonIgnore
     private Fad fad;
 
     /**
      * A destillat is ready for bottling after 3 years of maturation.
-     * This is the core business rule — the legal minimum for whisky.
+     * This is the core business rule - the legal minimum for whisky.
      */
     public boolean erKlar() {
         if (startDato == null) return false;
