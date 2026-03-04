@@ -109,6 +109,17 @@ public class DataInitializer implements CommandLineRunner {
         // Backdate fad6 så det er klar
         backdateDestillat(fad6.id(), LocalDate.of(2019, 6, 1));
 
+        // --- Extra ready barrels (untapped — visible as "Klar" in demo) ---
+        // fad8: 50L Rødvin, high-ABV spirit from dest1 (81% ABV, bøgeflisrøget)
+        fadService.paafyldFad(fad8.id(), new PaafyldFadRequest(List.of(
+                new PaafyldFadRequest.PaafyldningItem(dest1Resp.id(), 40, "Maintz"))));
+        backdateDestillat(fad8.id(), LocalDate.now().minusYears(4).minusMonths(3));
+
+        // fad9: 50L Sherry, medium-ABV spirit from dest3 (55% ABV, tørverøget)
+        fadService.paafyldFad(fad9.id(), new PaafyldFadRequest(List.of(
+                new PaafyldFadRequest.PaafyldningItem(dest3Resp.id(), 40, "Chris"))));
+        backdateDestillat(fad9.id(), LocalDate.of(2021, 3, 15));
+
         // --- Create a finished whisky product from the ready barrels ---
         var toerv = whiskyService.opretWhiskyProdukt(new OpretWhiskyProduktRequest("TØRV"));
         whiskyService.tapFad(toerv.id(), new TapFadRequest(fad4.id(), "Chris"));
