@@ -1,0 +1,96 @@
+<div class="modal fade" #modalEl tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Påfyld fad {{ fad?.fadNummer }}</h5>
+        <button type="button" class="btn-close" (click)="close()"></button>
+      </div>
+      <div class="modal-body">
+        @if (error) {
+          <div class="alert alert-danger py-2">{{ error }}</div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Medarbejder</label>
+          <input type="text" class="form-control" [(ngModel)]="medarbejder" placeholder="Navn">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Vælg destilleringer</label>
+          @if (loading) {
+            <div class="text-muted small">Indlæser...</div>
+          } @else {
+            <div class="border rounded" style="max-height: 200px; overflow-y: auto;">
+              @for (d of destilleringer; track d.id) {
+                <div class="d-flex align-items-center gap-2 p-2 border-bottom"
+                     [class.bg-light]="isValgt(d)">
+                  <input type="checkbox" class="form-check-input mt-0"
+                         [checked]="isValgt(d)" (change)="toggleDestillering(d)">
+                  <span class="flex-grow-1 small">
+                    #{{ d.batchNummer }} — {{ d.korn.variant }} {{ d.korn.sort }},
+                    {{ d.antalLiter }}L vol {{ d.alkoholProcent }}%
+                  </span>
+                </div>
+              } @empty {
+                <div class="p-3 text-muted small">Ingen destilleringer tilgængelige</div>
+              }
+            </div>
+          }
+        </div>
+
+        @if (valgte.length > 0) {
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Liters per destillering</label>
+            @for (item of valgte; track item.destillering.id) {
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <span class="flex-grow-1 small">#{{ item.destillering.batchNummer }} {{ item.destillering.korn.variant }}</span>
+                <input type="number" class="form-control form-control-sm" style="width: 100px"
+                       [(ngModel)]="item.liter" min="0.1" step="0.1">
+                <span class="small text-muted">L</span>
+              </div>
+            }
+          </div>
+        }
+
+        <hr>
+        <div class="mb-2">
+          <label class="form-label fw-semibold">Placer i lager (valgfrit)</label>
+        </div>
+        <div class="row g-2">
+          <div class="col-4">
+            <select class="form-select form-select-sm" [(ngModel)]="valgtLagerId" (ngModelChange)="onLagerChange()">
+              <option value="">— Vælg lager —</option>
+              @for (l of lagre; track l.id) {
+                <option [value]="l.id">{{ l.navn }}</option>
+              }
+            </select>
+          </div>
+          <div class="col-4">
+            <select class="form-select form-select-sm" [(ngModel)]="valgtReolId"
+                    (ngModelChange)="onReolChange()" [disabled]="!valgtLagerId">
+              <option value="">— Vælg reol —</option>
+              @for (r of valgtLager?.reoler ?? []; track r.id) {
+                <option [value]="r.id">Reol {{ r.reolNummer }}</option>
+              }
+            </select>
+          </div>
+          <div class="col-4">
+            <select class="form-select form-select-sm" [(ngModel)]="valgtHyldeId"
+                    [disabled]="!valgtReolId">
+              <option value="">— Vælg hylde —</option>
+              @for (h of ledigeHylder; track h.id) {
+                <option [value]="h.id">Hylde {{ h.position }}</option>
+              }
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="close()">Annuller</button>
+        <button class="btn btn-primary" (click)="submit()" [disabled]="saving">
+          {{ saving ? 'Gemmer...' : 'Påfyld fad' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

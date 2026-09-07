@@ -1,0 +1,33 @@
+<div class="modal fade" #modalEl tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Opret nyt lager</h5>
+        <button type="button" class="btn-close" (click)="close()"></button>
+      </div>
+      <div class="modal-body">
+        @if (error) {
+          <div class="alert alert-danger py-2">{{ error }}</div>
+        }
+        <div class="mb-3">
+          <label class="form-label">Lagernavn</label>
+          <input type="text" class="form-control" [(ngModel)]="navn" placeholder="f.eks. Lager A">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Antal reoler</label>
+          <input type="number" class="form-control" [(ngModel)]="antalReoler" min="1">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Hylder per reol</label>
+          <input type="number" class="form-control" [(ngModel)]="hylderPerReol" min="1">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="close()">Annuller</button>
+        <button class="btn btn-primary" (click)="submit()" [disabled]="saving">
+          {{ saving ? 'Gemmer...' : 'Opret lager' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+/* Global styles */
+body {
+  background-color: #f8f5f0;
+  font-family: 'Georgia', serif;
+}
+
+.badge-klar {
+  background-color: #2d6a2d;
+  color: white;
+}
+
+.badge-ikke-klar {
+  background-color: #8b4513;
+  color: white;
+}
+
+.card {
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+}
+
+.card-header {
+  background-color: #2c1810;
+  color: #f5e6d3;
+  border-radius: 8px 8px 0 0 !important;
+}
+
+.btn-primary {
+  background-color: #2c1810;
+  border-color: #2c1810;
+  &:hover {
+    background-color: #4a2c1a;
+    border-color: #4a2c1a;
+  }
+}
+
+.table th {
+  background-color: #f0e8df;
+  font-weight: 600;
+}
+
+.card.border-dashed {
+  border: 2px dashed #ccc !important;
+  box-shadow: none;
+  background: transparent;
+}
+
+.list-group-item.active {
+  background-color: #2c1810;
+  border-color: #2c1810;
+}
+
+.modal-header {
+  background-color: #2c1810;
+  color: #f5e6d3;
+}
+
+.modal-header .btn-close {
+  filter: invert(1);
+}

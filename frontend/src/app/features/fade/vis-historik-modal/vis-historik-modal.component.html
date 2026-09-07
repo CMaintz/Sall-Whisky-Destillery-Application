@@ -1,0 +1,104 @@
+<div class="modal fade" #modalEl tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Historik — {{ fad?.fadNummer }}</h5>
+        <button type="button" class="btn-close" (click)="close()"></button>
+      </div>
+      <div class="modal-body">
+        @if (fad) {
+          <dl class="row">
+            <dt class="col-5">Fad nr.</dt>
+            <dd class="col-7">{{ fad.fadNummer }}</dd>
+
+            <dt class="col-5">Kapacitet</dt>
+            <dd class="col-7">{{ fad.literKapacitet }}L</dd>
+
+            <dt class="col-5">Tidligere indhold</dt>
+            <dd class="col-7">{{ fad.tidligereIndhold }}</dd>
+
+            <dt class="col-5">Land</dt>
+            <dd class="col-7">{{ fad.land }}</dd>
+
+            <dt class="col-5">Fremstillingsår</dt>
+            <dd class="col-7">{{ fad.fraAar | date:'yyyy' }}</dd>
+
+            <dt class="col-5">Leverandør</dt>
+            <dd class="col-7">{{ fad.leverandoer }}</dd>
+
+            <dt class="col-5">Alder</dt>
+            <dd class="col-7">{{ fad.alderAar }} år</dd>
+
+            <dt class="col-5">Placering</dt>
+            <dd class="col-7">
+              @if (fad.hylde) {
+                {{ fad.hylde.lagerNavn }}, reol {{ fad.hylde.reolNummer }}, hylde {{ fad.hylde.position }}
+              } @else {
+                <span class="text-muted">Ikke placeret</span>
+              }
+            </dd>
+          </dl>
+
+          @if (fad.destillat) {
+            <hr>
+            <h6>Nuværende destillat</h6>
+            <dl class="row">
+              <dt class="col-5">Påfyldt</dt>
+              <dd class="col-7">{{ fad.destillat.startDato | date:'dd/MM/yyyy' }}</dd>
+
+              <dt class="col-5">Liter</dt>
+              <dd class="col-7">{{ fad.destillat.antalLiter }}L</dd>
+
+              <dt class="col-5">ABV</dt>
+              <dd class="col-7">{{ fad.destillat.alkoholProcent | number:'1.1-1' }}%</dd>
+
+              <dt class="col-5">Status</dt>
+              <dd class="col-7">
+                @if (fad.destillat.erKlar) {
+                  <span class="badge badge-klar">Klar til tapning</span>
+                } @else {
+                  <span class="badge badge-ikke-klar">Modner</span>
+                }
+              </dd>
+            </dl>
+
+            @if (fad.destillat.modningsHistorik.length > 0) {
+              <h6 class="mt-2">Tidligere destillater i dette fad</h6>
+              <table class="table table-sm mb-0">
+                <thead>
+                  <tr>
+                    <th>Fad</th>
+                    <th>Indhold</th>
+                    <th>Påfyldt</th>
+                    <th>Fjernet</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (h of fad.destillat.modningsHistorik; track h.paafyldningsDato) {
+                    <tr>
+                      <td>{{ h.fadNummer }}</td>
+                      <td>{{ h.tidligereIndhold }}</td>
+                      <td>{{ h.paafyldningsDato | date:'dd/MM/yyyy' }}</td>
+                      <td>
+                        @if (h.slutDato) {
+                          {{ h.slutDato | date:'dd/MM/yyyy' }}
+                        } @else {
+                          <span class="badge badge-klar">Nuværende</span>
+                        }
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            }
+          } @else {
+            <div class="text-muted mt-2">Fadet er tomt — intet destillat registreret.</div>
+          }
+        }
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="close()">Luk</button>
+      </div>
+    </div>
+  </div>
+</div>

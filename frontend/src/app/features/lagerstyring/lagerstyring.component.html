@@ -1,0 +1,165 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h4 class="mb-0">Lagerstyring</h4>
+  <button class="btn btn-primary btn-sm" (click)="opretLagerModal.open()">+ Opret lager</button>
+</div>
+
+@if (loading()) {
+  <div class="text-center py-4">Indlæser...</div>
+} @else {
+  <div class="row g-3">
+
+    <!-- Lager panel -->
+    <div class="col-md-3">
+      <div class="card h-100">
+        <div class="card-header fw-semibold">Lagre</div>
+        <div class="list-group list-group-flush" style="overflow-y: auto; max-height: 70vh;">
+          @for (l of lagre(); track l.id) {
+            <button type="button"
+                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                    [class.active]="valgtLager()?.id === l.id"
+                    (click)="vaelgLager(l)">
+              <span>{{ l.navn }}</span>
+              <small class="text-muted">{{ l.reoler.length }} reoler</small>
+            </button>
+          } @empty {
+            <div class="list-group-item text-muted text-center py-3">
+              <small>Ingen lagre endnu</small>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Reol panel -->
+    <div class="col-md-3">
+      <div class="card h-100">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span class="fw-semibold">Reoler</span>
+          @if (valgtLager()) {
+            <button class="btn btn-sm btn-outline-primary"
+                    (click)="opretReolModal.open(valgtLager()!.id, valgtLager()!.navn)">
+              + Tilføj
+            </button>
+          }
+        </div>
+        <div class="list-group list-group-flush" style="overflow-y: auto; max-height: 70vh;">
+          @if (!valgtLager()) {
+            <div class="list-group-item text-muted text-center py-3">
+              <small>Vælg et lager</small>
+            </div>
+          } @else {
+            @for (r of valgtLager()!.reoler; track r.id) {
+              <button type="button"
+                      class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                      [class.active]="valgtReol()?.id === r.id"
+                      (click)="vaelgReol(r)">
+                <span>Reol {{ r.reolNummer }}</span>
+                <small>{{ antalOptagede(r) }} / {{ r.hylder.length }} hylder</small>
+              </button>
+            } @empty {
+              <div class="list-group-item text-muted text-center py-3">
+                <small>Ingen reoler</small>
+              </div>
+            }
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Hylde panel -->
+    <div class="col-md-3">
+      <div class="card h-100">
+        <div class="card-header fw-semibold">
+          @if (valgtReol()) {
+            Hylder — Reol {{ valgtReol()!.reolNummer }}
+          } @else {
+            Hylder
+          }
+        </div>
+        <div class="list-group list-group-flush" style="overflow-y: auto; max-height: 70vh;">
+          @if (!valgtReol()) {
+            <div class="list-group-item text-muted text-center py-3">
+              <small>Vælg en reol</small>
+            </div>
+          } @else {
+            @for (h of valgtReol()!.hylder; track h.id) {
+              <button type="button"
+                      class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                      [class.active]="valgtHylde()?.id === h.id"
+                      (click)="vaelgHylde(h)">
+                <span>Hylde {{ h.position }}</span>
+                @if (h.erLedig) {
+                  <span class="badge bg-success">Ledig</span>
+                } @else if (h.fad?.erKlar) {
+                  <span class="badge badge-klar">Klar</span>
+                } @else {
+                  <span class="badge badge-ikke-klar">{{ h.fad?.fadNummer }}</span>
+                }
+              </button>
+            }
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Fad info panel -->
+    <div class="col-md-3">
+      <div class="card h-100">
+        <div class="card-header fw-semibold">Fad info</div>
+        <div class="card-body">
+          @if (valgtHylde(); as h) {
+            @if (h.fad; as f) {
+              <dl class="row mb-2">
+                <dt class="col-7">Fad nr.</dt>
+                <dd class="col-5">{{ f.fadNummer }}</dd>
+
+                <dt class="col-7">Kapacitet</dt>
+                <dd class="col-5">{{ f.literKapacitet }}L</dd>
+
+                <dt class="col-7">Tidl. indhold</dt>
+                <dd class="col-5">{{ f.tidligereIndhold }}</dd>
+
+                <dt class="col-7">Destillat</dt>
+                <dd class="col-5">
+                  @if (f.harDestillat) {
+                    <span class="text-success">Ja</span>
+                  } @else {
+                    <span class="text-muted">Nej</span>
+                  }
+                </dd>
+
+                <dt class="col-7">Status</dt>
+                <dd class="col-5">
+                  @if (f.erKlar) {
+                    <span class="badge badge-klar">Klar</span>
+                  } @else if (f.harDestillat) {
+                    <span class="badge badge-ikke-klar">Modner</span>
+                  } @else {
+                    <span class="badge bg-secondary">Tom</span>
+                  }
+                </dd>
+              </dl>
+              <button class="btn btn-sm btn-outline-secondary w-100"
+                      (click)="openFlytFad(h)">
+                📦 Flyt fad
+              </button>
+            } @else {
+              <div class="text-muted text-center py-3">
+                <small>Hylde {{ h.position }} er ledig</small>
+              </div>
+            }
+          } @else {
+            <div class="text-muted text-center py-3">
+              <small>Vælg en hylde for at se fad-info</small>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+  </div>
+}
+
+<app-opret-lager-modal #opretLagerModal (oprettet)="onLagerOprettet($event)" />
+<app-opret-reol-modal #opretReolModal (oprettet)="onReolOprettet($event)" />
+<app-flyt-fad-modal #flytFadModal (flyttet)="onFadFlyttet($event)" />

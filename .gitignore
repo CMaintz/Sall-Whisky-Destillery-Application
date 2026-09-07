@@ -2,3 +2,9 @@ out/
 .idea/
 *.iml
 .DS_Store
+/frontend/node_modules/
+/frontend/.angular/
+/backend/target/
+/storage.srl
+/CLAUDE.md
+/PROJECT_DESCRIPTION.md
